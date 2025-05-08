@@ -12,7 +12,8 @@ public class BairroImplements implements BairroDao {
     @Override
     public void salvar(Bairro bairro) throws SQLException {
         String sql = "INSERT INTO bairro(id, nome)VALUES(?,?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, bairro.getId());
             stmt.setString(2, bairro.getNome());
             stmt.executeUpdate();
@@ -22,7 +23,8 @@ public class BairroImplements implements BairroDao {
     @Override
     public void editar(Bairro bairro) throws SQLException {
         String sql = "UPDATE bairro SET nome = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, bairro.getNome());
             stmt.setInt(2, bairro.getId());
             stmt.executeUpdate();
@@ -32,7 +34,8 @@ public class BairroImplements implements BairroDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM bairro WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -42,7 +45,8 @@ public class BairroImplements implements BairroDao {
     public List<Bairro> listar() throws SQLException {
         List<Bairro> bairros = new LinkedList<>();
         String sql = "SELECT id, nome FROM bairro";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao();
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Bairro bairro = new Bairro();
                 bairro.setId(res.getInt("id"));
