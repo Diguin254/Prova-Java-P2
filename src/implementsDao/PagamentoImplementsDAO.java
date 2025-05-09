@@ -7,10 +7,7 @@ import model.MetodoPagamento;
 import model.Cupom;
 import model.Pedido;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +16,8 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     @Override
     public void salvar(Pagamento pagamento) throws SQLException {
         String sql = "INSERT INTO pagamento (id, metodoPagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?, ?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pagamento.getId());
             stmt.setInt(2, pagamento.getMetodoPagamento().getId());
             stmt.setInt(3, pagamento.getCupom().getId());
@@ -31,7 +29,8 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     @Override
     public void editar(Pagamento pagamento) throws SQLException {
         String sql = "UPDATE pagamento SET metodoPagamento_id = ?, cupom_id = ?, pedido_id = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pagamento.getMetodoPagamento().getId());
             stmt.setInt(2, pagamento.getCupom().getId());
             stmt.setInt(3, pagamento.getPedido().getId());
@@ -43,7 +42,8 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM pagamento WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -53,7 +53,8 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     public List<Pagamento> listar() throws SQLException {
         List<Pagamento> pagamentos = new LinkedList<>();
         String sql = "SELECT id, metodoPagamento_id, cupom_id, pedido_id FROM pagamento";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Pagamento pagamento = new Pagamento();
                 pagamento.setId(res.getInt("id"));

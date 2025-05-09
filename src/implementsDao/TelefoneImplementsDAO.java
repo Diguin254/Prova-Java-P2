@@ -6,10 +6,7 @@ import model.Telefone;
 import model.Cliente;
 import model.Funcionario;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +15,8 @@ public class TelefoneImplementsDAO implements TelefoneDao {
     @Override
     public void salvar(Telefone telefone) throws SQLException {
         String sql = "INSERT INTO telefone(id, ddd, numero, cliente_id, funcionario_id) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, telefone.getId());
             stmt.setInt(2, telefone.getDdd());
             stmt.setString(3, telefone.getNumero());
@@ -31,7 +29,8 @@ public class TelefoneImplementsDAO implements TelefoneDao {
     @Override
     public void editar(Telefone telefone) throws SQLException {
         String sql = "UPDATE telefone SET ddd = ?, numero = ?, cliente_id = ?, funcionario_id = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, telefone.getDdd());
             stmt.setString(2, telefone.getNumero());
             stmt.setInt(3, telefone.getCliente().getId());
@@ -44,7 +43,8 @@ public class TelefoneImplementsDAO implements TelefoneDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM telefone WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -54,7 +54,8 @@ public class TelefoneImplementsDAO implements TelefoneDao {
     public List<Telefone> listar() throws SQLException {
         List<Telefone> telefones = new LinkedList<>();
         String sql = "SELECT id, ddd, numero, cliente_id, funcionario_id FROM telefone";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             while (res.next()) {
                 Telefone telefone = new Telefone();

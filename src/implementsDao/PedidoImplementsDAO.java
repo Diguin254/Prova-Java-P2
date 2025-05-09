@@ -7,10 +7,7 @@ import model.Cliente;
 import model.StatusPedido;
 import model.Entrega;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +17,8 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public void salvar(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO pedido (id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id, entrega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pedido.getId());
             stmt.setString(2, pedido.getHoraPedido());
             stmt.setInt(3, pedido.getNumeroPedido());
@@ -35,7 +33,8 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public void editar(Pedido pedido) throws SQLException {
         String sql = "UPDATE pedido SET horaPedido = ?, numeroPedido = ?, dataPedido = ?, cliente_id = ?, statusPedido_id = ?, entrega_id = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, pedido.getHoraPedido());
             stmt.setInt(2, pedido.getNumeroPedido());
             stmt.setDate(3, new java.sql.Date(pedido.getDataPedido().getTime()));
@@ -50,7 +49,8 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM pedido WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -60,7 +60,8 @@ public class PedidoImplementsDAO implements PedidoDao {
     public List<Pedido> listar() throws SQLException {
         List<Pedido> pedidos = new LinkedList<>();
         String sql = "SELECT id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id, entrega_id FROM pedido";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Pedido pedido = new Pedido();
                 pedido.setId(res.getInt("id"));

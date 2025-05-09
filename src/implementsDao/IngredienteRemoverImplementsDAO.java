@@ -5,10 +5,7 @@ import dao.IngredienteRemoverDao;
 import model.IngredienteRemover;
 import model.IngredienteEscolha;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +14,8 @@ public class IngredienteRemoverImplementsDAO implements IngredienteRemoverDao {
     @Override
     public void salvar(IngredienteRemover ingredienteRemover) throws SQLException {
         String sql = "INSERT INTO ingredienteRemover (id, nome, ingredienteEscolha_id) VALUES (?, ?, ?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, ingredienteRemover.getId());
             stmt.setString(2, ingredienteRemover.getNome());
             stmt.setInt(3, ingredienteRemover.getIngredienteEscolha().getId());
@@ -28,7 +26,8 @@ public class IngredienteRemoverImplementsDAO implements IngredienteRemoverDao {
     @Override
     public void editar(IngredienteRemover ingredienteRemover) throws SQLException {
         String sql = "UPDATE ingredienteRemover SET nome = ?, ingredienteEscolha_id = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, ingredienteRemover.getNome());
             stmt.setInt(2, ingredienteRemover.getIngredienteEscolha().getId());
             stmt.setInt(3, ingredienteRemover.getId());
@@ -39,7 +38,8 @@ public class IngredienteRemoverImplementsDAO implements IngredienteRemoverDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM ingredienteRemover WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -49,7 +49,8 @@ public class IngredienteRemoverImplementsDAO implements IngredienteRemoverDao {
     public List<IngredienteRemover> listar() throws SQLException {
         List<IngredienteRemover> ingredientesRemover = new LinkedList<>();
         String sql = "SELECT id, nome, ingredienteEscolha_id FROM ingredienteRemover";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 IngredienteRemover ingredienteRemover = new IngredienteRemover();
                 ingredienteRemover.setId(res.getInt("id"));

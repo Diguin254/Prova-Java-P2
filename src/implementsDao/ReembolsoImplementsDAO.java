@@ -5,10 +5,7 @@ import dao.ReembolsoDao;
 import model.Reembolso;
 import model.Pedido;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +14,8 @@ public class ReembolsoImplementsDAO implements ReembolsoDao {
     @Override
     public void salvar(Reembolso reembolso) throws SQLException {
         String sql = "INSERT INTO reembolso(id, motivo, pedido_id) VALUES (?, ?, ?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, reembolso.getId());
             stmt.setString(2, reembolso.getMotivo());
             stmt.setInt(3, reembolso.getPedido().getId());
@@ -28,7 +26,8 @@ public class ReembolsoImplementsDAO implements ReembolsoDao {
     @Override
     public void editar(Reembolso reembolso) throws SQLException {
         String sql = "UPDATE reembolso SET motivo = ?, pedido_id = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, reembolso.getMotivo());
             stmt.setInt(2, reembolso.getPedido().getId());
             stmt.setInt(3, reembolso.getId());
@@ -39,7 +38,8 @@ public class ReembolsoImplementsDAO implements ReembolsoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM reembolso WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -49,7 +49,8 @@ public class ReembolsoImplementsDAO implements ReembolsoDao {
     public List<Reembolso> listar() throws SQLException {
         List<Reembolso> reembolsos = new LinkedList<>();
         String sql = "SELECT id, motivo, pedido_id FROM reembolso";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             while (res.next()) {
                 Reembolso reembolso = new Reembolso();

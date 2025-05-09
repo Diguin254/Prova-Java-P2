@@ -5,10 +5,7 @@ import dao.TaxaEntregaDao;
 import model.TaxaEntrega;
 import model.Endereco;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +14,8 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     @Override
     public void salvar(TaxaEntrega taxaEntrega) throws SQLException {
         String sql = "INSERT INTO taxaEntrega(id, taxa_entrega, endereco_id) VALUES (?, ?, ?)";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, taxaEntrega.getId());
             stmt.setDouble(2, taxaEntrega.getTaxa_entrega());
             stmt.setInt(3, taxaEntrega.getEndereco().getId());
@@ -28,7 +26,8 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     @Override
     public void editar(TaxaEntrega taxaEntrega) throws SQLException {
         String sql = "UPDATE taxaEntrega SET taxa_entrega = ?, endereco_id = ? WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, taxaEntrega.getTaxa_entrega());
             stmt.setInt(2, taxaEntrega.getEndereco().getId());
             stmt.setInt(3, taxaEntrega.getId());
@@ -39,7 +38,8 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM taxaEntrega WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -49,7 +49,8 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     public List<TaxaEntrega> listar() throws SQLException {
         List<TaxaEntrega> taxasEntregas = new LinkedList<>();
         String sql = "SELECT id, taxa_entrega, endereco_id FROM taxaEntrega";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
+        Connection con = Conexao.getConexao(); 
+        try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             while (res.next()) {
                 TaxaEntrega taxaEntrega = new TaxaEntrega();
