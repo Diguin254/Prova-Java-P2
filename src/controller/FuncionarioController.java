@@ -62,7 +62,7 @@ public class FuncionarioController {
         funcionarioDao.deletar(id);
     }
 
-    public List<FuncionarioDTO> listar() throws SQLException {
+    public List listar() throws SQLException {
         List<Funcionario> lista = funcionarioDao.listar();
         List<Telefone> listaTel = telefoneDao.listar();
 

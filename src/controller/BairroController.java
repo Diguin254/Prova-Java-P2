@@ -10,28 +10,28 @@ import java.util.List;
 
 public class BairroController {
 
-    private final BairroDao dao;
+    private final BairroDao bairroDao;
 
     public BairroController() {
-        this.dao = new BairroImplementsDAO();
+        this.bairroDao = new BairroImplementsDAO();
     }
 
     public void salvar(BairroDTO bairroDTO) throws SQLException {
         Bairro bairro = bairroDTO.builder();
-        dao.salvar(bairro);
+        bairroDao.salvar(bairro);
     }
 
     public void editar(BairroDTO bairroDTO) throws SQLException {
         Bairro bairro = bairroDTO.builder();
-        dao.editar(bairro);
+        bairroDao.editar(bairro);
     }
 
     public void deletar(int id) throws SQLException {
-        dao.deletar(id);
+        bairroDao.deletar(id);
     }
 
-    public List listar() throws SQLException {
-        List<Bairro> lista = dao.listar();
+    public List<BairroDTO> listar() throws SQLException {
+        List<Bairro> lista = bairroDao.listar();
         List<BairroDTO> listaDTO = new LinkedList<>();
         for (Bairro b : lista) {
             BairroDTO dto = new BairroDTO();

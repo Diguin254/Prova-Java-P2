@@ -9,4 +9,5 @@ public interface FuncionarioDao {
     public void editar(Funcionario funcionario) throws SQLException;
     public void deletar(int id) throws SQLException;
     public List<Funcionario> listar() throws SQLException;
+    List<Funcionario> listarComTelefones() throws SQLException;
 }

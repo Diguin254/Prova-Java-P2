@@ -10,7 +10,7 @@ public class IngredienteRemoverDTO {
 
     public String idIngrRem;
     public String nomeIngrRem;
-    public String idIngrRemov;
+    public String idIngrEsco;
 
     public IngredienteRemover builder() {
         IngredienteRemover ingr = new IngredienteRemover();
@@ -18,7 +18,7 @@ public class IngredienteRemoverDTO {
         ingr.setNome(nomeIngrRem == null ? "" : nomeIngrRem);
 
         IngredienteEscolha e = new IngredienteEscolha();
-        e.setId(idIngrRemov == null ? 0 : Integer.valueOf(idIngrRemov));
+        e.setId(idIngrEsco == null ? 0 : Integer.valueOf(idIngrEsco));
         ingr.setIngredienteEscolha(e);
 
         return ingr;
