@@ -24,6 +24,7 @@ public class PedidoController {
 
     public void salvar(PedidoDTO pedidoDTO) throws SQLException {
         Pedido ped = pedidoDTO.builder();
+        pedidoDao.salvar(ped);
 
         if (ped.getCarrinhos() != null) {
             for (Carrinho c : ped.getCarrinhos()) {
@@ -31,7 +32,6 @@ public class PedidoController {
                 carrinhoDao.salvar(c);
             }
         }
-        pedidoDao.salvar(ped);
     }
 
     public void editar(PedidoDTO pedidoDTO) throws SQLException {
@@ -87,7 +87,7 @@ public class PedidoController {
 
             if (carrinhos != null) {
                 List<CarrinhoDTO> carDtos = new LinkedList<>();
-                for (Carrinho car : carrinhos){
+                for (Carrinho car : carrinhos) {
                     CarrinhoDTO cDto = new CarrinhoDTO();
                     cDto.idCarrinho = String.valueOf(car.getId());
                     cDto.qntdItens = String.valueOf(car.getQntd());
