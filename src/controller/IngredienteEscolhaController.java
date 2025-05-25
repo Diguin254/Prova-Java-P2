@@ -6,30 +6,27 @@ import dao.IngredienteRemoverDao;
 import dto.IngredienteAdicionalDTO;
 import dto.IngredienteEscolhaDTO;
 import dto.IngredienteRemoverDTO;
-import model.IngredienteEscolha;
-import model.IngredienteRemover;
-import model.IngredienteAdicional;
+import dto.InterfaceDTO;
 import implementsDao.IngredienteAdicionalImplementsDAO;
 import implementsDao.IngredienteEscolhaImplementsDAO;
 import implementsDao.IngredienteRemoverImplementsDAO;
+import model.IngredienteAdicional;
+import model.IngredienteEscolha;
+import model.IngredienteRemover;
+
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IngredienteEscolhaController {
+public class IngredienteEscolhaController extends InterfaceController {
 
-    private final IngredienteEscolhaDao ingredienteEscolhaDao;
-    private final IngredienteRemoverDao ingredienteRemoverDao;
-    private final IngredienteAdicionalDao ingredienteAdicionalDao;
+    private final IngredienteEscolhaDao ingredienteEscolhaDao = new IngredienteEscolhaImplementsDAO();
+    private final IngredienteRemoverDao ingredienteRemoverDao = new IngredienteRemoverImplementsDAO();
+    private final IngredienteAdicionalDao ingredienteAdicionalDao = new IngredienteAdicionalImplementsDAO();
 
-    public IngredienteEscolhaController() {
-        this.ingredienteEscolhaDao = new IngredienteEscolhaImplementsDAO();
-        this.ingredienteRemoverDao = new IngredienteRemoverImplementsDAO();
-        this.ingredienteAdicionalDao = new IngredienteAdicionalImplementsDAO();
-    }
-
-    public void salvar(IngredienteEscolhaDTO ingredienteEscolhaDTO) throws SQLException {
-        IngredienteEscolha ingE = ingredienteEscolhaDTO.builder();
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        IngredienteEscolha ingE = ((IngredienteEscolhaDTO)dto).builder();
         ingredienteEscolhaDao.salvar(ingE);
 
         if (ingE.getIngredientesRemover() != null) {
@@ -38,6 +35,7 @@ public class IngredienteEscolhaController {
                 ingredienteRemoverDao.salvar(ingR);
             }
         }
+
         if (ingE.getIngredientesAdicional() != null) {
             for (IngredienteAdicional ingA : ingE.getIngredientesAdicional()) {
                 ingA.setIngredienteEscolha(ingE);
@@ -46,9 +44,10 @@ public class IngredienteEscolhaController {
         }
     }
 
-    public void editar(IngredienteEscolhaDTO ingredienteEscolhaDTO) throws SQLException {
-        IngredienteEscolha ingE = ingredienteEscolhaDTO.builder();
-        ingredienteEscolhaDao.editar(ingE);
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        IngredienteEscolha ingE = ((IngredienteEscolhaDTO)dto).builder();
+        ingredienteEscolhaDao.salvar(ingE);;
 
         if (ingE.getIngredientesRemover() != null) {
             for (IngredienteRemover ingR : ingE.getIngredientesRemover()) {
@@ -60,6 +59,7 @@ public class IngredienteEscolhaController {
                 }
             }
         }
+
         if (ingE.getIngredientesAdicional() != null) {
             for (IngredienteAdicional ingA : ingE.getIngredientesAdicional()) {
                 ingA.setIngredienteEscolha(ingE);
@@ -72,12 +72,18 @@ public class IngredienteEscolhaController {
         }
     }
 
-    public List<IngredienteEscolhaDTO> listar() throws SQLException {
+    @Override
+    public void deletar(int id) throws SQLException {
+        ingredienteEscolhaDao.deletar(id);
+    }
+
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<IngredienteEscolha> listaIngrediente = ingredienteEscolhaDao.listar();
         List<IngredienteRemover> todosIngrRemove = ingredienteRemoverDao.listar();
         List<IngredienteAdicional> todosIngrAdicional = ingredienteAdicionalDao.listar();
 
-        List<IngredienteEscolhaDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
         for (IngredienteEscolha ingE : listaIngrediente) {
 
@@ -125,7 +131,8 @@ public class IngredienteEscolhaController {
                 }
                 dto.ingrAdcs = adicDtos;
             }
-            listaDTO.add(dto);
+
+            listaDTO.add((InterfaceDTO) dto);
         }
 
         return listaDTO;

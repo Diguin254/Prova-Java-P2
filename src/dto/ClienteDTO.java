@@ -7,7 +7,7 @@ import model.Pedido;
 import model.Telefone;
 import model.Entrega;
 
-public class ClienteDTO {
+public class ClienteDTO implements InterfaceDTO{
 
     public ClienteDTO() {
     }

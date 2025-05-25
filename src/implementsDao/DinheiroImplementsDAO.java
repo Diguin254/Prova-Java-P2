@@ -10,10 +10,12 @@ import java.util.List;
 
 public class DinheiroImplementsDAO implements DinheiroDao {
 
+    Connection con;
+
     @Override
     public void salvar(Dinheiro dinheiro) throws SQLException {
         String sql = "INSERT INTO dinheiro (id, valorEntregado) VALUES (?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, dinheiro.getId());
             stmt.setDouble(2, dinheiro.getValorEntregado());
@@ -24,7 +26,7 @@ public class DinheiroImplementsDAO implements DinheiroDao {
     @Override
     public void editar(Dinheiro dinheiro) throws SQLException {
         String sql = "UPDATE dinheiro SET valorEntregado = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, dinheiro.getValorEntregado());
             stmt.setInt(2, dinheiro.getId());
@@ -35,7 +37,7 @@ public class DinheiroImplementsDAO implements DinheiroDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM dinheiro WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -46,7 +48,7 @@ public class DinheiroImplementsDAO implements DinheiroDao {
     public List<Dinheiro> listar() throws SQLException {
         List<Dinheiro> dinheiros = new LinkedList<>();
         String sql = "SELECT id, valorEntregado FROM dinheiro";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Dinheiro dinheiro = new Dinheiro();

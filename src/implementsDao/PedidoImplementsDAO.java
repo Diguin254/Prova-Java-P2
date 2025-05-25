@@ -14,10 +14,12 @@ import java.util.List;
 
 public class PedidoImplementsDAO implements PedidoDao {
 
+    Connection con;
+
     @Override
     public void salvar(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO pedido (id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id, entrega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pedido.getId());
             stmt.setString(2, pedido.getHoraPedido());
@@ -33,7 +35,7 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public void editar(Pedido pedido) throws SQLException {
         String sql = "UPDATE pedido SET horaPedido = ?, numeroPedido = ?, dataPedido = ?, cliente_id = ?, statusPedido_id = ?, entrega_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, pedido.getHoraPedido());
             stmt.setInt(2, pedido.getNumeroPedido());
@@ -49,7 +51,7 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM pedido WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -60,7 +62,7 @@ public class PedidoImplementsDAO implements PedidoDao {
     public List<Pedido> listar() throws SQLException {
         List<Pedido> pedidos = new LinkedList<>();
         String sql = "SELECT id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id, entrega_id FROM pedido";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Pedido pedido = new Pedido();

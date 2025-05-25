@@ -16,10 +16,12 @@ import model.Telefone;
 
 public class FuncionarioImplementsDAO implements FuncionarioDao {
 
+    Connection con;
+
     @Override
     public void salvar(Funcionario funcionario) throws SQLException {
         String sql = "INSERT INTO funcionario (id, nome, cpf, rg, login_id) VALUES (?, ?, ?, ?, ?)";
-        Connection con = Conexao.getConexao();
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, funcionario.getId());
             stmt.setString(2, funcionario.getNome());
@@ -33,7 +35,7 @@ public class FuncionarioImplementsDAO implements FuncionarioDao {
     @Override
     public void editar(Funcionario funcionario) throws SQLException {
         String sql = "UPDATE funcionario SET nome = ?, cpf = ?, rg = ?, login_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao();
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, funcionario.getNome());
             stmt.setString(2, funcionario.getCpf());
@@ -47,7 +49,7 @@ public class FuncionarioImplementsDAO implements FuncionarioDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM funcionario WHERE id = ?";
-        Connection con = Conexao.getConexao();
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -58,7 +60,7 @@ public class FuncionarioImplementsDAO implements FuncionarioDao {
     public List<Funcionario> listar() throws SQLException {
         List<Funcionario> funcionarios = new LinkedList<>();
         String sql = "SELECT id, nome, cpf, rg, login_id FROM funcionario";
-        Connection con = Conexao.getConexao();
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Funcionario funcionario = new Funcionario();
@@ -81,9 +83,7 @@ public class FuncionarioImplementsDAO implements FuncionarioDao {
     public List<Funcionario> listarComTelefones() throws SQLException {
         String sql = "SELECT f.id AS fid, f.nome, f.cpf, f.rg, f.login_id, t.id AS tid, t.ddd, t.numero FROM funcionario f LEFT JOIN telefone t ON t.funcionario_id = f.id ORDER BY f.id";
 
-        try (Connection con = Conexao.getConexao();
-             PreparedStatement stmt = con.prepareStatement(sql);
-             ResultSet res = stmt.executeQuery()) {
+        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             Map<Integer, Funcionario> mapa = new LinkedHashMap<>();
 

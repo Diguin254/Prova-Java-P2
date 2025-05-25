@@ -5,7 +5,7 @@ import java.util.List;
 import model.Login;
 import model.Funcionario;
 
-public class LoginDTO {
+public class LoginDTO implements InterfaceDTO{
 
     public LoginDTO() {
     }

@@ -2,13 +2,14 @@ package controller;
 
 import dao.EnderecoDao;
 import dto.EnderecoDTO;
+import dto.InterfaceDTO;
 import implementsDao.EnderecoImplementsDAO;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import model.Endereco;
 
-public class EnderecoController {
+public class EnderecoController extends InterfaceController {
 
     private final EnderecoDao enderecoDao;
 
@@ -16,34 +17,34 @@ public class EnderecoController {
         this.enderecoDao = new EnderecoImplementsDAO();
     }
 
-    public void salvar(EnderecoDTO enderecoDTO) throws SQLException {
-        Endereco end = enderecoDTO.builder();
-        enderecoDao.salvar(end);
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        enderecoDao.salvar(((EnderecoDTO) dto).builder());
     }
-    
-    public void editar(EnderecoDTO enderecoDTO) throws SQLException{
-        Endereco end = enderecoDTO.builder();
-        enderecoDao.editar(end);
+
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        enderecoDao.editar(((EnderecoDTO) dto).builder());
     }
-    
-    public void deletar(int id) throws SQLException{
+
+    @Override
+    public void deletar(int id) throws SQLException {
         enderecoDao.deletar(id);
     }
-    
-    public List<EnderecoDTO> listar() throws SQLException{
+
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<Endereco> lista = enderecoDao.listar();
-        List<EnderecoDTO> listaDTO = new LinkedList<>();
-        
-        for(Endereco end : lista){
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
+        for (Endereco end : lista) {
             EnderecoDTO dto = new EnderecoDTO();
             dto.idEndereco = String.valueOf(end.getId());
             dto.ruaEnd = end.getRua();
             dto.cepEnd = end.getCep();
             dto.idBairro = String.valueOf(end.getBairro().getId());
             dto.distanciaEnd = end.getDistancia();
-            listaDTO.add(dto);
+            listaDTO.add((InterfaceDTO) dto);
         }
-        
         return listaDTO;
     }
 }

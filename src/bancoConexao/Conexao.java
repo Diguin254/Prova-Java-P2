@@ -33,7 +33,7 @@ public class Conexao {
     }
     
     public Connection criarConexao() throws SQLException {
-        url = "jdbc:postgresql://localhost?5432/postgres";
+        url = "jdbc:postgresql://localhost:5432/postgres";
         user = "postgres";
         password = "1234";
         con = DriverManager.getConnection(url, user, password);

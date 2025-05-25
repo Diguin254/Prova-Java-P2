@@ -2,42 +2,45 @@ package controller;
 
 import dao.BairroDao;
 import dto.BairroDTO;
+import dto.InterfaceDTO;
 import implementsDao.BairroImplementsDAO;
 import model.Bairro;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BairroController {
+public class BairroController extends InterfaceController{
 
     private final BairroDao bairroDao;
 
     public BairroController() {
         this.bairroDao = new BairroImplementsDAO();
     }
-
-    public void salvar(BairroDTO bairroDTO) throws SQLException {
-        Bairro bairro = bairroDTO.builder();
-        bairroDao.salvar(bairro);
+    
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        bairroDao.salvar(((BairroDTO)dto).builder());
     }
-
-    public void editar(BairroDTO bairroDTO) throws SQLException {
-        Bairro bairro = bairroDTO.builder();
-        bairroDao.editar(bairro);
+    
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        bairroDao.editar(((BairroDTO)dto).builder());
     }
-
+    
+    @Override
     public void deletar(int id) throws SQLException {
         bairroDao.deletar(id);
     }
-
-    public List<BairroDTO> listar() throws SQLException {
+    
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<Bairro> lista = bairroDao.listar();
-        List<BairroDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
         for (Bairro b : lista) {
             BairroDTO dto = new BairroDTO();
             dto.idBairro = String.valueOf(b.getId());
             dto.nomeBairro = b.getNome();
-            listaDTO.add(dto);
+            listaDTO.add((InterfaceDTO) dto);
         }
         return listaDTO;
     }

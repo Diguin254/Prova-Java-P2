@@ -11,10 +11,12 @@ import java.util.List;
 
 public class DeliveryImplementsDAO implements DeliveryDao {
 
+    Connection con;
+
     @Override
     public void salvar(Delivery delivery) throws SQLException {
         String sql = "INSERT INTO delivery (id, chaveEntrega, numero, complemento, endereco_id) VALUES (?, ?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, delivery.getId());
             stmt.setString(2, delivery.getChaveEntrega());
@@ -28,7 +30,7 @@ public class DeliveryImplementsDAO implements DeliveryDao {
     @Override
     public void editar(Delivery delivery) throws SQLException {
         String sql = "UPDATE delivery SET chaveEntrega = ?, numero = ?, complemento = ?, endereco_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, delivery.getChaveEntrega());
             stmt.setInt(2, delivery.getNumero());
@@ -42,7 +44,8 @@ public class DeliveryImplementsDAO implements DeliveryDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM delivery WHERE id = ?";
-        try (Connection con = Conexao.getConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        con = Conexao.getConexao();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -52,7 +55,7 @@ public class DeliveryImplementsDAO implements DeliveryDao {
     public List<Delivery> listar() throws SQLException {
         List<Delivery> deliveries = new LinkedList<>();
         String sql = "SELECT id, chaveEntrega, numero, complemento, endereco_id FROM delivery";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Delivery delivery = new Delivery();

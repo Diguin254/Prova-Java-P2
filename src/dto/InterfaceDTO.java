@@ -1,5 +1,5 @@
 package dto;
 
-public abstract interface InterfaceDTO {
+public interface InterfaceDTO {
     
 }

@@ -6,6 +6,7 @@ import dao.PedidoDao;
 import dao.TelefoneDao;
 import dto.ClienteDTO;
 import dto.EntregaDTO;
+import dto.InterfaceDTO;
 import dto.PedidoDTO;
 import dto.TelefoneDTO;
 import implementsDao.ClienteImplementsDAO;
@@ -16,26 +17,20 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import model.Cliente;
-import model.Telefone;
-import model.Pedido;
 import model.Entrega;
+import model.Pedido;
+import model.Telefone;
 
-public class ClienteController {
+public class ClienteController extends InterfaceController {
 
-    private final ClienteDao clienteDao;
-    private final TelefoneDao telefoneDao;
-    private final PedidoDao pedidoDao;
-    private final EntregaDao entregaDao;
+    private final ClienteDao clienteDao = new ClienteImplementsDAO();
+    private final TelefoneDao telefoneDao = new TelefoneImplementsDAO();
+    private final PedidoDao pedidoDao = new PedidoImplementsDAO();
+    private final EntregaDao entregaDao = new EntregaImplementsDAO();
 
-    public ClienteController() {
-        this.clienteDao = new ClienteImplementsDAO();
-        this.telefoneDao = new TelefoneImplementsDAO();
-        this.pedidoDao = new PedidoImplementsDAO();
-        this.entregaDao = new EntregaImplementsDAO();
-    }
-
-    public void salvar(ClienteDTO clienteDTO) throws SQLException {
-        Cliente cliente = clienteDTO.builder();
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        Cliente cliente = ((ClienteDTO) dto).builder();
         clienteDao.salvar(cliente);
 
         if (cliente.getTelefones() != null) {
@@ -44,12 +39,14 @@ public class ClienteController {
                 telefoneDao.salvar(t);
             }
         }
+
         if (cliente.getPedidos() != null) {
             for (Pedido p : cliente.getPedidos()) {
                 p.setCliente(cliente);
                 pedidoDao.salvar(p);
             }
         }
+
         if (cliente.getEntregas() != null) {
             for (Entrega e : cliente.getEntregas()) {
                 e.setCliente(cliente);
@@ -58,8 +55,9 @@ public class ClienteController {
         }
     }
 
-    public void editar(ClienteDTO clienteDTO) throws SQLException {
-        Cliente cliente = clienteDTO.builder();
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        Cliente cliente = ((ClienteDTO) dto).builder();
         clienteDao.editar(cliente);
 
         if (cliente.getTelefones() != null) {
@@ -72,6 +70,7 @@ public class ClienteController {
                 }
             }
         }
+
         if (cliente.getPedidos() != null) {
             for (Pedido p : cliente.getPedidos()) {
                 p.setCliente(cliente);
@@ -82,6 +81,7 @@ public class ClienteController {
                 }
             }
         }
+
         if (cliente.getEntregas() != null) {
             for (Entrega e : cliente.getEntregas()) {
                 e.setCliente(cliente);
@@ -94,37 +94,13 @@ public class ClienteController {
         }
     }
 
-    public void deletar(int id) throws SQLException {
-        List<Telefone> todosTel = telefoneDao.listar();
-        List<Pedido> todosPed = pedidoDao.listar();
-        List<Entrega> todosEnt = entregaDao.listar();
-
-        for (Telefone tel : todosTel) {
-            if (tel.getCliente() != null && tel.getCliente().getId().equals(id)) {
-                telefoneDao.deletar(tel.getId());
-            }
-        }
-        for (Pedido ped : todosPed) {
-            if (ped.getCliente() != null && ped.getCliente().getId().equals(id)) {
-                pedidoDao.deletar(ped.getId());
-            }
-        }
-        for (Entrega ent : todosEnt) {
-            if (ent.getCliente() != null && ent.getCliente().getId().equals(id)) {
-                entregaDao.deletar(ent.getId());
-            }
-        }
-
-        clienteDao.deletar(id);
-    }
-
-    public List<ClienteDTO> listar() throws SQLException {
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<Cliente> listaClientes = clienteDao.listar();
         List<Telefone> listaTel = telefoneDao.listar();
         List<Pedido> listaPed = pedidoDao.listar();
         List<Entrega> listaEnt = entregaDao.listar();
-
-        List<ClienteDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
         for (Cliente c : listaClientes) {
             List<Telefone> telefones = new LinkedList<>();
@@ -156,40 +132,64 @@ public class ClienteController {
             dto.nomeCliente = c.getNome();
 
             if (!telefones.isEmpty()) {
-                List<TelefoneDTO> telDtos = new LinkedList<>();
+                dto.telefones = new LinkedList<>();
                 for (Telefone t : telefones) {
                     TelefoneDTO tDto = new TelefoneDTO();
                     tDto.idTel = String.valueOf(t.getId());
                     tDto.dddTel = String.valueOf(t.getDdd());
                     tDto.numTel = t.getNumero();
-                    telDtos.add(tDto);
+                    dto.telefones.add(tDto);
                 }
-                dto.telefones = telDtos;
             }
+
             if (!pedidos.isEmpty()) {
-                List<PedidoDTO> pedDtos = new LinkedList<>();
+                dto.pedidos = new LinkedList<>();
                 for (Pedido p : pedidos) {
                     PedidoDTO pDto = new PedidoDTO();
                     pDto.idPed = String.valueOf(p.getId());
                     pDto.horaPed = p.getHoraPedido();
                     pDto.nPed = String.valueOf(p.getNumeroPedido());
                     pDto.dataP = p.getDataPedido();
-                    pedDtos.add(pDto);
+                    dto.pedidos.add(pDto);
                 }
-                dto.pedidos = pedDtos;
             }
+
             if (!entregas.isEmpty()) {
-                List<EntregaDTO> entDtos = new LinkedList<>();
+                dto.entregas = new LinkedList<>();
                 for (Entrega e : entregas) {
                     EntregaDTO eDto = new EntregaDTO();
                     eDto.idEntrega = String.valueOf(e.getId());
                     eDto.tipoEntregaE = String.valueOf(e.getTipoEntrega());
-                    entDtos.add(eDto);
+                    dto.entregas.add(eDto);
                 }
-                dto.entregas = entDtos;
             }
-            listaDTO.add(dto);
+
+            listaDTO.add((InterfaceDTO) dto);
         }
+
         return listaDTO;
+    }
+
+    @Override
+    public void deletar(int id) throws SQLException {
+        for (Telefone t : telefoneDao.listar()) {
+            if (t.getCliente() != null && t.getCliente().getId().equals(id)) {
+                telefoneDao.deletar(t.getId());
+            }
+        }
+
+        for (Pedido p : pedidoDao.listar()) {
+            if (p.getCliente() != null && p.getCliente().getId().equals(id)) {
+                pedidoDao.deletar(p.getId());
+            }
+        }
+
+        for (Entrega e : entregaDao.listar()) {
+            if (e.getCliente() != null && e.getCliente().getId().equals(id)) {
+                entregaDao.deletar(e.getId());
+            }
+        }
+
+        clienteDao.deletar(id);
     }
 }

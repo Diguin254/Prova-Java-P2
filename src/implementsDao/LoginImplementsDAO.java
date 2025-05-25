@@ -10,10 +10,12 @@ import java.util.List;
 
 public class LoginImplementsDAO implements LoginDao {
 
+    Connection con;
+
     @Override
     public void salvar(Login login) throws SQLException {
         String sql = "INSERT INTO login (id, password, login_funcionario) VALUES (?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, login.getId());
             stmt.setString(2, login.getPassword());
@@ -25,7 +27,7 @@ public class LoginImplementsDAO implements LoginDao {
     @Override
     public void editar(Login login) throws SQLException {
         String sql = "UPDATE login SET password = ?, login_funcionario = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, login.getPassword());
             stmt.setString(2, login.getLogin_funcionario());
@@ -37,7 +39,7 @@ public class LoginImplementsDAO implements LoginDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM login WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -48,7 +50,7 @@ public class LoginImplementsDAO implements LoginDao {
     public List<Login> listar() throws SQLException {
         List<Login> logins = new LinkedList<>();
         String sql = "SELECT id, password, login_funcionario FROM login";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Login login = new Login();

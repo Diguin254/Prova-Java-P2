@@ -13,10 +13,12 @@ import java.util.List;
 
 public class PagamentoImplementsDAO implements PagamentoDao {
 
+    Connection con;
+
     @Override
     public void salvar(Pagamento pagamento) throws SQLException {
         String sql = "INSERT INTO pagamento (id, metodoPagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pagamento.getId());
             stmt.setInt(2, pagamento.getMetodoPagamento().getId());
@@ -29,7 +31,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     @Override
     public void editar(Pagamento pagamento) throws SQLException {
         String sql = "UPDATE pagamento SET metodoPagamento_id = ?, cupom_id = ?, pedido_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pagamento.getMetodoPagamento().getId());
             stmt.setInt(2, pagamento.getCupom().getId());
@@ -42,7 +44,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM pagamento WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -53,7 +55,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     public List<Pagamento> listar() throws SQLException {
         List<Pagamento> pagamentos = new LinkedList<>();
         String sql = "SELECT id, metodoPagamento_id, cupom_id, pedido_id FROM pagamento";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Pagamento pagamento = new Pagamento();

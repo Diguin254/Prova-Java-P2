@@ -11,10 +11,12 @@ import java.util.List;
 
 public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDao {
 
+    Connection con;
+
     @Override
     public void salvar(IngredienteAdicional ingredienteAdicional) throws SQLException {
         String sql = "INSERT INTO ingredienteAdicional (id, nome, valor, ingredienteEscolha_id) VALUES (?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, ingredienteAdicional.getId());
             stmt.setString(2, ingredienteAdicional.getNome());
@@ -27,7 +29,7 @@ public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDa
     @Override
     public void editar(IngredienteAdicional ingredienteAdicional) throws SQLException {
         String sql = "UPDATE ingredienteAdicional SET nome = ?, valor = ?, ingredienteEscolha_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, ingredienteAdicional.getNome());
             stmt.setDouble(2, ingredienteAdicional.getValor());
@@ -40,7 +42,7 @@ public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDa
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM ingredienteAdicional WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -51,7 +53,7 @@ public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDa
     public List<IngredienteAdicional> listar() throws SQLException {
         List<IngredienteAdicional> ingredientesAdicionais = new LinkedList<>();
         String sql = "SELECT id, nome, valor, ingredienteEscolha_id FROM ingredienteAdicional";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 IngredienteAdicional ingredienteAdicional = new IngredienteAdicional();

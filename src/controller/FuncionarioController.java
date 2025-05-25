@@ -3,27 +3,24 @@ package controller;
 import dao.FuncionarioDao;
 import dao.TelefoneDao;
 import dto.FuncionarioDTO;
+import dto.InterfaceDTO;
 import dto.TelefoneDTO;
 import implementsDao.FuncionarioImplementsDAO;
 import implementsDao.TelefoneImplementsDAO;
 import java.sql.SQLException;
-import model.Funcionario;
-import model.Telefone;
 import java.util.LinkedList;
 import java.util.List;
+import model.Funcionario;
+import model.Telefone;
 
-public class FuncionarioController {
+public class FuncionarioController extends InterfaceController {
 
-    private final FuncionarioDao funcionarioDao;
-    private final TelefoneDao telefoneDao;
+    private final FuncionarioDao funcionarioDao = new FuncionarioImplementsDAO();
+    private final TelefoneDao telefoneDao = new TelefoneImplementsDAO();
 
-    public FuncionarioController() {
-        this.funcionarioDao = new FuncionarioImplementsDAO();
-        this.telefoneDao = new TelefoneImplementsDAO();
-    }
-
-    public void salvar(FuncionarioDTO funcionarioDTO) throws SQLException {
-        Funcionario f = funcionarioDTO.builder();
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        Funcionario f = ((FuncionarioDTO) dto).builder();
         funcionarioDao.salvar(f);
 
         if (f.getTelefones() != null) {
@@ -34,8 +31,9 @@ public class FuncionarioController {
         }
     }
 
-    public void editar(FuncionarioDTO funcionarioDTO) throws SQLException {
-        Funcionario f = funcionarioDTO.builder();
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        Funcionario f = ((FuncionarioDTO) dto).builder();
         funcionarioDao.editar(f);
 
         if (f.getTelefones() != null) {
@@ -50,10 +48,9 @@ public class FuncionarioController {
         }
     }
 
+    @Override
     public void deletar(int id) throws SQLException {
-        List<Telefone> todos = telefoneDao.listar();
-
-        for (Telefone tel : todos) {
+        for (Telefone tel : telefoneDao.listar()) {
             if (tel.getFuncionario() != null && tel.getFuncionario().getId().equals(id)) {
                 telefoneDao.deletar(tel.getId());
             }
@@ -62,15 +59,16 @@ public class FuncionarioController {
         funcionarioDao.deletar(id);
     }
 
-    public List listar() throws SQLException {
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<Funcionario> lista = funcionarioDao.listar();
         List<Telefone> listaTel = telefoneDao.listar();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
-        List<FuncionarioDTO> listaDTO = new LinkedList<>();
         for (Funcionario f : lista) {
             List<Telefone> telefones = new LinkedList<>();
             for (Telefone tel : listaTel) {
-                if (tel.getFuncionario() != null && tel.getFuncionario().getId() == f.getId()) {
+                if (tel.getFuncionario() != null && tel.getFuncionario().getId().equals(f.getId())) {
                     telefones.add(tel);
                 }
             }
@@ -83,18 +81,19 @@ public class FuncionarioController {
             dto.rgFun = f.getRg();
             dto.idLogin = String.valueOf(f.getLogin().getId());
 
-            if (telefones != null) {
-                List<TelefoneDTO> teleDtos = new LinkedList<>();
+            if (!telefones.isEmpty()) {
+                dto.telefones = new LinkedList<>();
                 for (Telefone tel : telefones) {
                     TelefoneDTO tDto = new TelefoneDTO();
                     tDto.idTel = String.valueOf(tel.getId());
                     tDto.numTel = tel.getNumero();
-                    teleDtos.add(tDto);
+                    dto.telefones.add(tDto);
                 }
-                dto.telefones = teleDtos;
             }
-            listaDTO.add(dto);
+
+            listaDTO.add((InterfaceDTO) dto);
         }
+
         return listaDTO;
     }
 }

@@ -4,6 +4,7 @@ import dao.FuncionarioDao;
 import dao.LoginDao;
 import dto.FuncionarioDTO;
 import dto.LoginDTO;
+import dto.InterfaceDTO;
 import implementsDao.FuncionarioImplementsDAO;
 import implementsDao.LoginImplementsDAO;
 import java.sql.SQLException;
@@ -12,35 +13,32 @@ import java.util.List;
 import model.Funcionario;
 import model.Login;
 
-public class LoginController {
+public class LoginController extends InterfaceController {
 
-    private final LoginDao loginDao;
-    private final FuncionarioDao funcionarioDao;
+    private final LoginDao loginDao = new LoginImplementsDAO();
+    private final FuncionarioDao funcionarioDao = new FuncionarioImplementsDAO();
 
-    public LoginController() {
-        this.loginDao = new LoginImplementsDAO();
-        this.funcionarioDao = new FuncionarioImplementsDAO();
-    }
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        Login login = ((LoginDTO)dto).builder();
+        loginDao.salvar(login);
 
-    public void salvar(LoginDTO loginDTO) throws SQLException {
-        Login l = loginDTO.builder();
-        loginDao.salvar(l);
-
-        if (l.getFuncionarios() != null) {
-            for (Funcionario f : l.getFuncionarios()) {
-                f.setLogin(l);
+        if (login.getFuncionarios() != null) {
+            for (Funcionario f : login.getFuncionarios()) {
+                f.setLogin(login);
                 funcionarioDao.salvar(f);
             }
         }
     }
 
-    public void editar(LoginDTO loginDTO) throws SQLException {
-        Login l = loginDTO.builder();
-        loginDao.editar(l);
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        Login login = ((LoginDTO)dto).builder();
+        loginDao.salvar(login);
 
-        if (l.getFuncionarios() != null) {
-            for (Funcionario f : l.getFuncionarios()) {
-                f.setLogin(l);
+        if (login.getFuncionarios() != null) {
+            for (Funcionario f : login.getFuncionarios()) {
+                f.setLogin(login);
                 if (f.getId() == 0) {
                     funcionarioDao.salvar(f);
                 } else {
@@ -50,48 +48,47 @@ public class LoginController {
         }
     }
 
+    @Override
     public void deletar(int id) throws SQLException {
-        List<Funcionario> todos = funcionarioDao.listar();
-
-        for (Funcionario f : todos) {
+        for (Funcionario f : funcionarioDao.listar()) {
             if (f.getLogin() != null && f.getLogin().getId().equals(id)) {
                 funcionarioDao.deletar(f.getId());
             }
         }
-
         loginDao.deletar(id);
     }
 
-    public List<LoginDTO> listar() throws SQLException {
-        List<Login> lista = loginDao.listar();
-        List<LoginDTO> listaDTO = new LinkedList<>();
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
+        List<Login> listaLogins = loginDao.listar();
         List<Funcionario> listaFun = funcionarioDao.listar();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
-        for (Login l : lista) {
+        for (Login l : listaLogins) {
             List<Funcionario> funcionarios = new LinkedList<>();
-            for (Funcionario fun : listaFun) {
-                if (fun.getLogin() != null && fun.getLogin().getId() == l.getId()) {
-                    funcionarios.add(fun);
+            for (Funcionario f : listaFun) {
+                if (f.getLogin() != null && f.getLogin().getId().equals(l.getId())) {
+                    funcionarios.add(f);
                 }
             }
             l.setFuncionarios(funcionarios);
 
             LoginDTO dto = new LoginDTO();
             dto.idLogin = String.valueOf(l.getId());
-            dto.senhaLogin = l.getPassword();
             dto.loginFun = l.getLogin_funcionario();
-            
-            if(funcionarios != null){
-                List<FuncionarioDTO> funDtos = new LinkedList<>();
-                for(Funcionario func : funcionarios){
+            dto.senhaLogin = l.getPassword();
+
+            if (funcionarios != null && !funcionarios.isEmpty()) {
+                dto.funcionarios = new LinkedList<>();
+                for (Funcionario func : funcionarios) {
                     FuncionarioDTO fDto = new FuncionarioDTO();
                     fDto.nomeFun = func.getNome();
                     fDto.cpfFun = func.getCpf();
-                    funDtos.add(fDto);
+                    dto.funcionarios.add(fDto);
                 }
-                dto.funcionarios = funDtos;
             }
-        listaDTO.add(dto);
+
+            listaDTO.add((InterfaceDTO) dto);
         }
 
         return listaDTO;

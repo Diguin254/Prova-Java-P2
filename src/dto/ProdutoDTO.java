@@ -5,7 +5,7 @@ import java.util.List;
 import model.Carrinho;
 import model.Produto;
 
-public class ProdutoDTO {
+public class ProdutoDTO implements InterfaceDTO{
 
     public ProdutoDTO() {
     }

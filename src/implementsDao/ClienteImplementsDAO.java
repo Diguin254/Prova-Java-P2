@@ -10,10 +10,12 @@ import java.util.List;
 
 public class ClienteImplementsDAO implements ClienteDao {
 
+    Connection con;
+
     @Override
     public void salvar(Cliente cliente) throws SQLException {
         String sql = "INSERT INTO cliente (id, nome) VALUES (?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, cliente.getId());
             stmt.setString(2, cliente.getNome());
@@ -24,7 +26,7 @@ public class ClienteImplementsDAO implements ClienteDao {
     @Override
     public void editar(Cliente cliente) throws SQLException {
         String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cliente.getNome());
             stmt.setInt(2, cliente.getId());
@@ -35,7 +37,7 @@ public class ClienteImplementsDAO implements ClienteDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM cliente WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -46,7 +48,7 @@ public class ClienteImplementsDAO implements ClienteDao {
     public List<Cliente> listar() throws SQLException {
         List<Cliente> clientes = new LinkedList<>();
         String sql = "SELECT id, nome FROM cliente";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Cliente cliente = new Cliente();

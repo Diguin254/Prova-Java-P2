@@ -11,10 +11,12 @@ import java.util.List;
 
 public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
 
+    Connection con;
+
     @Override
     public void salvar(TaxaEntrega taxaEntrega) throws SQLException {
         String sql = "INSERT INTO taxaEntrega(id, taxa_entrega, endereco_id) VALUES (?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, taxaEntrega.getId());
             stmt.setDouble(2, taxaEntrega.getTaxa_entrega());
@@ -26,7 +28,7 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     @Override
     public void editar(TaxaEntrega taxaEntrega) throws SQLException {
         String sql = "UPDATE taxaEntrega SET taxa_entrega = ?, endereco_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, taxaEntrega.getTaxa_entrega());
             stmt.setInt(2, taxaEntrega.getEndereco().getId());
@@ -38,7 +40,7 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM taxaEntrega WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -49,7 +51,7 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     public List<TaxaEntrega> listar() throws SQLException {
         List<TaxaEntrega> taxasEntregas = new LinkedList<>();
         String sql = "SELECT id, taxa_entrega, endereco_id FROM taxaEntrega";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             while (res.next()) {

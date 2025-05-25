@@ -12,10 +12,12 @@ import java.util.List;
 
 public class MetodoPagamentoImplementsDAO implements MetodoPagamentoDao {
 
+    Connection con;
+
     @Override
     public void salvar(MetodoPagamento metodoPagamento) throws SQLException {
         String sql = "INSERT INTO metodoPagamento (id, pix, dinheiro_id, cartao_id) VALUES (?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, metodoPagamento.getId());
             stmt.setString(2, metodoPagamento.getPix());
@@ -28,7 +30,7 @@ public class MetodoPagamentoImplementsDAO implements MetodoPagamentoDao {
     @Override
     public void editar(MetodoPagamento metodoPagamento) throws SQLException {
         String sql = "UPDATE metodoPagamento SET pix = ?, dinheiro_id = ?, cartao_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, metodoPagamento.getPix());
             stmt.setInt(2, metodoPagamento.getDinheiro().getId());
@@ -41,7 +43,7 @@ public class MetodoPagamentoImplementsDAO implements MetodoPagamentoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM metodoPagamento WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -52,7 +54,7 @@ public class MetodoPagamentoImplementsDAO implements MetodoPagamentoDao {
     public List<MetodoPagamento> listar() throws SQLException {
         List<MetodoPagamento> metodosPagamentos = new LinkedList<>();
         String sql = "SELECT id, pix, dinheiro_id, cartao_id FROM metodoPagamento";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 MetodoPagamento metodoPagamento = new MetodoPagamento();

@@ -4,7 +4,7 @@ import model.Cliente;
 import model.Funcionario;
 import model.Telefone;
 
-public class TelefoneDTO {
+public class TelefoneDTO implements InterfaceDTO{
 
     public String idTel;
     public String dddTel;

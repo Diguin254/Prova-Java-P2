@@ -13,10 +13,12 @@ import java.util.List;
 
 public class CarrinhoImplementsDAO implements CarrinhoDao {
 
+    Connection con;
+
     @Override
     public void salvar(Carrinho carrinho) throws SQLException {
         String sql = "INSERT INTO carrinho (id, qntd, pedido_id, produto_id, ingrediente_escolha_id) VALUES (?, ?, ?, ?, ?)";
-        Connection con = Conexao.getConexao();
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, carrinho.getId());
             stmt.setInt(2, carrinho.getQntd());
@@ -30,7 +32,7 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
     @Override
     public void editar(Carrinho carrinho) throws SQLException {
         String sql = "UPDATE carrinho SET qntd = ?, pedido_id = ?, produto_id = ?, ingrediente_escolha_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, carrinho.getQntd());
             stmt.setInt(2, carrinho.getPedido().getId());
@@ -44,7 +46,7 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM carrinho WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -55,7 +57,7 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
     public List<Carrinho> listar() throws SQLException {
         List<Carrinho> carrinhos = new LinkedList<>();
         String sql = "SELECT id, qntd, pedido_id, produto_id, ingrediente_escolha_id FROM carrinho";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             while (res.next()) {

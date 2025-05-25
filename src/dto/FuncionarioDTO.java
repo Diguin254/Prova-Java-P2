@@ -6,7 +6,7 @@ import model.Funcionario;
 import model.Login;
 import model.Telefone;
 
-public class FuncionarioDTO {
+public class FuncionarioDTO implements InterfaceDTO{
 
     public FuncionarioDTO() {
     }

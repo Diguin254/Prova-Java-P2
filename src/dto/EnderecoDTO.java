@@ -3,7 +3,7 @@ package dto;
 import model.Bairro;
 import model.Endereco;
 
-public class EnderecoDTO {
+public class EnderecoDTO implements InterfaceDTO{
 
     public EnderecoDTO() {
     }

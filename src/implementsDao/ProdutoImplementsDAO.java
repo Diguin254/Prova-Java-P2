@@ -10,10 +10,12 @@ import java.util.List;
 
 public class ProdutoImplementsDAO implements ProdutoDao {
 
+    Connection con;
+
     @Override
     public void salvar(Produto produto) throws SQLException {
         String sql = "INSERT INTO produto(id, nome, valorUnitario) VALUES (?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, produto.getId());
             stmt.setString(2, produto.getNome());
@@ -25,7 +27,7 @@ public class ProdutoImplementsDAO implements ProdutoDao {
     @Override
     public void editar(Produto produto) throws SQLException {
         String sql = "UPDATE produto SET nome = ?, valorUnitario = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getValorUnitario());
@@ -37,7 +39,7 @@ public class ProdutoImplementsDAO implements ProdutoDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM produto WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -48,7 +50,7 @@ public class ProdutoImplementsDAO implements ProdutoDao {
     public List<Produto> listar() throws SQLException {
         List<Produto> produtos = new LinkedList<>();
         String sql = "SELECT id, nome, valorUnitario FROM produto";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
             while (res.next()) {

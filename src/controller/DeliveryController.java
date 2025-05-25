@@ -2,13 +2,14 @@ package controller;
 
 import dao.DeliveryDao;
 import dto.DeliveryDTO;
+import dto.InterfaceDTO;
 import implementsDao.DeliveryImplementsDAO;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import model.Delivery;
 
-public class DeliveryController {
+public class DeliveryController extends InterfaceController {
 
     private final DeliveryDao deliveryDao;
 
@@ -16,23 +17,25 @@ public class DeliveryController {
         this.deliveryDao = new DeliveryImplementsDAO();
     }
 
-    public void salvar(DeliveryDTO deliveryDTO) throws SQLException {
-        Delivery d = deliveryDTO.builder();
-        deliveryDao.salvar(d);
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        deliveryDao.salvar(((DeliveryDTO) dto).builder());
     }
 
-    public void editar(DeliveryDTO deliveryDTO) throws SQLException {
-        Delivery d = new DeliveryDTO().builder();
-        deliveryDao.editar(d);
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        deliveryDao.editar(((DeliveryDTO) dto).builder());
     }
 
+    @Override
     public void deletar(int id) throws SQLException {
         deliveryDao.deletar(id);
     }
 
-    public List<DeliveryDTO> listar() throws SQLException {
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<Delivery> lista = deliveryDao.listar();
-        List<DeliveryDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
         for (Delivery d : lista) {
             DeliveryDTO dto = new DeliveryDTO();
             dto.idDelivery = String.valueOf(d.getId());
@@ -40,7 +43,7 @@ public class DeliveryController {
             dto.numeroD = String.valueOf(d.getNumero());
             dto.complementoD = d.getComplemento();
             dto.idEndereco = String.valueOf(d.getEndereco().getId());
-            listaDTO.add(dto);
+            listaDTO.add((InterfaceDTO) dto);
         }
         return listaDTO;
     }

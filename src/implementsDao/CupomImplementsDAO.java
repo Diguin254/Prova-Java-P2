@@ -11,10 +11,12 @@ import java.util.List;
 
 public class CupomImplementsDAO implements CupomDao {
 
+    Connection con;
+
     @Override
     public void salvar(Cupom cupom) throws SQLException {
         String sql = "INSERT INTO cupom (id, valorCupom, codigo, validade, pagamento_id) VALUES (?, ?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, cupom.getId());
             stmt.setDouble(2, cupom.getValorCupom());
@@ -28,7 +30,7 @@ public class CupomImplementsDAO implements CupomDao {
     @Override
     public void editar(Cupom cupom) throws SQLException {
         String sql = "UPDATE cupom SET valorCupom = ?, codigo = ?, validade = ?, pagamento_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, cupom.getValorCupom());
             stmt.setString(2, cupom.getCodigo());
@@ -42,7 +44,7 @@ public class CupomImplementsDAO implements CupomDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM cupom WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -53,7 +55,7 @@ public class CupomImplementsDAO implements CupomDao {
     public List<Cupom> listar() throws SQLException {
         List<Cupom> cupons = new LinkedList<>();
         String sql = "SELECT id, valorCupom, codigo, validade, pagamento_id FROM cupom";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Cupom cupom = new Cupom();

@@ -2,44 +2,43 @@ package controller;
 
 import dao.IngredienteRemoverDao;
 import dto.IngredienteRemoverDTO;
-import model.IngredienteRemover;
+import dto.InterfaceDTO;
 import implementsDao.IngredienteRemoverImplementsDAO;
+import model.IngredienteRemover;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IngredienteRemoverController {
+public class IngredienteRemoverController extends InterfaceController {
 
-    private final IngredienteRemoverDao ingredienteRemoverDao;
+    private final IngredienteRemoverDao ingredienteRemoverDao = new IngredienteRemoverImplementsDAO();
 
-    public IngredienteRemoverController() {
-        this.ingredienteRemoverDao = new IngredienteRemoverImplementsDAO();
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        ingredienteRemoverDao.salvar(((IngredienteRemoverDTO) dto).builder());
     }
 
-    public void salvar(IngredienteRemoverDTO ingredienteRemoverDTO) throws SQLException {
-        IngredienteRemover ingrR = ingredienteRemoverDTO.builder();
-        ingredienteRemoverDao.salvar(ingrR);
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        ingredienteRemoverDao.salvar(((IngredienteRemoverDTO) dto).builder());
     }
 
-    public void editar(IngredienteRemoverDTO ingredienteRemoverDTO) throws SQLException {
-        IngredienteRemover ingrR = ingredienteRemoverDTO.builder();
-        ingredienteRemoverDao.editar(ingrR);
-    }
-
+    @Override
     public void deletar(int id) throws SQLException {
         ingredienteRemoverDao.deletar(id);
     }
 
-    public List<IngredienteRemoverDTO> listar() throws SQLException {
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<IngredienteRemover> lista = ingredienteRemoverDao.listar();
-        List<IngredienteRemoverDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
         for (IngredienteRemover ingrR : lista) {
             IngredienteRemoverDTO dto = new IngredienteRemoverDTO();
             dto.idIngrRem = String.valueOf(ingrR.getId());
             dto.nomeIngrRem = ingrR.getNome();
             dto.idIngrEsco = String.valueOf(ingrR.getIngredienteEscolha().getId());
-            listaDTO.add(dto);
+            listaDTO.add((InterfaceDTO) dto);
         }
 
         return listaDTO;

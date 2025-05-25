@@ -2,7 +2,7 @@ package dto;
 
 import model.Bairro;
 
-public class BairroDTO {
+public class BairroDTO implements InterfaceDTO{
 
     public String nomeBairro;
     public String idBairro;

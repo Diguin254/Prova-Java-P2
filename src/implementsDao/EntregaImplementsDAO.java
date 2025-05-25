@@ -14,10 +14,12 @@ import java.util.List;
 
 public class EntregaImplementsDAO implements EntregaDao {
 
+    Connection con;
+
     @Override
     public void salvar(Entrega entrega) throws SQLException {
         String sql = "INSERT INTO entrega (id, cliente_id, tipoEntrega, delivery_id, pedido_id, status_pedido_id) VALUES (?, ?, ?, ?, ?, ?)";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, entrega.getId());
             stmt.setInt(2, entrega.getCliente().getId());
@@ -32,7 +34,7 @@ public class EntregaImplementsDAO implements EntregaDao {
     @Override
     public void editar(Entrega entrega) throws SQLException {
         String sql = "UPDATE entrega SET cliente_id = ?, tipoEntrega = ?, delivery_id = ?, pedido_id = ?, status_pedido_id = ? WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, entrega.getCliente().getId());
             stmt.setInt(2, entrega.getTipoEntrega());
@@ -47,7 +49,7 @@ public class EntregaImplementsDAO implements EntregaDao {
     @Override
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM entrega WHERE id = ?";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -58,7 +60,7 @@ public class EntregaImplementsDAO implements EntregaDao {
     public List<Entrega> listar() throws SQLException {
         List<Entrega> entregas = new LinkedList<>();
         String sql = "SELECT id, cliente_id, tipoEntrega, delivery_id, pedido_id, status_pedido_id FROM entrega";
-        Connection con = Conexao.getConexao(); 
+        con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Entrega entrega = new Entrega();

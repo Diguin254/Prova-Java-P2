@@ -2,37 +2,36 @@ package controller;
 
 import dao.IngredienteAdicionalDao;
 import dto.IngredienteAdicionalDTO;
+import dto.InterfaceDTO;
 import model.IngredienteAdicional;
 import implementsDao.IngredienteAdicionalImplementsDAO;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IngredienteAdicionalController {
+public class IngredienteAdicionalController extends InterfaceController {
 
-    private final IngredienteAdicionalDao ingredienteAdicionalDao;
+    private final IngredienteAdicionalDao ingredienteAdicionalDao = new IngredienteAdicionalImplementsDAO();
 
-    public IngredienteAdicionalController() {
-        this.ingredienteAdicionalDao = new IngredienteAdicionalImplementsDAO();
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        ingredienteAdicionalDao.salvar(((IngredienteAdicionalDTO) dto).builder());
     }
 
-    public void salvar(IngredienteAdicionalDTO ingredienteAdicionalDTO) throws SQLException {
-        IngredienteAdicional ingrA = ingredienteAdicionalDTO.builder();
-        ingredienteAdicionalDao.salvar(ingrA);
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        ingredienteAdicionalDao.salvar(((IngredienteAdicionalDTO) dto).builder());
     }
 
-    public void editar(IngredienteAdicionalDTO ingredienteAdicionalDTO) throws SQLException {
-        IngredienteAdicional ingrA = ingredienteAdicionalDTO.builder();
-        ingredienteAdicionalDao.editar(ingrA);
-    }
-
+    @Override
     public void deletar(int id) throws SQLException {
         ingredienteAdicionalDao.deletar(id);
     }
 
-    public List<IngredienteAdicionalDTO> listar() throws SQLException {
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<IngredienteAdicional> lista = ingredienteAdicionalDao.listar();
-        List<IngredienteAdicionalDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
         for (IngredienteAdicional ing : lista) {
             IngredienteAdicionalDTO dto = new IngredienteAdicionalDTO();
@@ -40,7 +39,7 @@ public class IngredienteAdicionalController {
             dto.nomeIngrAdc = ing.getNome();
             dto.valorIngrAdc = String.valueOf(ing.getValor());
             dto.idIngrEsc = String.valueOf(ing.getIngredienteEscolha().getId());
-            listaDTO.add(dto);
+            listaDTO.add((InterfaceDTO) dto);
         }
 
         return listaDTO;
