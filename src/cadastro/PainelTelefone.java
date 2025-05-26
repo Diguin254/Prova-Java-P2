@@ -6,18 +6,18 @@ package cadastro;
 
 import app.InterfacePainel;
 import dto.InterfaceDTO;
-import dto.ProdutoDTO;
+import dto.TelefoneDTO;
 
 /**
  *
- * @author alenc
+ * @author Cliente
  */
-public class PainelProduto extends InterfacePainel {
+public class PainelTelefone extends InterfacePainel {
 
     /**
-     * Creates new form PainelProduto
+     * Creates new form PainelTelefone
      */
-    public PainelProduto() {
+    public PainelTelefone() {
         initComponents();
     }
 
@@ -36,11 +36,9 @@ public class PainelProduto extends InterfacePainel {
         jTextField2 = new javax.swing.JTextField();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Nome do Produto");
+        jLabel1.setText("DDD");
         jLabel1.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setPreferredSize(new java.awt.Dimension(200, 22));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -48,11 +46,9 @@ public class PainelProduto extends InterfacePainel {
         });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Valor do Produto");
+        jLabel2.setText("Número do Telefone");
         jLabel2.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setPreferredSize(new java.awt.Dimension(200, 22));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -65,17 +61,15 @@ public class PainelProduto extends InterfacePainel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(100, 100, 100)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -93,13 +87,13 @@ public class PainelProduto extends InterfacePainel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -108,22 +102,22 @@ public class PainelProduto extends InterfacePainel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
-    ProdutoDTO dto;
+    TelefoneDTO dto;
     @Override
-    public ProdutoDTO getDados(){
+    public InterfaceDTO getDados(){
         if(dto == null){
-            dto = new ProdutoDTO();
+            dto = new TelefoneDTO();
         }
         
-        dto.nomeProd = jTextField1.getText();
-        dto.valUnProd = jTextField2.getText();
-        return (ProdutoDTO) (InterfaceDTO) dto;
+        dto.dddTel = jTextField1.getText();
+        dto.numTel = jTextField2.getText();
+        return (InterfaceDTO) dto;
     }
     
     @Override
     public void setDados(InterfaceDTO dto){
-        this.dto = (ProdutoDTO) dto;
-        jTextField1.setText(this.dto.nomeProd);
-        jTextField1.setText(this.dto.valUnProd);
+        this.dto = (TelefoneDTO) dto;
+        jTextField1.setText(this.dto.dddTel);
+        jTextField2.setText(this.dto.numTel);
     }
 }

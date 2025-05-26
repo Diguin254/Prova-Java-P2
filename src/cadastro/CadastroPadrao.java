@@ -29,12 +29,12 @@ public class CadastroPadrao extends javax.swing.JDialog {
     public CadastroPadrao(java.awt.Frame parent, InterfacePainel painelCentro, InterfaceController controller, boolean modal) {
         super(parent, modal);
         initComponents();
-
         this.painelCentro = painelCentro;
         this.controller = controller;
 
         add((javax.swing.JPanel) painelCentro, BorderLayout.CENTER);
         pack();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -120,9 +120,7 @@ public class CadastroPadrao extends javax.swing.JDialog {
                 InterfacePainel painel = new PainelBairros();
                 InterfaceController controller = new BairroController();
 
-                CadastroPadrao dialog = new CadastroPadrao(new javax.swing.JFrame(), painel, controller, true);
-                dialog.setSize(400, 300);
-                dialog.setLocationRelativeTo(null); 
+                CadastroPadrao dialog = new CadastroPadrao(new javax.swing.JFrame(), painel, controller, true); 
                 dialog.setVisible(true);
             }
         });
