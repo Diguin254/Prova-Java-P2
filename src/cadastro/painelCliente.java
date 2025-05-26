@@ -4,16 +4,20 @@
  */
 package cadastro;
 
+import app.InterfacePainel;
+import dto.ClienteDTO;
+import dto.InterfaceDTO;
+
 /**
  *
  * @author alenc
  */
-public class painelCliente extends javax.swing.JPanel {
+public class PainelCliente extends InterfacePainel {
 
     /**
      * Creates new form painelCliente
      */
-    public painelCliente() {
+    public PainelCliente() {
         initComponents();
     }
 
@@ -58,4 +62,20 @@ public class painelCliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+     ClienteDTO dto;
+    @Override
+    public ClienteDTO getDados(){
+        if(dto == null){
+            dto = new ClienteDTO();
+        }
+        
+        dto.nomeCliente = jTextField1.getText();
+        return (ClienteDTO) (InterfaceDTO) dto;
+    }
+    
+    @Override
+    public void setDados(InterfaceDTO dto){
+        this.dto = (ClienteDTO) dto;
+        jTextField1.setText(this.dto.nomeCliente);
+    }
 }
