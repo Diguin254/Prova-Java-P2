@@ -14,19 +14,18 @@ public class ProdutoImplementsDAO implements ProdutoDao {
 
     @Override
     public void salvar(Produto produto) throws SQLException {
-        String sql = "INSERT INTO produto(id, nome, valorUnitario) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO produto(nome, valor_unitario) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, produto.getId());
-            stmt.setString(2, produto.getNome());
-            stmt.setDouble(3, produto.getValorUnitario());
+            stmt.setString(1, produto.getNome());
+            stmt.setDouble(2, produto.getValorUnitario());
             stmt.executeUpdate();
         }
     }
 
     @Override
     public void editar(Produto produto) throws SQLException {
-        String sql = "UPDATE produto SET nome = ?, valorUnitario = ? WHERE id = ?";
+        String sql = "UPDATE produto SET nome = ?, valor_unitario = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, produto.getNome());
@@ -49,7 +48,7 @@ public class ProdutoImplementsDAO implements ProdutoDao {
     @Override
     public List<Produto> listar() throws SQLException {
         List<Produto> produtos = new LinkedList<>();
-        String sql = "SELECT id, nome, valorUnitario FROM produto";
+        String sql = "SELECT id, nome, valor_unitario FROM produto";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
@@ -57,7 +56,7 @@ public class ProdutoImplementsDAO implements ProdutoDao {
                 Produto produto = new Produto();
                 produto.setId(res.getInt("id"));
                 produto.setNome(res.getString("nome"));
-                produto.setValorUnitario(res.getDouble("valorUnitario"));
+                produto.setValorUnitario(res.getDouble("valor_unitario"));
                 produtos.add(produto);
             }
         }

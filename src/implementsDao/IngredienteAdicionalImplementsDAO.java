@@ -15,13 +15,12 @@ public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDa
 
     @Override
     public void salvar(IngredienteAdicional ingredienteAdicional) throws SQLException {
-        String sql = "INSERT INTO ingredienteAdicional (id, nome, valor, ingredienteEscolha_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO ingredienteAdicional (nome, valor, ingredienteEscolha_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, ingredienteAdicional.getId());
-            stmt.setString(2, ingredienteAdicional.getNome());
-            stmt.setDouble(3, ingredienteAdicional.getValor());
-            stmt.setInt(4, ingredienteAdicional.getIngredienteEscolha().getId());
+            stmt.setString(1, ingredienteAdicional.getNome());
+            stmt.setDouble(2, ingredienteAdicional.getValor());
+            stmt.setInt(3, ingredienteAdicional.getIngredienteEscolha().getId());
             stmt.executeUpdate();
         }
     }
