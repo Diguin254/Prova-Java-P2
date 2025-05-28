@@ -15,14 +15,13 @@ public class DeliveryImplementsDAO implements DeliveryDao {
 
     @Override
     public void salvar(Delivery delivery) throws SQLException {
-        String sql = "INSERT INTO delivery (id, chaveEntrega, numero, complemento, endereco_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO delivery (chaveEntrega, numero, complemento, endereco_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, delivery.getId());
-            stmt.setString(2, delivery.getChaveEntrega());
-            stmt.setInt(3, delivery.getNumero());
-            stmt.setString(4, delivery.getComplemento());
-            stmt.setInt(5, delivery.getEndereco().getId());
+            stmt.setString(1, delivery.getChaveEntrega());
+            stmt.setInt(2, delivery.getNumero());
+            stmt.setString(3, delivery.getComplemento());
+            stmt.setInt(4, delivery.getEndereco().getId());
             stmt.executeUpdate();
         }
     }

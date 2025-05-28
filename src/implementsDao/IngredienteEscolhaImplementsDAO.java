@@ -15,11 +15,10 @@ public class IngredienteEscolhaImplementsDAO implements IngredienteEscolhaDao {
 
     @Override
     public void salvar(IngredienteEscolha ingredienteEscolha) throws SQLException {
-        String sql = "INSERT INTO ingredienteEscolha (id, carrinho_id) VALUES (?, ?)";
+        String sql = "INSERT INTO ingredienteEscolha (carrinho_id) VALUES (?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, ingredienteEscolha.getId());
-            stmt.setInt(2, ingredienteEscolha.getCarrinho().getId());
+            stmt.setInt(1, ingredienteEscolha.getCarrinho().getId());
             stmt.executeUpdate();
         }
     }

@@ -15,12 +15,11 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
 
     @Override
     public void salvar(StatusPedido statusPedido) throws SQLException {
-        String sql = "INSERT INTO statusPedido(id, progresso, pedido_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO statusPedido(progresso, pedido_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, statusPedido.getId());
-            stmt.setString(2, statusPedido.getProgresso());
-            stmt.setInt(3, statusPedido.getPedido().getId());
+            stmt.setString(1, statusPedido.getProgresso());
+            stmt.setInt(2, statusPedido.getPedido().getId());
             stmt.executeUpdate();
         }
     }

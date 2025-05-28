@@ -15,12 +15,11 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
 
     @Override
     public void salvar(TaxaEntrega taxaEntrega) throws SQLException {
-        String sql = "INSERT INTO taxaEntrega(id, taxa_entrega, endereco_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO taxaEntrega(taxa_entrega, endereco_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, taxaEntrega.getId());
-            stmt.setDouble(2, taxaEntrega.getTaxa_entrega());
-            stmt.setInt(3, taxaEntrega.getEndereco().getId());
+            stmt.setDouble(1, taxaEntrega.getTaxa_entrega());
+            stmt.setInt(2, taxaEntrega.getEndereco().getId());
             stmt.executeUpdate();
         }
     }

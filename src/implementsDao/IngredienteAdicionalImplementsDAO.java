@@ -18,9 +18,8 @@ public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDa
         String sql = "INSERT INTO ingredienteAdicional (nome, valor, ingredienteEscolha_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, ingredienteAdicional.getNome());
-            stmt.setDouble(2, ingredienteAdicional.getValor());
-            stmt.setInt(3, ingredienteAdicional.getIngredienteEscolha().getId());
+            stmt.setDouble(1, ingredienteAdicional.getValor());
+            stmt.setInt(2, ingredienteAdicional.getIngredienteEscolha().getId());
             stmt.executeUpdate();
         }
     }

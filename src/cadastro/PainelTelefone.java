@@ -5,8 +5,13 @@
 package cadastro;
 
 import app.InterfacePainel;
+import dao.ClienteDao;
 import dto.InterfaceDTO;
 import dto.TelefoneDTO;
+import implementsDao.ClienteImplementsDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Cliente;
 
 /**
  *
@@ -17,8 +22,13 @@ public class PainelTelefone extends InterfacePainel {
     /**
      * Creates new form PainelTelefone
      */
+    private final ClienteDao clienteDao = new ClienteImplementsDAO();
+    private List<Cliente> listaCliente;
+    TelefoneDTO dto;
+    
     public PainelTelefone() {
         initComponents();
+        carregarComboCliente();
     }
 
     /**
@@ -34,6 +44,8 @@ public class PainelTelefone extends InterfacePainel {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jLabelCliente = new javax.swing.JLabel();
+        jComboBoxCliente = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DDD");
@@ -55,6 +67,9 @@ public class PainelTelefone extends InterfacePainel {
             }
         });
 
+        jLabelCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCliente.setText("Cliente");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,11 +81,14 @@ public class PainelTelefone extends InterfacePainel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBoxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabelCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,7 +101,11 @@ public class PainelTelefone extends InterfacePainel {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(jLabelCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -97,12 +119,25 @@ public class PainelTelefone extends InterfacePainel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBoxCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelCliente;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
-    TelefoneDTO dto;
+    
+    private void carregarComboCliente() {
+        try {
+            listaCliente = clienteDao.listar();
+            jComboBoxCliente.removeAllItems();
+            for (Cliente c : listaCliente) {
+                jComboBoxCliente.addItem(c.getNome());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar Clientes: " + e.getMessage());
+        }
+    }
     @Override
     public InterfaceDTO getDados(){
         if(dto == null){
@@ -111,7 +146,13 @@ public class PainelTelefone extends InterfacePainel {
         
         dto.dddTel = jTextField1.getText();
         dto.numTel = jTextField2.getText();
-        return (InterfaceDTO) dto;
+        
+        int index = jComboBoxCliente.getSelectedIndex();
+        if (index >= 0 && index < listaCliente.size()) {
+            dto.idCliente = String.valueOf(listaCliente.get(index).getId());
+        }
+        
+        return dto;
     }
     
     @Override
@@ -119,5 +160,16 @@ public class PainelTelefone extends InterfacePainel {
         this.dto = (TelefoneDTO) dto;
         jTextField1.setText(this.dto.dddTel);
         jTextField2.setText(this.dto.numTel);
+        
+        if (listaCliente != null && !listaCliente.isEmpty() && this.dto.idCliente != null) {
+            int id = Integer.parseInt(this.dto.idCliente);
+            for (int i = 0; i < listaCliente.size(); i++) {
+                if (listaCliente.get(i).getId() == id) {
+                    jComboBoxCliente.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
     }
+
 }

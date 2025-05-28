@@ -15,14 +15,13 @@ public class EnderecoImplementsDAO implements EnderecoDao {
 
     @Override
     public void salvar(Endereco endereco) throws SQLException {
-        String sql = "INSERT INTO endereco (id, rua, cep, bairro_id, distancia) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO endereco (rua, cep, bairro_id, distancia) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, endereco.getId());
-            stmt.setString(2, endereco.getRua());
-            stmt.setString(3, endereco.getCep());
-            stmt.setInt(4, endereco.getBairro().getId());
-            stmt.setString(5, endereco.getDistancia());
+            stmt.setString(1, endereco.getRua());
+            stmt.setString(2, endereco.getCep());
+            stmt.setInt(3, endereco.getBairro().getId());
+            stmt.setString(4, endereco.getDistancia());
             stmt.executeUpdate();
         }
     }

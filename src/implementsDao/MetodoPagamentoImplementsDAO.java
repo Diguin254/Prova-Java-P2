@@ -19,10 +19,9 @@ public class MetodoPagamentoImplementsDAO implements MetodoPagamentoDao {
         String sql = "INSERT INTO metodoPagamento (id, pix, dinheiro_id, cartao_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, metodoPagamento.getId());
-            stmt.setString(2, metodoPagamento.getPix());
-            stmt.setInt(3, metodoPagamento.getDinheiro().getId());
-            stmt.setInt(4, metodoPagamento.getCartao().getId());
+            stmt.setString(1, metodoPagamento.getPix());
+            stmt.setInt(2, metodoPagamento.getDinheiro().getId());
+            stmt.setInt(3, metodoPagamento.getCartao().getId());
             stmt.executeUpdate();
         }
     }

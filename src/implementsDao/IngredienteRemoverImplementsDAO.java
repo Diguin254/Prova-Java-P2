@@ -15,12 +15,11 @@ public class IngredienteRemoverImplementsDAO implements IngredienteRemoverDao {
 
     @Override
     public void salvar(IngredienteRemover ingredienteRemover) throws SQLException {
-        String sql = "INSERT INTO ingredienteRemover (id, nome, ingredienteEscolha_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO ingredienteRemover (nome, ingredienteEscolha_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, ingredienteRemover.getId());
-            stmt.setString(2, ingredienteRemover.getNome());
-            stmt.setInt(3, ingredienteRemover.getIngredienteEscolha().getId());
+            stmt.setString(1, ingredienteRemover.getNome());
+            stmt.setInt(2, ingredienteRemover.getIngredienteEscolha().getId());
             stmt.executeUpdate();
         }
     }

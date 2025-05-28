@@ -17,13 +17,12 @@ public class PagamentoImplementsDAO implements PagamentoDao {
 
     @Override
     public void salvar(Pagamento pagamento) throws SQLException {
-        String sql = "INSERT INTO pagamento (id, metodoPagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO pagamento (metodo_pagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, pagamento.getId());
-            stmt.setInt(2, pagamento.getMetodoPagamento().getId());
-            stmt.setInt(3, pagamento.getCupom().getId());
-            stmt.setInt(4, pagamento.getPedido().getId());
+            stmt.setInt(1, pagamento.getMetodoPagamento().getId());
+            stmt.setInt(2, pagamento.getCupom().getId());
+            stmt.setInt(3, pagamento.getPedido().getId());
             stmt.executeUpdate();
         }
     }

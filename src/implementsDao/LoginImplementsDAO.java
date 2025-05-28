@@ -14,12 +14,11 @@ public class LoginImplementsDAO implements LoginDao {
 
     @Override
     public void salvar(Login login) throws SQLException {
-        String sql = "INSERT INTO login (id, password, login_funcionario) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO login (password, login_funcionario) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, login.getId());
-            stmt.setString(2, login.getPassword());
-            stmt.setString(3, login.getLogin_funcionario());
+            stmt.setString(1, login.getPassword());
+            stmt.setString(2, login.getLogin_funcionario());
             stmt.executeUpdate();
         }
     }

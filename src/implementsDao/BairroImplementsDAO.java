@@ -11,11 +11,10 @@ public class BairroImplementsDAO implements BairroDao {
     Connection con;
     @Override
     public void salvar(Bairro bairro) throws SQLException {
-        String sql = "INSERT INTO bairro(id, nome)VALUES(?,?)";
+        String sql = "INSERT INTO bairro(nome)VALUES(?,?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, bairro.getId());
-            stmt.setString(2, bairro.getNome());
+            stmt.setString(1, bairro.getNome());
             stmt.executeUpdate();
         }
     }

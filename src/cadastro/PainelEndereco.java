@@ -5,8 +5,16 @@
 package cadastro;
 
 import app.InterfacePainel;
+import dao.BairroDao;
+import model.Bairro;
 import dto.EnderecoDTO;
 import dto.InterfaceDTO;
+import implementsDao.BairroImplementsDAO;
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -17,8 +25,13 @@ public class PainelEndereco extends InterfacePainel {
     /**
      * Creates new form PainelEndereco
      */
+    private final BairroDao bairroDao = new BairroImplementsDAO();
+    private List<Bairro> listaBairros;
+    private EnderecoDTO dto;
+
     public PainelEndereco() {
         initComponents();
+        carregarComboBairros();
     }
 
     /**
@@ -34,6 +47,10 @@ public class PainelEndereco extends InterfacePainel {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabelBairro = new javax.swing.JLabel();
+        jComboBoxBairro = new javax.swing.JComboBox();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Rua");
@@ -59,6 +76,25 @@ public class PainelEndereco extends InterfacePainel {
             }
         });
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Distância");
+
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
+        jLabelBairro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBairro.setText("Bairro");
+
+        jComboBoxBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxBairroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -68,12 +104,17 @@ public class PainelEndereco extends InterfacePainel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(100, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100))))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100))
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +127,15 @@ public class PainelEndereco extends InterfacePainel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelBairro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -98,29 +147,73 @@ public class PainelEndereco extends InterfacePainel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jComboBoxBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBairroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxBairroActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBoxBairro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelBairro;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
-    EnderecoDTO dto;
+
+    private void carregarComboBairros() {
+        try {
+            listaBairros = bairroDao.listar();
+            jComboBoxBairro.removeAllItems();
+            for (Bairro b : listaBairros) {
+                jComboBoxBairro.addItem(b.getNome());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar bairros: " + e.getMessage());
+        }
+    }
+
     @Override
-    public EnderecoDTO getDados(){
-        if(dto == null){
+    public InterfaceDTO getDados() {
+        if (dto == null) {
             dto = new EnderecoDTO();
         }
-        
+
         dto.ruaEnd = jTextField1.getText();
         dto.cepEnd = jTextField2.getText();
-        return (EnderecoDTO) (InterfaceDTO) dto;
+        dto.distanciaEnd = jTextField3.getText();
+
+        int index = jComboBoxBairro.getSelectedIndex();
+        if (index >= 0 && index < listaBairros.size()) {
+            dto.idBairro = String.valueOf(listaBairros.get(index).getId());
+        }
+
+        return dto;
     }
-    
+
     @Override
-    public void setDados(InterfaceDTO dto){
+    public void setDados(InterfaceDTO dto) {
         this.dto = (EnderecoDTO) dto;
         jTextField1.setText(this.dto.ruaEnd);
         jTextField2.setText(this.dto.cepEnd);
+        jTextField3.setText(this.dto.distanciaEnd);
+
+        if (listaBairros != null && !listaBairros.isEmpty() && this.dto.idBairro != null) {
+            int id = Integer.parseInt(this.dto.idBairro);
+            for (int i = 0; i < listaBairros.size(); i++) {
+                if (listaBairros.get(i).getId() == id) {
+                    jComboBoxBairro.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+
     }
+
 }

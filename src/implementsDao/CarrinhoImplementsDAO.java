@@ -17,14 +17,13 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
 
     @Override
     public void salvar(Carrinho carrinho) throws SQLException {
-        String sql = "INSERT INTO carrinho (id, qntd, pedido_id, produto_id, ingrediente_escolha_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO carrinho (qntd, pedido_id, produto_id, ingredienteEscolha_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, carrinho.getId());
-            stmt.setInt(2, carrinho.getQntd());
-            stmt.setInt(3, carrinho.getPedido().getId());
-            stmt.setInt(4, carrinho.getProduto().getId());
-            stmt.setInt(5, carrinho.getIngredienteEscolha().getId());
+            stmt.setInt(1, carrinho.getQntd());
+            stmt.setInt(2, carrinho.getPedido().getId());
+            stmt.setInt(3, carrinho.getProduto().getId());
+            stmt.setInt(4, carrinho.getIngredienteEscolha().getId());
             stmt.executeUpdate();
         }
     }
