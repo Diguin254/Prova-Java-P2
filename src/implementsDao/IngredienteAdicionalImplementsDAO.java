@@ -15,7 +15,7 @@ public class IngredienteAdicionalImplementsDAO implements IngredienteAdicionalDa
 
     @Override
     public void salvar(IngredienteAdicional ingredienteAdicional) throws SQLException {
-        String sql = "INSERT INTO ingredienteAdicional (nome, valor, ingredienteEscolha_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO ingredienteAdicional (nome, valor, ingredienteEscolha_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, ingredienteAdicional.getValor());

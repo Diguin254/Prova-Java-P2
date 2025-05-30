@@ -20,7 +20,7 @@ public class FuncionarioImplementsDAO implements FuncionarioDao {
 
     @Override
     public void salvar(Funcionario funcionario) throws SQLException {
-        String sql = "INSERT INTO funcionario (nome, cpf, rg, login_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO funcionario (nome, cpf, rg, login_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, funcionario.getNome());

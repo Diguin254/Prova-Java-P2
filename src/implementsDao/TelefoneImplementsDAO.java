@@ -16,7 +16,7 @@ public class TelefoneImplementsDAO implements TelefoneDao {
 
     @Override
     public void salvar(Telefone telefone) throws SQLException {
-        String sql = "INSERT INTO telefone(ddd, numero, cliente_id, funcionario_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO telefone(ddd, numero, cliente_id, funcionario_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, telefone.getDdd());

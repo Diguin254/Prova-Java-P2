@@ -15,7 +15,7 @@ public class ReembolsoImplementsDAO implements ReembolsoDao {
 
     @Override
     public void salvar(Reembolso reembolso) throws SQLException {
-        String sql = "INSERT INTO reembolso(motivo, pedido_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO reembolso(motivo, pedido_id) VALUES (?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, reembolso.getMotivo());

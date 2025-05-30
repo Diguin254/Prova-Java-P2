@@ -14,7 +14,7 @@ public class LoginImplementsDAO implements LoginDao {
 
     @Override
     public void salvar(Login login) throws SQLException {
-        String sql = "INSERT INTO login (password, login_funcionario) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO login (password, login_funcionario) VALUES (?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, login.getPassword());

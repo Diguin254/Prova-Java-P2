@@ -87,7 +87,6 @@ public class ProdutoController extends InterfaceController {
                     cDto.qntdItens = String.valueOf(car.getQntd());
                     cDto.idPedido = car.getPedido() != null ? String.valueOf(car.getPedido().getId()) : null;
                     cDto.idProduto = car.getProduto() != null ? String.valueOf(car.getProduto().getId()) : null;
-                    cDto.idIngredienteEscolha = car.getIngredienteEscolha() != null ? String.valueOf(car.getIngredienteEscolha().getId()) : null;
                     dto.carrinhos.add(cDto);
                 }
             }

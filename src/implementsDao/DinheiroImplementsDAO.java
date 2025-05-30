@@ -14,7 +14,7 @@ public class DinheiroImplementsDAO implements DinheiroDao {
 
     @Override
     public void salvar(Dinheiro dinheiro) throws SQLException {
-        String sql = "INSERT INTO dinheiro (valorEntregado) VALUES (?, ?)";
+        String sql = "INSERT INTO dinheiro (valorEntregado) VALUES (?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, dinheiro.getValorEntregado());

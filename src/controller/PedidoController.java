@@ -82,7 +82,6 @@ public class PedidoController extends InterfaceController {
             dto.dataP = ped.getDataPedido();
             dto.idClienteP = ped.getCliente() != null ? String.valueOf(ped.getCliente().getId()) : null;
             dto.idStatusPed = ped.getStatusPedido() != null ? String.valueOf(ped.getStatusPedido().getId()) : null;
-            dto.idEntregaP = ped.getEntrega() != null ? String.valueOf(ped.getEntrega().getId()) : null;
 
             if (carrinhos != null && !carrinhos.isEmpty()) {
                 dto.carrinhos = new LinkedList<>();

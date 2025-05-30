@@ -18,7 +18,7 @@ public class PedidoImplementsDAO implements PedidoDao {
 
     @Override
     public void salvar(Pedido pedido) throws SQLException {
-        String sql = "INSERT INTO pedido (horaPedido, numeroPedido, dataPedido, cliente_id, status_pedido_id, entrega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pedido (horaPedido, numeroPedido, dataPedido, cliente_id, status_pedido_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, pedido.getHoraPedido());
@@ -26,14 +26,13 @@ public class PedidoImplementsDAO implements PedidoDao {
             stmt.setDate(3, new java.sql.Date(pedido.getDataPedido().getTime()));
             stmt.setInt(4, pedido.getCliente().getId());
             stmt.setInt(5, pedido.getStatusPedido().getId());
-            stmt.setInt(6, pedido.getEntrega().getId());
             stmt.executeUpdate();
         }
     }
 
     @Override
     public void editar(Pedido pedido) throws SQLException {
-        String sql = "UPDATE pedido SET horaPedido = ?, numeroPedido = ?, dataPedido = ?, cliente_id = ?, statusPedido_id = ?, entrega_id = ? WHERE id = ?";
+        String sql = "UPDATE pedido SET horaPedido = ?, numeroPedido = ?, dataPedido = ?, cliente_id = ?, statusPedido_id = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, pedido.getHoraPedido());
@@ -41,8 +40,7 @@ public class PedidoImplementsDAO implements PedidoDao {
             stmt.setDate(3, new java.sql.Date(pedido.getDataPedido().getTime()));
             stmt.setInt(4, pedido.getCliente().getId());
             stmt.setInt(5, pedido.getStatusPedido().getId());
-            stmt.setInt(6, pedido.getEntrega().getId());
-            stmt.setInt(7, pedido.getId());
+            stmt.setInt(6, pedido.getId());
             stmt.executeUpdate();
         }
     }
@@ -60,7 +58,7 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public List<Pedido> listar() throws SQLException {
         List<Pedido> pedidos = new LinkedList<>();
-        String sql = "SELECT id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id, entrega_id FROM pedido";
+        String sql = "SELECT id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id FROM pedido";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
@@ -77,10 +75,6 @@ public class PedidoImplementsDAO implements PedidoDao {
                 StatusPedido status = new StatusPedido();
                 status.setId(res.getInt("statusPedido_id"));
                 pedido.setStatusPedido(status);
-
-                Entrega entrega = new Entrega();
-                entrega.setId(res.getInt("entrega_id"));
-                pedido.setEntrega(entrega);
 
                 pedidos.add(pedido);
             }

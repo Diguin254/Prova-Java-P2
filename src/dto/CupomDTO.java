@@ -13,7 +13,6 @@ public class CupomDTO {
     public String valorC;
     public String codigoC;
     public Date validadeC;
-    public String idPagamento;
 
     public Cupom builder() {
         Cupom c = new Cupom();
@@ -22,9 +21,6 @@ public class CupomDTO {
         c.setCodigo(codigoC == null ? "" : codigoC);
         c.setValidade(validadeC);
 
-        Pagamento pag = new Pagamento();
-        pag.setId(idPagamento == null ? 0 : Integer.valueOf(idPagamento));
-        c.setPagamento(pag);
         return c;
     }
 }

@@ -15,11 +15,10 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
 
     @Override
     public void salvar(StatusPedido statusPedido) throws SQLException {
-        String sql = "INSERT INTO statusPedido(progresso, pedido_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO statusPedido(progresso) VALUES (?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, statusPedido.getProgresso());
-            stmt.setInt(2, statusPedido.getPedido().getId());
             stmt.executeUpdate();
         }
     }
@@ -30,8 +29,7 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, statusPedido.getProgresso());
-            stmt.setInt(2, statusPedido.getPedido().getId());
-            stmt.setInt(3, statusPedido.getId());
+            stmt.setInt(2, statusPedido.getId());
             stmt.executeUpdate();
         }
     }
@@ -57,10 +55,6 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
                 StatusPedido statusPedido = new StatusPedido();
                 statusPedido.setId(res.getInt("id"));
                 statusPedido.setProgresso(res.getString("progresso"));
-
-                Pedido pedido = new Pedido();
-                pedido.setId(res.getInt("pedido_id"));
-                statusPedido.setPedido(pedido);
 
                 statusPedidos.add(statusPedido);
             }

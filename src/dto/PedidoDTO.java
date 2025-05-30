@@ -21,7 +21,6 @@ public class PedidoDTO {
     public String idClienteP;
     public List<CarrinhoDTO> carrinhos;
     public String idStatusPed;
-    public String idEntregaP;
 
     public Pedido builder() {
         Pedido ped = new Pedido();
@@ -47,10 +46,6 @@ public class PedidoDTO {
         StatusPedido sp = new StatusPedido();
         sp.setId(idStatusPed == null ? 0 : Integer.valueOf(idStatusPed));
         ped.setStatusPedido(sp);
-
-        Entrega e = new Entrega();
-        e.setId(idEntregaP == null ? 0 : Integer.valueOf(idEntregaP));
-        ped.setEntrega(e);
 
         return ped;
     }

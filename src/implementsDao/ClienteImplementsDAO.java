@@ -14,7 +14,7 @@ public class ClienteImplementsDAO implements ClienteDao {
 
     @Override
     public void salvar(Cliente cliente) throws SQLException {
-        String sql = "INSERT INTO cliente (nome) VALUES (?, ?)";
+        String sql = "INSERT INTO cliente (nome) VALUES (?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cliente.getNome());

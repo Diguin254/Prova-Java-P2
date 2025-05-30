@@ -8,17 +8,15 @@ public class Cupom {
     private double valorCupom;
     private String codigo;
     private Date validade;
-    private Pagamento pagamento;
 
     public Cupom() {
     }
 
-    public Cupom(Integer id, double valorCupom, String codigo, Date validade, Pagamento pagamento) {
+    public Cupom(Integer id, double valorCupom, String codigo, Date validade) {
         this.id = id;
         this.valorCupom = valorCupom;
         this.codigo = codigo;
         this.validade = validade;
-        this.pagamento = pagamento;
     }
 
     public Integer getId() {
@@ -52,13 +50,4 @@ public class Cupom {
     public void setValidade(Date validade) {
         this.validade = validade;
     }
-
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
 }

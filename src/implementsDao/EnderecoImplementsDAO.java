@@ -15,7 +15,7 @@ public class EnderecoImplementsDAO implements EnderecoDao {
 
     @Override
     public void salvar(Endereco endereco) throws SQLException {
-        String sql = "INSERT INTO endereco (rua, cep, bairro_id, distancia) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO endereco (rua, cep, bairro_id, distancia) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, endereco.getRua());

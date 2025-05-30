@@ -14,7 +14,7 @@ public class ProdutoImplementsDAO implements ProdutoDao {
 
     @Override
     public void salvar(Produto produto) throws SQLException {
-        String sql = "INSERT INTO produto(nome, valor_unitario) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO produto(nome, valor_unitario) VALUES (?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, produto.getNome());

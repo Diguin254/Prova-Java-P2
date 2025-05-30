@@ -41,7 +41,6 @@ public class StatusPedidoController extends InterfaceController {
             StatusPedidoDTO dto = new StatusPedidoDTO();
             dto.idStatPed = String.valueOf(stP.getId());
             dto.progStatPed = stP.getProgresso();
-            dto.idPedidoSP = stP.getPedido() != null ? String.valueOf(stP.getPedido().getId()) : null;
             listaDTO.add((InterfaceDTO) dto);
         }
         return listaDTO;

@@ -6,17 +6,15 @@ public class Carrinho {
     private int qntd;
     private Pedido pedido;
     private Produto produto;
-    private IngredienteEscolha ingredienteEscolha;
 
     public Carrinho() {
     }
 
-    public Carrinho(Integer id, int qntd, Pedido pedido, Produto produto, IngredienteEscolha ingredienteEscolha) {
+    public Carrinho(Integer id, int qntd, Pedido pedido, Produto produto) {
         this.id = id;
         this.qntd = qntd;
         this.pedido = pedido;
         this.produto = produto;
-        this.ingredienteEscolha = ingredienteEscolha;
     }
 
     public Integer getId() {
@@ -49,14 +47,6 @@ public class Carrinho {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
-    }
-
-    public IngredienteEscolha getIngredienteEscolha() {
-        return ingredienteEscolha;
-    }
-
-    public void setIngredienteEscolha(IngredienteEscolha ingredienteEscolha) {
-        this.ingredienteEscolha = ingredienteEscolha;
     }
 
 }

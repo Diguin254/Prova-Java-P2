@@ -17,27 +17,25 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
 
     @Override
     public void salvar(Carrinho carrinho) throws SQLException {
-        String sql = "INSERT INTO carrinho (qntd, pedido_id, produto_id, ingredienteEscolha_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO carrinho (qntd, pedido_id, produto_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, carrinho.getQntd());
             stmt.setInt(2, carrinho.getPedido().getId());
             stmt.setInt(3, carrinho.getProduto().getId());
-            stmt.setInt(4, carrinho.getIngredienteEscolha().getId());
             stmt.executeUpdate();
         }
     }
 
     @Override
     public void editar(Carrinho carrinho) throws SQLException {
-        String sql = "UPDATE carrinho SET qntd = ?, pedido_id = ?, produto_id = ?, ingrediente_escolha_id = ? WHERE id = ?";
+        String sql = "UPDATE carrinho SET qntd = ?, pedido_id = ?, produto_id = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, carrinho.getQntd());
             stmt.setInt(2, carrinho.getPedido().getId());
             stmt.setInt(3, carrinho.getProduto().getId());
-            stmt.setInt(4, carrinho.getIngredienteEscolha().getId());
-            stmt.setInt(5, carrinho.getId());
+            stmt.setInt(4, carrinho.getId());
             stmt.executeUpdate();
         }
     }
@@ -55,7 +53,7 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
     @Override
     public List<Carrinho> listar() throws SQLException {
         List<Carrinho> carrinhos = new LinkedList<>();
-        String sql = "SELECT id, qntd, pedido_id, produto_id, ingrediente_escolha_id FROM carrinho";
+        String sql = "SELECT id, qntd, pedido_id, produto_id FROM carrinho";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 
@@ -71,10 +69,6 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
                 Produto produto = new Produto();
                 produto.setId(res.getInt("produto_id"));
                 carrinho.setProduto(produto);
-
-                IngredienteEscolha ingredienteEscolha = new IngredienteEscolha();
-                ingredienteEscolha.setId(res.getInt("ingrediente_escolha_id"));
-                carrinho.setIngredienteEscolha(ingredienteEscolha);
 
                 carrinhos.add(carrinho);
             }

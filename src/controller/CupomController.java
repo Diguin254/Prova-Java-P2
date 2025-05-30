@@ -42,7 +42,6 @@ public class CupomController extends InterfaceController {
             dto.valorC = String.valueOf(c.getValorCupom());
             dto.codigoC = c.getCodigo();
             dto.validadeC = c.getValidade();
-            dto.idPagamento = String.valueOf(c.getPagamento().getId());
             listaDTO.add((InterfaceDTO) dto);
         }
         return listaDTO;

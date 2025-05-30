@@ -17,10 +17,6 @@ public class StatusPedidoDTO {
         sp.setId(idStatPed == null ? 0 : Integer.valueOf(idStatPed));
         sp.setProgresso(progStatPed == null ? "" : progStatPed);
 
-        Pedido p = new Pedido();
-        p.setId(idPedidoSP == null ? 0 : Integer.valueOf(idPedidoSP));
-        sp.setPedido(p);
-
         return sp;
     }
 }

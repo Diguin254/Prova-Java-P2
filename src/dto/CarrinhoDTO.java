@@ -14,7 +14,6 @@ public class CarrinhoDTO {
     public String qntdItens;
     public String idPedido;
     public String idProduto;
-    public String idIngredienteEscolha;
 
     public Carrinho builder() {
         Carrinho c = new Carrinho();
@@ -28,10 +27,6 @@ public class CarrinhoDTO {
         Produto pro = new Produto();
         pro.setId(idProduto == null ? 0 : Integer.valueOf(idProduto));
         c.setProduto(pro);
-
-        IngredienteEscolha ing = new IngredienteEscolha();
-        ing.setId(idIngredienteEscolha == null ? 0 : Integer.valueOf(idIngredienteEscolha));
-        c.setIngredienteEscolha(ing);
 
         return c;
     }

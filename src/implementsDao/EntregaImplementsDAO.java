@@ -18,7 +18,7 @@ public class EntregaImplementsDAO implements EntregaDao {
 
     @Override
     public void salvar(Entrega entrega) throws SQLException {
-        String sql = "INSERT INTO entrega (cliente_id, tipoEntrega, delivery_id, pedido_id, status_pedido_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO entrega (cliente_id, tipoEntrega, delivery_id, pedido_id, status_pedido_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, entrega.getCliente().getId());

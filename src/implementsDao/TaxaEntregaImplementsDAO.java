@@ -15,7 +15,7 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
 
     @Override
     public void salvar(TaxaEntrega taxaEntrega) throws SQLException {
-        String sql = "INSERT INTO taxaEntrega(taxa_entrega, endereco_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO taxaEntrega(taxa_entrega, endereco_id) VALUES (?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, taxaEntrega.getTaxa_entrega());

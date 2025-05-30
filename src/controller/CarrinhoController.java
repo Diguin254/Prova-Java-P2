@@ -42,7 +42,6 @@ public class CarrinhoController extends InterfaceController {
             dto.qntdItens = String.valueOf(carrinho.getQntd());
             dto.idPedido = String.valueOf(carrinho.getPedido().getId());
             dto.idProduto = String.valueOf(carrinho.getProduto().getId());
-            dto.idIngredienteEscolha = String.valueOf(carrinho.getIngredienteEscolha().getId());
             listaDTO.add((InterfaceDTO) dto);
         }
         return listaDTO;

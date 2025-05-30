@@ -15,7 +15,7 @@ public class DeliveryImplementsDAO implements DeliveryDao {
 
     @Override
     public void salvar(Delivery delivery) throws SQLException {
-        String sql = "INSERT INTO delivery (chaveEntrega, numero, complemento, endereco_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO delivery (chaveEntrega, numero, complemento, endereco_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, delivery.getChaveEntrega());

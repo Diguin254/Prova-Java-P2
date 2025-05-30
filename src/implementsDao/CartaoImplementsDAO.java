@@ -15,7 +15,7 @@ public class CartaoImplementsDAO implements CartaoDao {
 
     @Override
     public void salvar(Cartao cartao) throws SQLException {
-        String sql = "INSERT INTO cartao (numeroCartao, ccv, tipoConta) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO cartao (numeroCartao, ccv, tipoConta) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, cartao.getNumeroCartao());

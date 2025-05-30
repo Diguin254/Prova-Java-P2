@@ -17,7 +17,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
 
     @Override
     public void salvar(Pagamento pagamento) throws SQLException {
-        String sql = "INSERT INTO pagamento (metodo_pagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO pagamento (metodo_pagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pagamento.getMetodoPagamento().getId());

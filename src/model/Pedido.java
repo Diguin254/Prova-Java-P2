@@ -12,12 +12,11 @@ public class Pedido {
     private Cliente cliente;
     private List<Carrinho> carrinhos;
     private StatusPedido statusPedido;
-    private Entrega entrega;
 
     public Pedido() {
     }
 
-    public Pedido(Integer id, String horaPedido, int numeroPedido, Date dataPedido, Cliente cliente, List<Carrinho> carrinhos, StatusPedido statusPedido, Entrega entrega) {
+    public Pedido(Integer id, String horaPedido, int numeroPedido, Date dataPedido, Cliente cliente, List<Carrinho> carrinhos, StatusPedido statusPedido) {
         this.id = id;
         this.horaPedido = horaPedido;
         this.numeroPedido = numeroPedido;
@@ -25,7 +24,6 @@ public class Pedido {
         this.cliente = cliente;
         this.carrinhos = carrinhos;
         this.statusPedido = statusPedido;
-        this.entrega = entrega;
     }
 
     public Integer getId() {
@@ -82,14 +80,6 @@ public class Pedido {
 
     public void setStatusPedido(StatusPedido statusPedido) {
         this.statusPedido = statusPedido;
-    }
-
-    public Entrega getEntrega() {
-        return entrega;
-    }
-
-    public void setEntrega(Entrega entrega) {
-        this.entrega = entrega;
     }
 
 }
