@@ -51,4 +51,9 @@ public class Login {
         this.funcionarios = funcionarios;
     }
 
+    @Override
+    public String toString() {
+        return "Login{" + "id=" + id + ", password=" + password + ", login_funcionario=" + login_funcionario + ", funcionarios=" + funcionarios + '}';
+    }
+
 }

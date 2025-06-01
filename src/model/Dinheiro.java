@@ -28,4 +28,10 @@ public class Dinheiro {
     public void setValorEntregado(double valorEntregado) {
         this.valorEntregado = valorEntregado;
     }
+
+    @Override
+    public String toString() {
+        return "Dinheiro{" + "id=" + id + ", valorEntregado=" + valorEntregado + '}';
+    }
+    
 }

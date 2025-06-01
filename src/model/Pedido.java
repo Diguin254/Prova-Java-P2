@@ -82,4 +82,9 @@ public class Pedido {
         this.statusPedido = statusPedido;
     }
 
+    @Override
+    public String toString() {
+        return "Pedido{" + "id=" + id + ", horaPedido=" + horaPedido + ", numeroPedido=" + numeroPedido + ", dataPedido=" + dataPedido + ", cliente=" + cliente + ", carrinhos=" + carrinhos + ", statusPedido=" + statusPedido + '}';
+    }
+
 }

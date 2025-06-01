@@ -6,17 +6,22 @@ package cadastro;
 
 import app.InterfacePainel;
 import dao.ClienteDao;
+import dao.FuncionarioDao;
 import dto.InterfaceDTO;
 import dto.TelefoneDTO;
 import implementsDao.ClienteImplementsDAO;
+import implementsDao.FuncionarioImplementsDAO;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Cliente;
+import model.Funcionario;
 
 /**
  *
  * @author Cliente
  */
+
 public class PainelTelefone extends InterfacePainel {
 
     /**
@@ -24,11 +29,14 @@ public class PainelTelefone extends InterfacePainel {
      */
     private final ClienteDao clienteDao = new ClienteImplementsDAO();
     private List<Cliente> listaCliente;
+    private final FuncionarioDao funcionarioDao = new FuncionarioImplementsDAO();
+    private List<Funcionario> listaFuncionario;
     TelefoneDTO dto;
-    
+
     public PainelTelefone() {
         initComponents();
         carregarComboCliente();
+        carregarComboFuncionario();
     }
 
     /**
@@ -46,6 +54,8 @@ public class PainelTelefone extends InterfacePainel {
         jTextField2 = new javax.swing.JTextField();
         jLabelCliente = new javax.swing.JLabel();
         jComboBoxCliente = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoxFuncionario = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DDD");
@@ -70,10 +80,14 @@ public class PainelTelefone extends InterfacePainel {
         jLabelCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCliente.setText("Cliente");
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Funcionario");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -82,13 +96,18 @@ public class PainelTelefone extends InterfacePainel {
                         .addGap(100, 100, 100)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 5, Short.MAX_VALUE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBoxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jComboBoxFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabelCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,7 +124,11 @@ public class PainelTelefone extends InterfacePainel {
                 .addComponent(jLabelCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -120,56 +143,97 @@ public class PainelTelefone extends InterfacePainel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBoxCliente;
+    private javax.swing.JComboBox<String> jComboBoxFuncionario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelCliente;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
-    
+
     private void carregarComboCliente() {
         try {
             listaCliente = clienteDao.listar();
             jComboBoxCliente.removeAllItems();
+
+            jComboBoxCliente.addItem("Selecione");
+
             for (Cliente c : listaCliente) {
                 jComboBoxCliente.addItem(c.getNome());
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar Clientes: " + e.getMessage());
-        }
-    }
-    @Override
-    public InterfaceDTO getDados(){
-        if(dto == null){
-            dto = new TelefoneDTO();
-        }
-        
-        dto.dddTel = jTextField1.getText();
-        dto.numTel = jTextField2.getText();
-        
-        int index = jComboBoxCliente.getSelectedIndex();
-        if (index >= 0 && index < listaCliente.size()) {
-            dto.idCliente = String.valueOf(listaCliente.get(index).getId());
-        }
-        
-        return dto;
-    }
-    
-    @Override
-    public void setDados(InterfaceDTO dto){
-        this.dto = (TelefoneDTO) dto;
-        jTextField1.setText(this.dto.dddTel);
-        jTextField2.setText(this.dto.numTel);
-        
-        if (listaCliente != null && !listaCliente.isEmpty() && this.dto.idCliente != null) {
-            int id = Integer.parseInt(this.dto.idCliente);
-            for (int i = 0; i < listaCliente.size(); i++) {
-                if (listaCliente.get(i).getId() == id) {
-                    jComboBoxCliente.setSelectedIndex(i);
-                    break;
-                }
-            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar Clientes: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-}
+    private void carregarComboFuncionario() {
+        try {
+            listaFuncionario = funcionarioDao.listar();
+            jComboBoxFuncionario.removeAllItems();
+
+            jComboBoxFuncionario.addItem("Selecione");
+
+            for (Funcionario f : listaFuncionario) {
+                jComboBoxFuncionario.addItem(f.getNome());
+            }
+         }catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar funcionarios: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        
+        }
+    }
+        @Override
+        public InterfaceDTO getDados
+        
+            () {
+        if (dto == null) {
+                dto = new TelefoneDTO();
+            }
+
+            dto.dddTel = jTextField1.getText();
+            dto.numTel = jTextField2.getText();
+
+            int index = jComboBoxCliente.getSelectedIndex();
+            if (index >= 0 && index < listaCliente.size()) {
+                dto.idCliente = String.valueOf(listaCliente.get(index).getId());
+            }
+
+            int indexF = jComboBoxFuncionario.getSelectedIndex();
+            if (indexF >= 0 && indexF < listaFuncionario.size()) {
+                dto.idFuncionario = String.valueOf(listaFuncionario.get(indexF).getId());
+            }
+
+            return dto;
+        }
+
+        @Override
+        public void setDados
+        (InterfaceDTO dto
+        
+            ) {
+        this.dto = (TelefoneDTO) dto;
+            jTextField1.setText(this.dto.dddTel);
+            jTextField2.setText(this.dto.numTel);
+
+            if (listaCliente != null && !listaCliente.isEmpty() && this.dto.idCliente != null) {
+                int id = Integer.parseInt(this.dto.idCliente);
+                for (int i = 0; i < listaCliente.size(); i++) {
+                    if (listaCliente.get(i).getId() == id) {
+                        jComboBoxCliente.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
+
+            if (listaFuncionario != null && !listaFuncionario.isEmpty() && this.dto.idFuncionario != null) {
+                int id = Integer.parseInt(this.dto.idFuncionario);
+                for (int i = 0; i < listaFuncionario.size(); i++) {
+                    if (listaFuncionario.get(i).getId() == id) {
+                        jComboBoxFuncionario.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
+        }
+
+    }

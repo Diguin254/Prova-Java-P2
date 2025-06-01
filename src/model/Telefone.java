@@ -59,4 +59,11 @@ public class Telefone {
         this.funcionario = funcionario;
     }
 
+    @Override
+    public String toString() {
+        return "Telefone{" + "id=" + id + ", ddd=" + ddd + ", numero=" + numero + ", cliente=" + cliente + ", funcionario=" + funcionario + '}';
+    }
+
+    
+    
 }

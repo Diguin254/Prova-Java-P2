@@ -16,10 +16,16 @@ public class LoginImplementsDAO implements LoginDao {
     public void salvar(Login login) throws SQLException {
         String sql = "INSERT INTO login (password, login_funcionario) VALUES (?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, login.getPassword());
             stmt.setString(2, login.getLogin_funcionario());
             stmt.executeUpdate();
+            
+            try(ResultSet rs = stmt.getGeneratedKeys()) {
+                if(rs.next()) {
+                    login.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

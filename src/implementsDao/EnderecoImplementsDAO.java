@@ -21,7 +21,17 @@ public class EnderecoImplementsDAO implements EnderecoDao {
             stmt.setString(1, endereco.getRua());
             stmt.setString(2, endereco.getCep());
             stmt.setInt(3, endereco.getBairro().getId());
-            stmt.setString(4, endereco.getDistancia());
+            
+            double d;
+            
+            try {
+                String texto = endereco.getDistancia().replace(",", ".");
+                d = Double.parseDouble(texto);
+            } catch (NumberFormatException e) {
+                throw new SQLException("Valor de distância inválido: \"" + endereco.getDistancia() + "\"");
+            }
+            
+            stmt.setDouble(4, d);
             stmt.executeUpdate();
         }
     }

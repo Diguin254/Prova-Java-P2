@@ -48,6 +48,11 @@ public class Cartao {
     public void setTipoConta(int tipoConta) {
         this.tipoConta = tipoConta;
     }
+
+    @Override
+    public String toString() {
+        return "Cartao{" + "id=" + id + ", numeroCartao=" + numeroCartao + ", ccv=" + ccv + ", tipoConta=" + tipoConta + '}';
+    }
     
    
 }

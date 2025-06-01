@@ -2,13 +2,14 @@ package controller;
 
 import dao.EntregaDao;
 import dto.EntregaDTO;
+import dto.InterfaceDTO;
 import model.Entrega;
 import implementsDao.EntregaImplementsDAO;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EntregaController {
+public class EntregaController extends InterfaceController {
 
     private final EntregaDao entregaDao;
 
@@ -16,23 +17,25 @@ public class EntregaController {
         this.entregaDao = new EntregaImplementsDAO();
     }
 
-    public void salvar(EntregaDTO entregaDTO) throws SQLException {
-        Entrega e = entregaDTO.builder();
-        entregaDao.salvar(e);
+    @Override
+    public void salvar(InterfaceDTO dto) throws SQLException {
+        entregaDao.salvar(((EntregaDTO) dto).builder());
     }
 
-    public void editar(EntregaDTO entregaDTO) throws SQLException {
-        Entrega e = entregaDTO.builder();
-        entregaDao.editar(e);
+    @Override
+    public void editar(InterfaceDTO dto) throws SQLException {
+        entregaDao.editar(((EntregaDTO) dto).builder());
     }
 
+    @Override
     public void deletar(int id) throws SQLException {
         entregaDao.deletar(id);
     }
 
-    public List<EntregaDTO> listar() throws SQLException {
+    @Override
+    public List<InterfaceDTO> listar() throws SQLException {
         List<Entrega> lista = entregaDao.listar();
-        List<EntregaDTO> listaDTO = new LinkedList<>();
+        List<InterfaceDTO> listaDTO = new LinkedList<>();
 
         for (Entrega e : lista) {
             EntregaDTO dto = new EntregaDTO();
@@ -42,9 +45,10 @@ public class EntregaController {
             dto.idDelivery = String.valueOf(e.getDelivery().getId());
             dto.idPedido = String.valueOf(e.getPedido().getId());
             dto.idStatusPedido = String.valueOf(e.getStatusPedido().getId());
-            listaDTO.add(dto);
+            listaDTO.add((InterfaceDTO) dto);
         }
 
         return listaDTO;
     }
+
 }

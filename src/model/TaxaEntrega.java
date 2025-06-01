@@ -38,4 +38,11 @@ public class TaxaEntrega {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    @Override
+    public String toString() {
+        return "TaxaEntrega{" + "id=" + id + ", taxa_entrega=" + taxa_entrega + ", endereco=" + endereco + '}';
+    }
+    
+    
 }

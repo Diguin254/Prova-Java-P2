@@ -38,4 +38,11 @@ public class Reembolso {
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
+
+    @Override
+    public String toString() {
+        return "Reembolso{" + "id=" + id + ", motivo=" + motivo + ", pedido=" + pedido + '}';
+    }
+    
+    
 }

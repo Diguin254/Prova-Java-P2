@@ -3,7 +3,7 @@ package dto;
 import model.IngredienteEscolha;
 import model.IngredienteRemover;
 
-public class IngredienteRemoverDTO {
+public class IngredienteRemoverDTO implements InterfaceDTO{
 
     public IngredienteRemoverDTO() {
     }
@@ -11,6 +11,30 @@ public class IngredienteRemoverDTO {
     public String idIngrRem;
     public String nomeIngrRem;
     public String idIngrEsco;
+
+    public String getIdIngrRem() {
+        return idIngrRem;
+    }
+
+    public void setIdIngrRem(String idIngrRem) {
+        this.idIngrRem = idIngrRem;
+    }
+
+    public String getNomeIngrRem() {
+        return nomeIngrRem;
+    }
+
+    public void setNomeIngrRem(String nomeIngrRem) {
+        this.nomeIngrRem = nomeIngrRem;
+    }
+
+    public String getIdIngrEsco() {
+        return idIngrEsco;
+    }
+
+    public void setIdIngrEsco(String idIngrEsco) {
+        this.idIngrEsco = idIngrEsco;
+    }
 
     public IngredienteRemover builder() {
         IngredienteRemover ingr = new IngredienteRemover();
@@ -23,4 +47,11 @@ public class IngredienteRemoverDTO {
 
         return ingr;
     }
+
+    @Override
+    public String toString() {
+        return "IngredienteRemoverDTO{" + "idIngrRem=" + idIngrRem + ", nomeIngrRem=" + nomeIngrRem + ", idIngrEsco=" + idIngrEsco + '}';
+    }
+    
+    
 }

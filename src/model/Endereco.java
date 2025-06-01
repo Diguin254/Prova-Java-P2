@@ -59,4 +59,9 @@ public class Endereco {
         this.distancia = distancia;
     }
 
+    @Override
+    public String toString() {
+        return "Endereco{" + "id=" + id + ", rua=" + rua + ", cep=" + cep + ", bairro=" + bairro + ", distancia=" + distancia + '}';
+    }
+
 }

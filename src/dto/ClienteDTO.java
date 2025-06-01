@@ -18,6 +18,48 @@ public class ClienteDTO implements InterfaceDTO{
     public List<PedidoDTO> pedidos;
     public List<EntregaDTO> entregas;
 
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public List<TelefoneDTO> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<TelefoneDTO> telefones) {
+        this.telefones = telefones;
+    }
+
+    public List<PedidoDTO> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<PedidoDTO> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<EntregaDTO> getEntregas() {
+        return entregas;
+    }
+
+    public void setEntregas(List<EntregaDTO> entregas) {
+        this.entregas = entregas;
+    }
+
+    
+    
     public Cliente builder() {
         Cliente c = new Cliente();
         c.setId(idCliente == null ? 0 : Integer.valueOf(idCliente));
@@ -55,4 +97,11 @@ public class ClienteDTO implements InterfaceDTO{
 
         return c;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" + "idCliente=" + idCliente + ", nomeCliente=" + nomeCliente + ", telefones=" + telefones + ", pedidos=" + pedidos + ", entregas=" + entregas + '}';
+    }
+    
+    
 }

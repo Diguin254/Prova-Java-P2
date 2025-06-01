@@ -3,7 +3,7 @@ package dto;
 import model.Endereco;
 import model.TaxaEntrega;
 
-public class TaxaEntregaDTO {
+public class TaxaEntregaDTO implements InterfaceDTO {
 
     public TaxaEntregaDTO() {
     }
@@ -11,6 +11,30 @@ public class TaxaEntregaDTO {
     public String idTaxaEnt;
     public String valEntrega;
     public String idEnd;
+
+    public String getIdTaxaEnt() {
+        return idTaxaEnt;
+    }
+
+    public void setIdTaxaEnt(String idTaxaEnt) {
+        this.idTaxaEnt = idTaxaEnt;
+    }
+
+    public String getValEntrega() {
+        return valEntrega;
+    }
+
+    public void setValEntrega(String valEntrega) {
+        this.valEntrega = valEntrega;
+    }
+
+    public String getIdEnd() {
+        return idEnd;
+    }
+
+    public void setIdEnd(String idEnd) {
+        this.idEnd = idEnd;
+    }
 
     public TaxaEntrega builder() {
         TaxaEntrega tx = new TaxaEntrega();
@@ -23,4 +47,11 @@ public class TaxaEntregaDTO {
 
         return tx;
     }
+
+    @Override
+    public String toString() {
+        return "TaxaEntregaDTO{" + "idTaxaEnt=" + idTaxaEnt + ", valEntrega=" + valEntrega + ", idEnd=" + idEnd + '}';
+    }
+    
+    
 }

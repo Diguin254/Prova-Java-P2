@@ -77,6 +77,7 @@ public class CadastroPadrao extends javax.swing.JDialog {
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
         try {
             controller.salvar(painelCentro.getDados());
+            dispose();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroPadrao.class.getName()).log(Level.SEVERE, null, ex);
         }

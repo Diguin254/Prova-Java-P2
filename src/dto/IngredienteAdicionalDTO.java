@@ -3,7 +3,7 @@ package dto;
 import model.IngredienteAdicional;
 import model.IngredienteEscolha;
 
-public class IngredienteAdicionalDTO {
+public class IngredienteAdicionalDTO implements InterfaceDTO{
 
     public IngredienteAdicionalDTO() {
     }
@@ -12,6 +12,38 @@ public class IngredienteAdicionalDTO {
     public String nomeIngrAdc;
     public String valorIngrAdc;
     public String idIngrEsc;
+
+    public String getIdIngrAdc() {
+        return idIngrAdc;
+    }
+
+    public void setIdIngrAdc(String idIngrAdc) {
+        this.idIngrAdc = idIngrAdc;
+    }
+
+    public String getNomeIngrAdc() {
+        return nomeIngrAdc;
+    }
+
+    public void setNomeIngrAdc(String nomeIngrAdc) {
+        this.nomeIngrAdc = nomeIngrAdc;
+    }
+
+    public String getValorIngrAdc() {
+        return valorIngrAdc;
+    }
+
+    public void setValorIngrAdc(String valorIngrAdc) {
+        this.valorIngrAdc = valorIngrAdc;
+    }
+
+    public String getIdIngrEsc() {
+        return idIngrEsc;
+    }
+
+    public void setIdIngrEsc(String idIngrEsc) {
+        this.idIngrEsc = idIngrEsc;
+    }
 
     public IngredienteAdicional builder() {
         IngredienteAdicional ingr = new IngredienteAdicional();
@@ -25,4 +57,11 @@ public class IngredienteAdicionalDTO {
 
         return ingr;
     }
+
+    @Override
+    public String toString() {
+        return "IngredienteAdicionalDTO{" + "idIngrAdc=" + idIngrAdc + ", nomeIngrAdc=" + nomeIngrAdc + ", valorIngrAdc=" + valorIngrAdc + ", idIngrEsc=" + idIngrEsc + '}';
+    }
+    
+    
 }

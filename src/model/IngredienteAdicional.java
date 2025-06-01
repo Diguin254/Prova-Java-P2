@@ -49,5 +49,10 @@ public class IngredienteAdicional {
         this.ingredienteEscolha = ingredienteEscolha;
     }
 
+    @Override
+    public String toString() {
+        return "IngredienteAdicional{" + "id=" + id + ", nome=" + nome + ", valor=" + valor + ", ingredienteEscolha=" + ingredienteEscolha + '}';
+    }
+
 }
 

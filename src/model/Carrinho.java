@@ -49,4 +49,9 @@ public class Carrinho {
         this.produto = produto;
     }
 
+    @Override
+    public String toString() {
+        return "Carrinho{" + "id=" + id + ", qntd=" + qntd + ", pedido=" + pedido + ", produto=" + produto + '}';
+    }
+
 }

@@ -6,18 +6,48 @@ package app;
 
 import cadastro.CadastroPadrao;
 import cadastro.PainelBairros;
+import cadastro.PainelCarrinho;
+import cadastro.PainelCartao;
 import cadastro.PainelCliente;
+import cadastro.PainelCupom;
+import cadastro.PainelDelivery;
+import cadastro.PainelDinheiro;
 import cadastro.PainelEndereco;
+import cadastro.PainelEntrega;
 import cadastro.PainelFuncionario;
+import cadastro.PainelIngredienteAdicional;
+import cadastro.PainelIngredienteEscolha;
+import cadastro.PainelIngredienteRemover;
 import cadastro.PainelLogin;
+import cadastro.PainelMetPagamento;
+import cadastro.PainelPagamento;
+import cadastro.PainelPedido;
 import cadastro.PainelProduto;
+import cadastro.PainelReembolso;
+import cadastro.PainelStatusPedido;
+import cadastro.PainelTaxaEntrega;
 import cadastro.PainelTelefone;
 import controller.BairroController;
+import controller.CarrinhoController;
+import controller.CartaoController;
 import controller.ClienteController;
+import controller.CupomController;
+import controller.DeliveryController;
+import controller.DinheiroController;
 import controller.EnderecoController;
+import controller.EntregaController;
 import controller.FuncionarioController;
+import controller.IngredienteAdicionalController;
+import controller.IngredienteEscolhaController;
+import controller.IngredienteRemoverController;
 import controller.LoginController;
+import controller.MetodoPagamentoController;
+import controller.PagamentoController;
+import controller.PedidoController;
 import controller.ProdutoController;
+import controller.ReembolsoController;
+import controller.StatusPedidoController;
+import controller.TaxaEntregaController;
 import controller.TelefoneController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,13 +100,28 @@ public class Principal extends javax.swing.JFrame {
         jbSair = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItemBairro = new javax.swing.JMenuItem();
+        jMenuItemCarrinho = new javax.swing.JMenuItem();
+        jMenuItemCartao = new javax.swing.JMenuItem();
+        jMenuItemCliente = new javax.swing.JMenuItem();
+        jMenuItemCupom = new javax.swing.JMenuItem();
+        jMenuItemDelivery = new javax.swing.JMenuItem();
+        jMenuItemDinheiro = new javax.swing.JMenuItem();
+        jMenuItemEndereco = new javax.swing.JMenuItem();
+        jMenuItemEntrega = new javax.swing.JMenuItem();
+        jMenuItemFuncionario = new javax.swing.JMenuItem();
+        jMenuItemAdicional = new javax.swing.JMenuItem();
+        jMenuItemEscolha = new javax.swing.JMenuItem();
+        jMenuItemRemover = new javax.swing.JMenuItem();
+        jMenuItemLogin = new javax.swing.JMenuItem();
+        jMenuItemMetPagamento = new javax.swing.JMenuItem();
+        jMenuItemPagamento = new javax.swing.JMenuItem();
+        jMenuItemPedido = new javax.swing.JMenuItem();
+        jMenuItemProduto = new javax.swing.JMenuItem();
+        jMenuItemReembolso = new javax.swing.JMenuItem();
+        jMenuItemStatusPedido = new javax.swing.JMenuItem();
+        jMenuItemTaxaEntrega = new javax.swing.JMenuItem();
+        jMenuItemTelefone = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,61 +143,181 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Cadastros");
 
-        jMenuItem1.setText("Cadastro de Funcionário");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemBairro.setText("Bairro");
+        jMenuItemBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemBairroActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(jMenuItemBairro);
 
-        jMenuItem2.setText("Cadastro de Bairro");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCarrinho.setText("Carrinho");
+        jMenuItemCarrinho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItemCarrinhoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(jMenuItemCarrinho);
 
-        jMenuItem3.setText("Cadastro de Cliente");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCartao.setText("Cartão");
+        jMenuItemCartao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItemCartaoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenu2.add(jMenuItemCartao);
 
-        jMenuItem4.setText("Cadastro de Endereço");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCliente.setText("Cliente");
+        jMenuItemCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenuItemClienteActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        jMenu2.add(jMenuItemCliente);
 
-        jMenuItem5.setText("Cadastro de Login");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCupom.setText("Cupom");
+        jMenuItemCupom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenuItemCupomActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu2.add(jMenuItemCupom);
 
-        jMenuItem6.setText("Cadastro de Produto");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemDelivery.setText("Delivery");
+        jMenuItemDelivery.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jMenuItemDeliveryActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        jMenu2.add(jMenuItemDelivery);
 
-        jMenuItem7.setText("Cadastro de Telefone");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemDinheiro.setText("Dinheiro");
+        jMenuItemDinheiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jMenuItemDinheiroActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem7);
+        jMenu2.add(jMenuItemDinheiro);
+
+        jMenuItemEndereco.setText("Endereço");
+        jMenuItemEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEnderecoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemEndereco);
+
+        jMenuItemEntrega.setText("Entrega");
+        jMenuItemEntrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEntregaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemEntrega);
+
+        jMenuItemFuncionario.setText("Funcionario");
+        jMenuItemFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFuncionarioActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemFuncionario);
+
+        jMenuItemAdicional.setText("Ingrediente Adicional");
+        jMenuItemAdicional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAdicionalActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemAdicional);
+
+        jMenuItemEscolha.setText("Ingrediente Escolha");
+        jMenuItemEscolha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEscolhaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemEscolha);
+
+        jMenuItemRemover.setText("Ingrediente Remover");
+        jMenuItemRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRemoverActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemRemover);
+
+        jMenuItemLogin.setText("Login");
+        jMenuItemLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLoginActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemLogin);
+
+        jMenuItemMetPagamento.setText("Metodo de Pagamento");
+        jMenuItemMetPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMetPagamentoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemMetPagamento);
+
+        jMenuItemPagamento.setText("Pagamento");
+        jMenuItemPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPagamentoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemPagamento);
+
+        jMenuItemPedido.setText("Pedido");
+        jMenuItemPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPedidoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemPedido);
+
+        jMenuItemProduto.setText("Produto");
+        jMenuItemProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemProdutoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemProduto);
+
+        jMenuItemReembolso.setText("Reembolso");
+        jMenuItemReembolso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemReembolsoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemReembolso);
+
+        jMenuItemStatusPedido.setText("Status do Pedido");
+        jMenuItemStatusPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemStatusPedidoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemStatusPedido);
+
+        jMenuItemTaxaEntrega.setText("Taxa de Entrega");
+        jMenuItemTaxaEntrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTaxaEntregaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemTaxaEntrega);
+
+        jMenuItemTelefone.setText("Telefone");
+        jMenuItemTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTelefoneActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemTelefone);
 
         jMenuBar1.add(jMenu2);
 
@@ -168,33 +333,93 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jbSairActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItemBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemBairroActionPerformed
         new CadastroPadrao(this, new PainelBairros(), new BairroController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItemBairroActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClienteActionPerformed
         new CadastroPadrao(this, new PainelCliente(), new ClienteController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuItemClienteActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFuncionarioActionPerformed
         new CadastroPadrao(this, new PainelFuncionario(), new FuncionarioController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemFuncionarioActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMenuItemEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEnderecoActionPerformed
         new CadastroPadrao(this, new PainelEndereco(), new EnderecoController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMenuItemEnderecoActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void jMenuItemLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoginActionPerformed
         new CadastroPadrao(this, new PainelLogin(), new LoginController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_jMenuItemLoginActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProdutoActionPerformed
         new CadastroPadrao(this, new PainelProduto(), new ProdutoController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_jMenuItemProdutoActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void jMenuItemTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTelefoneActionPerformed
         new CadastroPadrao(this, new PainelTelefone(), new TelefoneController(), true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_jMenuItemTelefoneActionPerformed
+
+    private void jMenuItemCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCarrinhoActionPerformed
+        new CadastroPadrao(this, new PainelCarrinho(), new CarrinhoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemCarrinhoActionPerformed
+
+    private void jMenuItemAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAdicionalActionPerformed
+        new CadastroPadrao(this, new PainelIngredienteAdicional(), new IngredienteAdicionalController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemAdicionalActionPerformed
+
+    private void jMenuItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPedidoActionPerformed
+        new CadastroPadrao(this, new PainelPedido(), new PedidoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemPedidoActionPerformed
+
+    private void jMenuItemStatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemStatusPedidoActionPerformed
+        new CadastroPadrao(this, new PainelStatusPedido(), new StatusPedidoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemStatusPedidoActionPerformed
+
+    private void jMenuItemCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCupomActionPerformed
+        new CadastroPadrao(this, new PainelCupom(), new CupomController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemCupomActionPerformed
+
+    private void jMenuItemDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeliveryActionPerformed
+        new CadastroPadrao(this, new PainelDelivery(), new DeliveryController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemDeliveryActionPerformed
+
+    private void jMenuItemDinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDinheiroActionPerformed
+        new CadastroPadrao(this, new PainelDinheiro(), new DinheiroController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemDinheiroActionPerformed
+
+    private void jMenuItemEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEntregaActionPerformed
+        new CadastroPadrao(this, new PainelEntrega(), new EntregaController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemEntregaActionPerformed
+
+    private void jMenuItemEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEscolhaActionPerformed
+        new CadastroPadrao(this, new PainelIngredienteEscolha(), new IngredienteEscolhaController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemEscolhaActionPerformed
+
+    private void jMenuItemRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRemoverActionPerformed
+        new CadastroPadrao(this, new PainelIngredienteRemover(), new IngredienteRemoverController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemRemoverActionPerformed
+
+    private void jMenuItemMetPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMetPagamentoActionPerformed
+        new CadastroPadrao(this, new PainelMetPagamento(), new MetodoPagamentoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemMetPagamentoActionPerformed
+
+    private void jMenuItemPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPagamentoActionPerformed
+        new CadastroPadrao(this, new PainelPagamento(), new PagamentoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemPagamentoActionPerformed
+
+    private void jMenuItemReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReembolsoActionPerformed
+        new CadastroPadrao(this, new PainelReembolso(), new ReembolsoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemReembolsoActionPerformed
+
+    private void jMenuItemTaxaEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTaxaEntregaActionPerformed
+        new CadastroPadrao(this, new PainelTaxaEntrega(), new TaxaEntregaController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemTaxaEntregaActionPerformed
+
+    private void jMenuItemCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCartaoActionPerformed
+        new CadastroPadrao(this, new PainelCartao(), new CartaoController(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItemCartaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,13 +457,28 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItemAdicional;
+    private javax.swing.JMenuItem jMenuItemBairro;
+    private javax.swing.JMenuItem jMenuItemCarrinho;
+    private javax.swing.JMenuItem jMenuItemCartao;
+    private javax.swing.JMenuItem jMenuItemCliente;
+    private javax.swing.JMenuItem jMenuItemCupom;
+    private javax.swing.JMenuItem jMenuItemDelivery;
+    private javax.swing.JMenuItem jMenuItemDinheiro;
+    private javax.swing.JMenuItem jMenuItemEndereco;
+    private javax.swing.JMenuItem jMenuItemEntrega;
+    private javax.swing.JMenuItem jMenuItemEscolha;
+    private javax.swing.JMenuItem jMenuItemFuncionario;
+    private javax.swing.JMenuItem jMenuItemLogin;
+    private javax.swing.JMenuItem jMenuItemMetPagamento;
+    private javax.swing.JMenuItem jMenuItemPagamento;
+    private javax.swing.JMenuItem jMenuItemPedido;
+    private javax.swing.JMenuItem jMenuItemProduto;
+    private javax.swing.JMenuItem jMenuItemReembolso;
+    private javax.swing.JMenuItem jMenuItemRemover;
+    private javax.swing.JMenuItem jMenuItemStatusPedido;
+    private javax.swing.JMenuItem jMenuItemTaxaEntrega;
+    private javax.swing.JMenuItem jMenuItemTelefone;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbSair;

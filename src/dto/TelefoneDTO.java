@@ -16,6 +16,16 @@ public class TelefoneDTO implements InterfaceDTO{
 
     }
 
+    public String getNumTel() {
+        return numTel;
+    }
+
+    public void setNumTel(String numTel) {
+        this.numTel = numTel;
+    }
+
+    
+    
     public Telefone builder() {
         Telefone t = new Telefone();
         t.setId(idTel == null ? 0 : Integer.valueOf(idTel));
@@ -32,4 +42,11 @@ public class TelefoneDTO implements InterfaceDTO{
 
         return t;
     }
+
+    @Override
+    public String toString() {
+        return numTel;
+    }
+    
+    
 }

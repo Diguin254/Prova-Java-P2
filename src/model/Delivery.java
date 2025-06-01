@@ -59,4 +59,9 @@ public class Delivery {
         this.endereco = endereco;
     }
 
+    @Override
+    public String toString() {
+        return "Delivery{" + "id=" + id + ", chaveEntrega=" + chaveEntrega + ", numero=" + numero + ", complemento=" + complemento + ", endereco=" + endereco + '}';
+    }
+
 }

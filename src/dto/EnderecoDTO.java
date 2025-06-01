@@ -15,6 +15,46 @@ public class EnderecoDTO implements InterfaceDTO{
     public String idBairro;
     public String distanciaEnd;
 
+    public String getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(String idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
+    public String getRuaEnd() {
+        return ruaEnd;
+    }
+
+    public void setRuaEnd(String ruaEnd) {
+        this.ruaEnd = ruaEnd;
+    }
+
+    public String getCepEnd() {
+        return cepEnd;
+    }
+
+    public void setCepEnd(String cepEnd) {
+        this.cepEnd = cepEnd;
+    }
+
+    public String getIdBairro() {
+        return idBairro;
+    }
+
+    public void setIdBairro(String idBairro) {
+        this.idBairro = idBairro;
+    }
+
+    public String getDistanciaEnd() {
+        return distanciaEnd;
+    }
+
+    public void setDistanciaEnd(String distanciaEnd) {
+        this.distanciaEnd = distanciaEnd;
+    }
+
     public Endereco builder() {
         Endereco end = new Endereco();
         end.setId(idEndereco == null ? 0 : Integer.valueOf(idEndereco));
@@ -29,4 +69,11 @@ public class EnderecoDTO implements InterfaceDTO{
 
         return end;
     }
+
+    @Override
+    public String toString() {
+        return "EnderecoDTO{" + "idEndereco=" + idEndereco + ", ruaEnd=" + ruaEnd + ", cepEnd=" + cepEnd + ", idBairro=" + idBairro + ", distanciaEnd=" + distanciaEnd + '}';
+    }
+    
+    
 }

@@ -9,7 +9,7 @@ import model.Pedido;
 import model.StatusPedido;
 import model.Carrinho;
 
-public class PedidoDTO {
+public class PedidoDTO implements InterfaceDTO{
 
     public PedidoDTO() {
     }
@@ -22,6 +22,64 @@ public class PedidoDTO {
     public List<CarrinhoDTO> carrinhos;
     public String idStatusPed;
 
+    public String getIdPed() {
+        return idPed;
+    }
+
+    public void setIdPed(String idPed) {
+        this.idPed = idPed;
+    }
+
+    public String getHoraPed() {
+        return horaPed;
+    }
+
+    public void setHoraPed(String horaPed) {
+        this.horaPed = horaPed;
+    }
+
+    public Date getDataP() {
+        return dataP;
+    }
+
+    public void setDataP(Date dataP) {
+        this.dataP = dataP;
+    }
+
+    public String getIdClienteP() {
+        return idClienteP;
+    }
+
+    public void setIdClienteP(String idClienteP) {
+        this.idClienteP = idClienteP;
+    }
+
+    public List<CarrinhoDTO> getCarrinhos() {
+        return carrinhos;
+    }
+
+    public void setCarrinhos(List<CarrinhoDTO> carrinhos) {
+        this.carrinhos = carrinhos;
+    }
+
+    public String getIdStatusPed() {
+        return idStatusPed;
+    }
+
+    public void setIdStatusPed(String idStatusPed) {
+        this.idStatusPed = idStatusPed;
+    }
+
+    public String getnPed() {
+        return nPed;
+    }
+
+    public void setnPed(String nPed) {
+        this.nPed = nPed;
+    }
+
+    
+    
     public Pedido builder() {
         Pedido ped = new Pedido();
         ped.setId(idPed == null ? 0 : Integer.valueOf(idPed));
@@ -49,4 +107,11 @@ public class PedidoDTO {
 
         return ped;
     }
+
+    @Override
+    public String toString() {
+        return "PedidoDTO{" + "idPed=" + idPed + ", horaPed=" + horaPed + ", nPed=" + nPed + ", dataP=" + dataP + ", idClienteP=" + idClienteP + ", carrinhos=" + carrinhos + ", idStatusPed=" + idStatusPed + '}';
+    }
+    
+    
 }

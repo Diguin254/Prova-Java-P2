@@ -29,4 +29,9 @@ public class Bairro {
         this.nome = nome;
     }
 
+    @Override
+    public String toString() {
+        return "Bairro{" + "id=" + id + ", nome=" + nome + '}';
+    }
+
 }

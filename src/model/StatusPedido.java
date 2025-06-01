@@ -29,4 +29,10 @@ public class StatusPedido {
         this.progresso = progresso;
     }
 
+    @Override
+    public String toString() {
+        return "StatusPedido{" + "id=" + id + ", progresso=" + progresso + '}';
+    }
+
+    
 }

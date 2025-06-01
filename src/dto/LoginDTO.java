@@ -15,6 +15,38 @@ public class LoginDTO implements InterfaceDTO{
     public String loginFun;
     public List<FuncionarioDTO> funcionarios ;
 
+    public String getIdLogin() {
+        return idLogin;
+    }
+
+    public void setIdLogin(String idLogin) {
+        this.idLogin = idLogin;
+    }
+
+    public String getSenhaLogin() {
+        return senhaLogin;
+    }
+
+    public void setSenhaLogin(String senhaLogin) {
+        this.senhaLogin = senhaLogin;
+    }
+
+    public String getLoginFun() {
+        return loginFun;
+    }
+
+    public void setLoginFun(String loginFun) {
+        this.loginFun = loginFun;
+    }
+
+    public List<FuncionarioDTO> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<FuncionarioDTO> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
     public Login builder() {
         if (loginFun == null || loginFun.trim().isEmpty()) {
             throw new IllegalArgumentException("Login não pode ficar vazio");
@@ -40,4 +72,11 @@ public class LoginDTO implements InterfaceDTO{
 
         return l;
     }
+
+    @Override
+    public String toString() {
+        return "LoginDTO{" + "idLogin=" + idLogin + ", senhaLogin=" + senhaLogin + ", loginFun=" + loginFun + ", funcionarios=" + funcionarios + '}';
+    }
+    
+    
 }

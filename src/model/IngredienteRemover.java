@@ -39,4 +39,9 @@ public class IngredienteRemover {
         this.ingredienteEscolha = ingredienteEscolha;
     }
 
+    @Override
+    public String toString() {
+        return "IngredienteRemover{" + "id=" + id + ", nome=" + nome + ", ingredienteEscolha=" + ingredienteEscolha + '}';
+    }
+
 }

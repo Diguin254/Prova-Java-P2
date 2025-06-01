@@ -3,7 +3,6 @@ package implementsDao;
 import bancoConexao.Conexao;
 import dao.CarrinhoDao;
 import model.Carrinho;
-import model.IngredienteEscolha;
 import model.Pedido;
 import model.Produto;
 
@@ -19,11 +18,17 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
     public void salvar(Carrinho carrinho) throws SQLException {
         String sql = "INSERT INTO carrinho (qntd, pedido_id, produto_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, carrinho.getQntd());
             stmt.setInt(2, carrinho.getPedido().getId());
             stmt.setInt(3, carrinho.getProduto().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+            if (rs.next()) {
+                carrinho.setId(rs.getInt(1));
+            }
+        }
         }
     }
 

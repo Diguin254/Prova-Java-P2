@@ -5,7 +5,7 @@ import model.MetodoPagamento;
 import model.Pagamento;
 import model.Pedido;
 
-public class PagamentoDTO {
+public class PagamentoDTO implements InterfaceDTO{
 
     public PagamentoDTO() {
     }
@@ -14,6 +14,38 @@ public class PagamentoDTO {
     public String idMetPag;
     public String idCupomP;
     public String idPedidoP;
+
+    public String getIdPag() {
+        return idPag;
+    }
+
+    public void setIdPag(String idPag) {
+        this.idPag = idPag;
+    }
+
+    public String getIdMetPag() {
+        return idMetPag;
+    }
+
+    public void setIdMetPag(String idMetPag) {
+        this.idMetPag = idMetPag;
+    }
+
+    public String getIdCupomP() {
+        return idCupomP;
+    }
+
+    public void setIdCupomP(String idCupomP) {
+        this.idCupomP = idCupomP;
+    }
+
+    public String getIdPedidoP() {
+        return idPedidoP;
+    }
+
+    public void setIdPedidoP(String idPedidoP) {
+        this.idPedidoP = idPedidoP;
+    }
 
     public Pagamento builder() {
         Pagamento pag = new Pagamento();
@@ -33,4 +65,11 @@ public class PagamentoDTO {
 
         return pag;
     }
+
+    @Override
+    public String toString() {
+        return "PagamentoDTO{" + "idPag=" + idPag + ", idMetPag=" + idMetPag + ", idCupomP=" + idCupomP + ", idPedidoP=" + idPedidoP + '}';
+    }
+    
+    
 }

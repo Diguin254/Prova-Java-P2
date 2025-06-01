@@ -7,7 +7,7 @@ import model.IngredienteAdicional;
 import model.IngredienteEscolha;
 import model.IngredienteRemover;
 
-public class IngredienteEscolhaDTO {
+public class IngredienteEscolhaDTO implements InterfaceDTO{
 
     public IngredienteEscolhaDTO() {
     }
@@ -16,6 +16,38 @@ public class IngredienteEscolhaDTO {
     public String idCarrinho;
     public List<IngredienteRemoverDTO> ingrRemovs;
     public List<IngredienteAdicionalDTO> ingrAdcs;
+
+    public String getIdIngrEsc() {
+        return idIngrEsc;
+    }
+
+    public void setIdIngrEsc(String idIngrEsc) {
+        this.idIngrEsc = idIngrEsc;
+    }
+
+    public String getIdCarrinho() {
+        return idCarrinho;
+    }
+
+    public void setIdCarrinho(String idCarrinho) {
+        this.idCarrinho = idCarrinho;
+    }
+
+    public List<IngredienteRemoverDTO> getIngrRemovs() {
+        return ingrRemovs;
+    }
+
+    public void setIngrRemovs(List<IngredienteRemoverDTO> ingrRemovs) {
+        this.ingrRemovs = ingrRemovs;
+    }
+
+    public List<IngredienteAdicionalDTO> getIngrAdcs() {
+        return ingrAdcs;
+    }
+
+    public void setIngrAdcs(List<IngredienteAdicionalDTO> ingrAdcs) {
+        this.ingrAdcs = ingrAdcs;
+    }
 
     public IngredienteEscolha builder() {
         IngredienteEscolha ingr = new IngredienteEscolha();
@@ -47,4 +79,11 @@ public class IngredienteEscolhaDTO {
 
         return ingr;
     }
+
+    @Override
+    public String toString() {
+        return "IngredienteEscolhaDTO{" + "idIngrEsc=" + idIngrEsc + ", idCarrinho=" + idCarrinho + ", ingrRemovs=" + ingrRemovs + ", ingrAdcs=" + ingrAdcs + '}';
+    }
+    
+    
 }

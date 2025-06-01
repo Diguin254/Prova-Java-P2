@@ -18,6 +18,54 @@ public class FuncionarioDTO implements InterfaceDTO{
     public String idLogin;
     public List<TelefoneDTO> telefones;
 
+    public String getIdFuncionario() {
+        return idFuncionario;
+    }
+
+    public void setIdFuncionario(String idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
+    public String getRgFun() {
+        return rgFun;
+    }
+
+    public void setRgFun(String rgFun) {
+        this.rgFun = rgFun;
+    }
+
+    public String getIdLogin() {
+        return idLogin;
+    }
+
+    public void setIdLogin(String idLogin) {
+        this.idLogin = idLogin;
+    }
+
+    public List<TelefoneDTO> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<TelefoneDTO> telefones) {
+        this.telefones = telefones;
+    }
+
+    public String getNomeFun() {
+        return nomeFun;
+    }
+
+    public void setNomeFun(String nomeFun) {
+        this.nomeFun = nomeFun;
+    }
+
+    public String getCpfFun() {
+        return cpfFun;
+    }
+
+    public void setCpfFun(String cpfFun) {
+        this.cpfFun = cpfFun;
+    }
+    
     public Funcionario builder() {
 
         Funcionario f = new Funcionario();
@@ -41,5 +89,10 @@ public class FuncionarioDTO implements InterfaceDTO{
         f.setTelefones(lista);
 
         return f;
+    }
+
+    @Override
+    public String toString() {
+        return "FuncionarioDTO{" + "idFuncionario=" + idFuncionario + ", nomeFun=" + nomeFun + ", cpfFun=" + cpfFun + ", rgFun=" + rgFun + ", idLogin=" + idLogin + ", telefones=" + telefones + '}';
     }
 }

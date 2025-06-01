@@ -69,4 +69,9 @@ public class Entrega {
         this.statusPedido = statusPedido;
     }
 
+    @Override
+    public String toString() {
+        return "Entrega{" + "id=" + id + ", cliente=" + cliente + ", tipoEntrega=" + tipoEntrega + ", delivery=" + delivery + ", pedido=" + pedido + ", statusPedido=" + statusPedido + '}';
+    }
+
 }

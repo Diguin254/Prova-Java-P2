@@ -71,4 +71,9 @@ public class Funcionario {
         this.telefones = telefones;
     }
 
+    @Override
+    public String toString() {
+        return "Funcionario{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", rg=" + rg + ", login=" + login + ", telefones=" + telefones + '}';
+    }
+
 }

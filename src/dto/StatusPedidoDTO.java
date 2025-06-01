@@ -3,7 +3,7 @@ package dto;
 import model.Pedido;
 import model.StatusPedido;
 
-public class StatusPedidoDTO {
+public class StatusPedidoDTO implements InterfaceDTO{
 
     public StatusPedidoDTO() {
     }
@@ -12,6 +12,30 @@ public class StatusPedidoDTO {
     public String progStatPed;
     public String idPedidoSP;
 
+    public String getIdStatPed() {
+        return idStatPed;
+    }
+
+    public void setIdStatPed(String idStatPed) {
+        this.idStatPed = idStatPed;
+    }
+
+    public String getProgStatPed() {
+        return progStatPed;
+    }
+
+    public void setProgStatPed(String progStatPed) {
+        this.progStatPed = progStatPed;
+    }
+
+    public String getIdPedidoSP() {
+        return idPedidoSP;
+    }
+
+    public void setIdPedidoSP(String idPedidoSP) {
+        this.idPedidoSP = idPedidoSP;
+    }
+
     public StatusPedido builder() {
         StatusPedido sp = new StatusPedido();
         sp.setId(idStatPed == null ? 0 : Integer.valueOf(idStatPed));
@@ -19,4 +43,11 @@ public class StatusPedidoDTO {
 
         return sp;
     }
+
+    @Override
+    public String toString() {
+        return "StatusPedidoDTO{" + "idStatPed=" + idStatPed + ", progStatPed=" + progStatPed + ", idPedidoSP=" + idPedidoSP + '}';
+    }
+    
+    
 }

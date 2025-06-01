@@ -2,13 +2,46 @@ package dto;
 
 import java.util.Date;
 import model.Cupom;
-import model.Pagamento;
 
-public class CupomDTO {
+public class CupomDTO implements InterfaceDTO{
 
     public CupomDTO() {
     }
 
+    public String getIdC() {
+        return idC;
+    }
+
+    public void setIdC(String idC) {
+        this.idC = idC;
+    }
+
+    public String getValorC() {
+        return valorC;
+    }
+
+    public void setValorC(String valorC) {
+        this.valorC = valorC;
+    }
+
+    public String getCodigoC() {
+        return codigoC;
+    }
+
+    public void setCodigoC(String codigoC) {
+        this.codigoC = codigoC;
+    }
+
+    public Date getValidadeC() {
+        return validadeC;
+    }
+
+    public void setValidadeC(Date validadeC) {
+        this.validadeC = validadeC;
+    }
+
+    
+    
     public String idC;
     public String valorC;
     public String codigoC;
@@ -23,4 +56,11 @@ public class CupomDTO {
 
         return c;
     }
+
+    @Override
+    public String toString() {
+        return "CupomDTO{" + "idC=" + idC + ", valorC=" + valorC + ", codigoC=" + codigoC + ", validadeC=" + validadeC + '}';
+    }
+    
+    
 }

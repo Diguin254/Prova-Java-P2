@@ -61,4 +61,9 @@ public class Cliente {
         this.entregas = entregas;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", telefones=" + telefones + ", pedidos=" + pedidos + ", entregas=" + entregas + '}';
+    }
+
 }

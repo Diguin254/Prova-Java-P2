@@ -49,4 +49,9 @@ public class Pagamento {
         this.pedido = pedido;
     }
 
+    @Override
+    public String toString() {
+        return "Pagamento{" + "id=" + id + ", metodoPagamento=" + metodoPagamento + ", cupom=" + cupom + ", pedido=" + pedido + '}';
+    }
+
 }

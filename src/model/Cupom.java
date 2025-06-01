@@ -50,4 +50,10 @@ public class Cupom {
     public void setValidade(Date validade) {
         this.validade = validade;
     }
+
+    @Override
+    public String toString() {
+        return "Cupom{" + "id=" + id + ", valorCupom=" + valorCupom + ", codigo=" + codigo + ", validade=" + validade + '}';
+    }
+    
 }

@@ -15,7 +15,7 @@ public class CartaoImplementsDAO implements CartaoDao {
 
     @Override
     public void salvar(Cartao cartao) throws SQLException {
-        String sql = "INSERT INTO cartao (numeroCartao, ccv, tipoConta) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cartao (numeroCartao, cvv, tipoConta) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, cartao.getNumeroCartao());
@@ -27,7 +27,7 @@ public class CartaoImplementsDAO implements CartaoDao {
 
     @Override
     public void editar(Cartao cartao) throws SQLException {
-        String sql = "UPDATE cartao SET numeroCartao = ?, ccv = ?, tipoConta = ? WHERE id = ?";
+        String sql = "UPDATE cartao SET numeroCartao = ?, cvv = ?, tipoConta = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, cartao.getNumeroCartao());
@@ -51,14 +51,14 @@ public class CartaoImplementsDAO implements CartaoDao {
     @Override
     public List<Cartao> listar() throws SQLException {
         List<Cartao> cartoes = new LinkedList<>();
-        String sql = "SELECT id, numeroCartao, ccv, tipoConta FROM cartao";
+        String sql = "SELECT id, numeroCartao, cvv, tipoConta FROM cartao";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
                 Cartao cartao = new Cartao();
                 cartao.setId(res.getInt("id"));
                 cartao.setNumeroCartao(res.getInt("numeroCartao"));
-                cartao.setCcv(res.getInt("ccv"));
+                cartao.setCcv(res.getInt("cvv"));
                 cartao.setTipoConta(res.getInt("tipoConta"));
                 cartoes.add(cartao);
             }
