@@ -246,7 +246,7 @@ public class CadastroPadrao extends javax.swing.JDialog {
         }
 
         if (dto instanceof IngredienteEscolhaDTO ingEsc) {
-            if (ingEsc.ingrAdcs == null || ingEsc.ingrAdcs.isEmpty() || ingEsc.ingrRemovs == null || ingEsc.ingrRemovs.isEmpty()) {
+            if (ingEsc.idCarrinho == null) {
                 mostrarAlerta("Informe todos os dados.");
                 return false;
             }

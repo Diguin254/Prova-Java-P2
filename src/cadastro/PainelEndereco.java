@@ -167,6 +167,7 @@ public class PainelEndereco extends InterfacePainel {
         try {
             listaBairros = bairroDao.listar();
             jComboBoxBairro.removeAllItems();
+            jComboBoxBairro.addItem("— Selecione —");
             for (Bairro b : listaBairros) {
                 jComboBoxBairro.addItem(b.getNome());
             }
@@ -186,8 +187,11 @@ public class PainelEndereco extends InterfacePainel {
         dto.distanciaEnd = jTextField3.getText();
 
         int index = jComboBoxBairro.getSelectedIndex();
-        if (index >= 0 && index < listaBairros.size()) {
-            dto.idBairro = String.valueOf(listaBairros.get(index).getId());
+        if (index > 0 && index <= listaBairros.size()) {
+            Bairro escolhido = listaBairros.get(index - 1);
+            dto.idBairro = String.valueOf(escolhido.getId());
+        } else {
+            dto.idBairro = null;
         }
 
         return dto;
@@ -204,12 +208,12 @@ public class PainelEndereco extends InterfacePainel {
             int id = Integer.parseInt(this.dto.idBairro);
             for (int i = 0; i < listaBairros.size(); i++) {
                 if (listaBairros.get(i).getId() == id) {
-                    jComboBoxBairro.setSelectedIndex(i);
-                    break;
+                    jComboBoxBairro.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
-
+        jComboBoxBairro.setSelectedIndex(0);
     }
 
 }

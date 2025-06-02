@@ -5,14 +5,8 @@
 package cadastro;
 
 import app.InterfacePainel;
-import dao.PedidoDao;
 import dto.InterfaceDTO;
 import dto.StatusPedidoDTO;
-import implementsDao.PedidoImplementsDAO;
-import java.util.List;
-import javax.swing.JOptionPane;
-import model.Pedido;
-
 /**
  *
  * @author alenc
@@ -22,13 +16,10 @@ public class PainelStatusPedido extends InterfacePainel {
     /**
      * Creates new form PainelStatusPedido
      */
-    private final PedidoDao pedidoDao = new PedidoImplementsDAO();
-    private List<Pedido> listaPedido;
     StatusPedidoDTO dto;
 
     public PainelStatusPedido() {
         initComponents();
-        carregarComboPedido();
     }
 
     /**
@@ -42,29 +33,18 @@ public class PainelStatusPedido extends InterfacePainel {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Progresso do pedido");
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Pedido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(100, 100, 100)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -74,33 +54,15 @@ public class PainelStatusPedido extends InterfacePainel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(247, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
-    private void carregarComboPedido() {
-        try {
-            listaPedido = pedidoDao.listar();
-            jComboBox1.removeAllItems();
-            for (Pedido p : listaPedido) {
-                jComboBox1.addItem(String.valueOf(p.getNumeroPedido()));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar pedido: " + e.getMessage());
-        }
-    }
 
     @Override
     public InterfaceDTO getDados() {
@@ -110,11 +72,6 @@ public class PainelStatusPedido extends InterfacePainel {
 
         dto.progStatPed = jTextField1.getText();
 
-        int indexP = jComboBox1.getSelectedIndex();
-        if (indexP >= 0 && indexP < listaPedido.size()) {
-            dto.idPedidoSP = String.valueOf(listaPedido.get(indexP).getId());
-
-        }
         return (InterfaceDTO) dto;
     }
 
@@ -122,15 +79,6 @@ public class PainelStatusPedido extends InterfacePainel {
     public void setDados(InterfaceDTO dto) {
         this.dto = (StatusPedidoDTO) dto;
         jTextField1.setText(this.dto.progStatPed);
-        
-        if (listaPedido != null && !listaPedido.isEmpty() && this.dto.idPedidoSP != null) {
-            int idP = Integer.parseInt(this.dto.idPedidoSP);
-            for (int i = 0; i < listaPedido.size(); i++) {
-                if (listaPedido.get(i).getId() == idP) {
-                    jComboBox1.setSelectedIndex(i);
-                    break;
-                }
-            }
-        }
+
     }
 }

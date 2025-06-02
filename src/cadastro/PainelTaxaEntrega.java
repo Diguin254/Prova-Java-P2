@@ -58,13 +58,10 @@ public class PainelTaxaEntrega extends InterfacePainel {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,11 +91,12 @@ public class PainelTaxaEntrega extends InterfacePainel {
         try {
             listaEnd = endDao.listar();
             jComboBox1.removeAllItems();
+            jComboBox1.addItem("— Selecione —");
             for (Endereco p : listaEnd) {
-                jComboBox1.addItem(String.valueOf(p.getRua()));
+                jComboBox1.addItem(p.getRua());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar pedido: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao carregar endereço: " + e.getMessage());
         }
     }
 
@@ -110,11 +108,14 @@ public class PainelTaxaEntrega extends InterfacePainel {
         dto.valEntrega = jTextField1.getText();
         
         int indexE = jComboBox1.getSelectedIndex();
-        if (indexE >= 0 && indexE < listaEnd.size()) {
-            dto.idEnd = String.valueOf(listaEnd.get(indexE).getId());
+        if (indexE > 0 && indexE <= listaEnd.size()) {
+            Endereco escolhido = listaEnd.get(indexE - 1);
+            dto.idEnd = String.valueOf(escolhido.getId());
+        } else {
+            dto.idEnd = null;
         }
         
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
@@ -122,14 +123,15 @@ public class PainelTaxaEntrega extends InterfacePainel {
         this.dto = (TaxaEntregaDTO) dto;
         jTextField1.setText(this.dto.valEntrega);
         
-        if (listaEnd != null && !listaEnd.isEmpty() && this.dto.idTaxaEnt != null) {
-            int idC = Integer.parseInt(this.dto.idTaxaEnt);
+        if (listaEnd != null && !listaEnd.isEmpty() && this.dto.idEnd != null) {
+            int idC = Integer.parseInt(this.dto.idEnd);
             for (int i = 0; i < listaEnd.size(); i++) {
                 if (listaEnd.get(i).getId() == idC) {
-                    jComboBox1.setSelectedIndex(i);
-                    break;
+                    jComboBox1.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBox1.setSelectedIndex(0);
     }
 }

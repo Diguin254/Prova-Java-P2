@@ -6,15 +6,11 @@ package cadastro;
 
 import app.InterfacePainel;
 import dao.CarrinhoDao;
-import dto.IngredienteAdicionalDTO;
 import dto.IngredienteEscolhaDTO;
-import dto.IngredienteRemoverDTO;
 import dto.InterfaceDTO;
 import implementsDao.CarrinhoImplementsDAO;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Carrinho;
 
 /**
@@ -33,7 +29,6 @@ public class PainelIngredienteEscolha extends InterfacePainel {
     public PainelIngredienteEscolha() {
         initComponents();
         carregarComboCarrinho();
-        atualizarTabela();
     }
 
     /**
@@ -49,14 +44,6 @@ public class PainelIngredienteEscolha extends InterfacePainel {
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jButtonRemover = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jButtonAdicional = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,72 +61,15 @@ public class PainelIngredienteEscolha extends InterfacePainel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Carrinho");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Remover Ingrediente");
-
-        jButtonRemover.setText("add");
-        jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRemoverActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Ingrediente Adicional");
-
-        jButtonAdicional.setText("add");
-        jButtonAdicional.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAdicionalActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonRemover)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextField2)
-                        .addGap(20, 20, 20)
-                        .addComponent(jButtonAdicional)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(107, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,70 +78,25 @@ public class PainelIngredienteEscolha extends InterfacePainel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel2)
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRemover)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAdicional))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    List<IngredienteRemoverDTO> ingRemovers = new LinkedList<>();
-    List<IngredienteAdicionalDTO> ingAdcs = new LinkedList<>();
-    private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
-        // TODO add your handling code here:
-        IngredienteRemoverDTO ingRemoverDTO = new IngredienteRemoverDTO();
-        ingRemoverDTO.nomeIngrRem = jTextField1.getText().trim();
-        if (!ingRemoverDTO.nomeIngrRem.isEmpty()) {
-            ingRemovers.add(ingRemoverDTO);
-            atualizarTabela();
-            jTextField1.setText("");
-        }
-    }//GEN-LAST:event_jButtonRemoverActionPerformed
-
-    private void jButtonAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionalActionPerformed
-        // TODO add your handling code here:
-        IngredienteAdicionalDTO ingAdicionalDTO = new IngredienteAdicionalDTO();
-        ingAdicionalDTO.nomeIngrAdc = jTextField2.getText().trim();
-        if (!ingAdicionalDTO.nomeIngrAdc.isEmpty()) {
-            ingAdcs.add(ingAdicionalDTO);
-            atualizarTabela();
-            jTextField2.setText("");
-        }
-    }//GEN-LAST:event_jButtonAdicionalActionPerformed
-   
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdicional;
-    private javax.swing.JButton jButtonRemover;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
     private void carregarComboCarrinho() {
         try {
             listaCarrinho = carrinhoDao.listar();
             jComboBox1.removeAllItems();
+            jComboBox1.addItem("— Selecione —");
             for (Carrinho c : listaCarrinho) {
-                jComboBox1.addItem(String.valueOf(c.getProduto()));
+                jComboBox1.addItem(String.valueOf((char) c.getQntd()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar carrinho: " + e.getMessage());
@@ -224,12 +109,12 @@ public class PainelIngredienteEscolha extends InterfacePainel {
             dto = new IngredienteEscolhaDTO();
         }
         
-        dto.ingrRemovs = ingRemovers;
-        dto.ingrAdcs = ingAdcs;
-        
         int index = jComboBox1.getSelectedIndex();
-        if (index >= 0 && index < listaCarrinho.size()) {
-            dto.idCarrinho = String.valueOf(listaCarrinho.get(index).getId());
+        if (index > 0 && index <= listaCarrinho.size()) {
+            Carrinho escolhido = listaCarrinho.get(index - 1);
+            dto.idCarrinho = String.valueOf(escolhido.getId());
+        } else {
+            dto.idCarrinho = null;
         }
         
         return (InterfaceDTO) dto;
@@ -238,18 +123,16 @@ public class PainelIngredienteEscolha extends InterfacePainel {
     @Override
     public void setDados(InterfaceDTO dto) {
         this.dto = (IngredienteEscolhaDTO) dto;
-    }
-
-    private void atualizarTabela() {
-         int tamanho = Math.max(ingRemovers.size(), ingAdcs.size());
-        Object[][] data = new Object[tamanho][2];
         
-        for (int i = 0; i < tamanho; i++) {
-            data[i][0] = (i < ingRemovers.size()) ? ingRemovers.get(i).nomeIngrRem : "";
-            data[i][1] = (i < ingAdcs.size()) ? ingAdcs.get(i).nomeIngrAdc : "";
+        if (listaCarrinho != null && !listaCarrinho.isEmpty() && this.dto.idCarrinho != null) {
+            int idC = Integer.parseInt(this.dto.idCarrinho);
+            for (int i = 0; i < listaCarrinho.size(); i++) {
+                if (listaCarrinho.get(i).getId() == idC) {
+                    jComboBox1.setSelectedIndex(i + 1);
+                    return;
+                }
+            }
         }
-        
-        jTable1.setModel(new DefaultTableModel(
-                data, new String[]{"Remover Ingrediente", "ingrediente Adicional"}));
+        jComboBox1.setSelectedIndex(0);
     }
 }

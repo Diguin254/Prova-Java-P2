@@ -22,12 +22,10 @@ public class PainelIngredienteAdicional extends InterfacePainel {
     /**
      * Creates new form PainelIngredienteAdicional
      */
-    private final IngredienteEscolhaDao ingEscolhaDao = new IngredienteEscolhaImplementsDAO();
-    private List<IngredienteEscolha> listaIngredienteEscolha;
+
 
     public PainelIngredienteAdicional() {
         initComponents();
-        comboCarregarIngredienteEscolha();
     }
 
     /**
@@ -43,17 +41,12 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Valor");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nome do Ingrediente");
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Ingredientes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -74,11 +67,6 @@ public class PainelIngredienteAdicional extends InterfacePainel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100))
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,20 +79,14 @@ public class PainelIngredienteAdicional extends InterfacePainel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
@@ -119,11 +101,6 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         dto.nomeIngrAdc = jTextField1.getText();
         dto.valorIngrAdc = jTextField2.getText();
 
-        int index = jComboBox1.getSelectedIndex();
-        if (index >= 0 && index < listaIngredienteEscolha.size()) {
-            dto.idIngrEsc = String.valueOf(listaIngredienteEscolha.get(index).getId());
-        }
-
         return (InterfaceDTO) dto;
     }
 
@@ -133,26 +110,5 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         jTextField1.setText(this.dto.nomeIngrAdc);
         jTextField2.setText(this.dto.valorIngrAdc);
 
-        if (listaIngredienteEscolha != null && !listaIngredienteEscolha.isEmpty() && this.dto.idIngrEsc != null) {
-            int id = Integer.parseInt(this.dto.idIngrEsc);
-            for (int i = 0; i < listaIngredienteEscolha.size(); i++) {
-                if (listaIngredienteEscolha.get(i).getId() == id) {
-                    jComboBox1.setSelectedIndex(i);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void comboCarregarIngredienteEscolha() {
-        try {
-            listaIngredienteEscolha = ingEscolhaDao.listar();
-            jComboBox1.removeAllItems();
-            for (IngredienteEscolha ing : listaIngredienteEscolha) {
-                jComboBox1.addItem(String.valueOf(ing.getIngredientesAdicional()));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar ingrediente: " + e.getMessage());
-        }
     }
 }

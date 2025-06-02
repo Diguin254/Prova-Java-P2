@@ -21,7 +21,16 @@ public class PedidoImplementsDAO implements PedidoDao {
         String sql = "INSERT INTO pedido (horaPedido, numeroPedido, dataPedido, cliente_id, status_pedido_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, pedido.getHoraPedido());
+            String horaStr = pedido.getHoraPedido().trim();
+            java.sql.Time horaSql;
+            
+            if(horaStr.matches("^\\d{1,2}:\\d{2}$")){
+                horaSql = java.sql.Time.valueOf(horaStr + ":00");
+            } else {
+                horaSql = java.sql.Time.valueOf(horaStr);
+            }
+            
+            stmt.setTime(1, horaSql);
             stmt.setInt(2, pedido.getNumeroPedido());
             stmt.setDate(3, new java.sql.Date(pedido.getDataPedido().getTime()));
             stmt.setInt(4, pedido.getCliente().getId());
@@ -79,7 +88,7 @@ public class PedidoImplementsDAO implements PedidoDao {
                 pedido.setCliente(cliente);
 
                 StatusPedido status = new StatusPedido();
-                status.setId(res.getInt("statusPedido_id"));
+                status.setId(res.getInt("status_pedido_id"));
                 pedido.setStatusPedido(status);
 
                 pedidos.add(pedido);

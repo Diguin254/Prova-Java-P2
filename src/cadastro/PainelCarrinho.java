@@ -117,7 +117,7 @@ public class PainelCarrinho extends InterfacePainel {
             jComboBoxPedido.removeAllItems();
             jComboBoxPedido.addItem("— Selecione —");
             for (Pedido p : listaPed) {
-                jComboBoxPedido.addItem(p.getHoraPedido());
+                jComboBoxPedido.addItem(String.valueOf(p.getNumeroPedido()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar pedido: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -146,19 +146,17 @@ public class PainelCarrinho extends InterfacePainel {
         dto.qntdItens = jTextField1.getText().trim();
         
         int indexP = jComboBoxPedido.getSelectedIndex();
-        if (indexP >= 0 && indexP < listaPed.size()) {
-            int realIndexP = indexP - 1;
-            
-            dto.idPedido = String.valueOf(listaPed.get(realIndexP).getId());
+        if (indexP > 0 && indexP <= listaPed.size()) {
+            Pedido escolhido = listaPed.get(indexP - 1);
+            dto.idPedido = String.valueOf(escolhido.getId());
         } else {
             dto.idPedido = null;
         }
         
         int indexPro = jComboBoxProduto.getSelectedIndex();
         if (indexPro >= 0 && indexPro < listaProd.size()) {
-            int realIndexPro = indexP - 1;
-            
-            dto.idProduto = String.valueOf(listaProd.get(realIndexPro).getId());
+            Produto escolhido = listaProd.get(indexP - 1);
+            dto.idProduto = String.valueOf(escolhido.getId());
         } else {
             dto.idProduto = null;
         }
@@ -172,30 +170,26 @@ public class PainelCarrinho extends InterfacePainel {
         
         jTextField1.setText(this.dto.qntdItens);
         
-       if (this.dto.idPedido != null && listaPed != null) {
+       if (listaPed != null && !listaPed.isEmpty() && this.dto.idPedido != null) {
             int idP = Integer.parseInt(this.dto.idPedido);
-            
             for (int i = 0; i < listaPed.size(); i++) {
                 if (listaPed.get(i).getId() == idP) {
                     jComboBoxPedido.setSelectedIndex(i + 1);
-                    break;
+                    return;
                 }
             }
-        } else {
-           jComboBoxPedido.setSelectedIndex(0);
-       }
+        }
+       jComboBoxPedido.setSelectedIndex(0);
        
        if (this.dto.idProduto != null && listaProd != null) {
             int idP = Integer.parseInt(this.dto.idProduto);
-            
             for (int i = 0; i < listaProd.size(); i++) {
                 if (listaProd.get(i).getId() == idP) {
                     jComboBoxProduto.setSelectedIndex(i + 1);
-                    break;
+                    return;
                 }
             }
-        } else {
-           jComboBoxProduto.setSelectedIndex(0);
-       }
+        }
+       jComboBoxProduto.setSelectedIndex(0);
     }
 }

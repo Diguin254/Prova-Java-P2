@@ -91,8 +91,9 @@ public class PainelIngredienteRemover extends InterfacePainel {
         try {
             listaIngredienteEscolha = ingEscolhaDao.listar();
             jComboBox1.removeAllItems();
+            jComboBox1.addItem("— Selecione —");
             for (IngredienteEscolha ing : listaIngredienteEscolha) {
-                jComboBox1.addItem(String.valueOf(ing.getIngredientesAdicional()));
+                jComboBox1.addItem(String.valueOf(ing.toString()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar ingrediente: " + e.getMessage());
@@ -108,8 +109,11 @@ public class PainelIngredienteRemover extends InterfacePainel {
         dto.nomeIngrRem = jTextField1.getText();
 
         int index = jComboBox1.getSelectedIndex();
-        if (index >= 0 && index < listaIngredienteEscolha.size()) {
-            dto.idIngrEsco = String.valueOf(listaIngredienteEscolha.get(index).getId());
+        if (index > 0 && index <= listaIngredienteEscolha.size()) {
+            IngredienteEscolha escolhido = listaIngredienteEscolha.get(index - 1);
+            dto.idIngrEsco = String.valueOf(escolhido.getId());
+        } else {
+            dto.idIngrEsco = null;
         }
 
         return (InterfaceDTO) dto;
@@ -124,10 +128,11 @@ public class PainelIngredienteRemover extends InterfacePainel {
             int id = Integer.parseInt(this.dto.idIngrEsco);
             for (int i = 0; i < listaIngredienteEscolha.size(); i++) {
                 if (listaIngredienteEscolha.get(i).getId() == id) {
-                    jComboBox1.setSelectedIndex(i);
-                    break;
+                    jComboBox1.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBox1.setSelectedIndex(0);
     }
 }
