@@ -16,9 +16,15 @@ public class DinheiroImplementsDAO implements DinheiroDao {
     public void salvar(Dinheiro dinheiro) throws SQLException {
         String sql = "INSERT INTO dinheiro (valorEntregado) VALUES (?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setDouble(1, dinheiro.getValorEntregado());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    dinheiro.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

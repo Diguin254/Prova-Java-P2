@@ -17,10 +17,16 @@ public class TaxaEntregaImplementsDAO implements TaxaEntregaDao {
     public void salvar(TaxaEntrega taxaEntrega) throws SQLException {
         String sql = "INSERT INTO taxaEntrega(taxa_entrega, endereco_id) VALUES (?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setDouble(1, taxaEntrega.getTaxa_entrega());
             stmt.setInt(2, taxaEntrega.getEndereco().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    taxaEntrega.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

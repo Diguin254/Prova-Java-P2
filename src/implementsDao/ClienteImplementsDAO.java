@@ -16,9 +16,15 @@ public class ClienteImplementsDAO implements ClienteDao {
     public void salvar(Cliente cliente) throws SQLException {
         String sql = "INSERT INTO cliente (nome) VALUES (?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, cliente.getNome());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    cliente.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

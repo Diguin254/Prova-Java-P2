@@ -17,12 +17,18 @@ public class DeliveryImplementsDAO implements DeliveryDao {
     public void salvar(Delivery delivery) throws SQLException {
         String sql = "INSERT INTO delivery (chaveEntrega, numero, complemento, endereco_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, delivery.getChaveEntrega());
             stmt.setInt(2, delivery.getNumero());
             stmt.setString(3, delivery.getComplemento());
             stmt.setInt(4, delivery.getEndereco().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    delivery.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

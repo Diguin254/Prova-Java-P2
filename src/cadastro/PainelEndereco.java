@@ -11,11 +11,7 @@ import dto.EnderecoDTO;
 import dto.InterfaceDTO;
 import implementsDao.BairroImplementsDAO;
 import java.util.List;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-
 /**
  *
  * @author alenc

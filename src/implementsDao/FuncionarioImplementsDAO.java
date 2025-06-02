@@ -22,12 +22,18 @@ public class FuncionarioImplementsDAO implements FuncionarioDao {
     public void salvar(Funcionario funcionario) throws SQLException {
         String sql = "INSERT INTO funcionario (nome, cpf, rg, login_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, funcionario.getNome());
             stmt.setString(2, funcionario.getCpf());
             stmt.setString(3, funcionario.getRg());
             stmt.setInt(4, funcionario.getLogin().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    funcionario.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

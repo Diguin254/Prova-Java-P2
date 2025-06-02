@@ -3,7 +3,12 @@ package dto;
 import java.util.Date;
 import model.Cupom;
 
-public class CupomDTO implements InterfaceDTO{
+public class CupomDTO implements InterfaceDTO {
+
+    public String idC;
+    public String valorC;
+    public String codigoC;
+    public Date validadeC;
 
     public CupomDTO() {
     }
@@ -40,13 +45,6 @@ public class CupomDTO implements InterfaceDTO{
         this.validadeC = validadeC;
     }
 
-    
-    
-    public String idC;
-    public String valorC;
-    public String codigoC;
-    public Date validadeC;
-
     public Cupom builder() {
         Cupom c = new Cupom();
         c.setId(idC == null ? 0 : Integer.valueOf(idC));
@@ -61,6 +59,5 @@ public class CupomDTO implements InterfaceDTO{
     public String toString() {
         return "CupomDTO{" + "idC=" + idC + ", valorC=" + valorC + ", codigoC=" + codigoC + ", validadeC=" + validadeC + '}';
     }
-    
-    
+
 }

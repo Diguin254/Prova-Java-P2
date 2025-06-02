@@ -4,7 +4,6 @@
  */
 package app;
 
-import cadastro.CadastroPadrao;
 import cadastro.PainelBairros;
 import cadastro.PainelCarrinho;
 import cadastro.PainelCartao;
@@ -51,7 +50,6 @@ import controller.TaxaEntregaController;
 import controller.TelefoneController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 

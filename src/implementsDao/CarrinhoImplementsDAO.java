@@ -23,12 +23,12 @@ public class CarrinhoImplementsDAO implements CarrinhoDao {
             stmt.setInt(2, carrinho.getPedido().getId());
             stmt.setInt(3, carrinho.getProduto().getId());
             stmt.executeUpdate();
-            
+
             try (ResultSet rs = stmt.getGeneratedKeys()) {
-            if (rs.next()) {
-                carrinho.setId(rs.getInt(1));
+                if (rs.next()) {
+                    carrinho.setId(rs.getInt(1));
+                }
             }
-        }
         }
     }
 

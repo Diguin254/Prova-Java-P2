@@ -20,13 +20,19 @@ public class EntregaImplementsDAO implements EntregaDao {
     public void salvar(Entrega entrega) throws SQLException {
         String sql = "INSERT INTO entrega (cliente_id, tipoEntrega, delivery_id, pedido_id, status_pedido_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, entrega.getCliente().getId());
             stmt.setInt(2, entrega.getTipoEntrega());
             stmt.setInt(3, entrega.getDelivery().getId());
             stmt.setInt(4, entrega.getPedido().getId());
             stmt.setInt(5, entrega.getStatusPedido().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    entrega.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

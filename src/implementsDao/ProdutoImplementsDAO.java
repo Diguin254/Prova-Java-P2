@@ -16,10 +16,16 @@ public class ProdutoImplementsDAO implements ProdutoDao {
     public void salvar(Produto produto) throws SQLException {
         String sql = "INSERT INTO produto(nome, valor_unitario) VALUES (?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getValorUnitario());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    produto.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

@@ -19,11 +19,17 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     public void salvar(Pagamento pagamento) throws SQLException {
         String sql = "INSERT INTO pagamento (metodo_pagamento_id, cupom_id, pedido_id) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, pagamento.getMetodoPagamento().getId());
             stmt.setInt(2, pagamento.getCupom().getId());
             stmt.setInt(3, pagamento.getPedido().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    pagamento.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

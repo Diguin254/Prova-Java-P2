@@ -18,12 +18,18 @@ public class TelefoneImplementsDAO implements TelefoneDao {
     public void salvar(Telefone telefone) throws SQLException {
         String sql = "INSERT INTO telefone(ddd, numero, cliente_id, funcionario_id) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, telefone.getDdd());
             stmt.setString(2, telefone.getNumero());
             stmt.setInt(3, telefone.getCliente().getId());
             stmt.setInt(4, telefone.getFuncionario().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    telefone.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

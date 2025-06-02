@@ -17,11 +17,17 @@ public class CupomImplementsDAO implements CupomDao {
     public void salvar(Cupom cupom) throws SQLException {
         String sql = "INSERT INTO cupom (valorCupom, codigo, validade) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setDouble(1, cupom.getValorCupom());
             stmt.setString(2, cupom.getCodigo());
             stmt.setDate(3, new java.sql.Date(cupom.getValidade().getTime()));
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    cupom.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

@@ -20,19 +20,25 @@ public class PedidoImplementsDAO implements PedidoDao {
     public void salvar(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO pedido (horaPedido, numeroPedido, dataPedido, cliente_id, status_pedido_id) VALUES (?, ?, ?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, pedido.getHoraPedido());
             stmt.setInt(2, pedido.getNumeroPedido());
             stmt.setDate(3, new java.sql.Date(pedido.getDataPedido().getTime()));
             stmt.setInt(4, pedido.getCliente().getId());
             stmt.setInt(5, pedido.getStatusPedido().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    pedido.setId(rs.getInt(1));
+                }
+            }
         }
     }
 
     @Override
     public void editar(Pedido pedido) throws SQLException {
-        String sql = "UPDATE pedido SET horaPedido = ?, numeroPedido = ?, dataPedido = ?, cliente_id = ?, statusPedido_id = ? WHERE id = ?";
+        String sql = "UPDATE pedido SET horaPedido = ?, numeroPedido = ?, dataPedido = ?, cliente_id = ?, status_pedido_id = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, pedido.getHoraPedido());
@@ -58,7 +64,7 @@ public class PedidoImplementsDAO implements PedidoDao {
     @Override
     public List<Pedido> listar() throws SQLException {
         List<Pedido> pedidos = new LinkedList<>();
-        String sql = "SELECT id, horaPedido, numeroPedido, dataPedido, cliente_id, statusPedido_id FROM pedido";
+        String sql = "SELECT id, horaPedido, numeroPedido, dataPedido, cliente_id, status_pedido_id FROM pedido";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {

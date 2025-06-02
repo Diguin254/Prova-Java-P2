@@ -27,11 +27,12 @@ public class PainelFuncionario extends InterfacePainel {
      */
     private final LoginDao loginDao = new LoginImplementsDAO();
     private List<Login> listaLogin;
-    FuncionarioDTO dto;
-
+    
     public PainelFuncionario() {
         initComponents();
+        carregarCombo();
         carregarComboLogin();
+        atualizarTabela();
     }
 
     /**
@@ -51,11 +52,11 @@ public class PainelFuncionario extends InterfacePainel {
         jTextField3 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabelLogin = new javax.swing.JLabel();
         jComboBoxLogin = new javax.swing.JComboBox<>();
+        comboTelefone = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(400, 306));
 
@@ -103,12 +104,6 @@ public class PainelFuncionario extends InterfacePainel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,8 +136,8 @@ public class PainelFuncionario extends InterfacePainel {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(comboTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,14 +169,15 @@ public class PainelFuncionario extends InterfacePainel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(comboTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    List<TelefoneDTO> telefones = new LinkedList<>();
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -193,25 +189,13 @@ public class PainelFuncionario extends InterfacePainel {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-    List<TelefoneDTO> telefones = new LinkedList<>();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelefoneDTO telefoneDTO = new TelefoneDTO();
-        telefoneDTO.numTel = jTextField4.getText();
-        telefones.add(telefoneDTO);
-        Object[][] data = new Object[telefones.size()][1];
-        for (int i = 0; i < telefones.size(); i++) {
-            data[i][0] = telefones.get(i).numTel;
-        }
 
-        jTable1.setModel(new DefaultTableModel(data, new String[]{"Telefone"}));
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboTelefone;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxLogin;
     private javax.swing.JLabel jLabel1;
@@ -224,36 +208,24 @@ public class PainelFuncionario extends InterfacePainel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
-
-    private void carregarComboLogin() {
-        try {
-            listaLogin = loginDao.listar();
-            jComboBoxLogin.removeAllItems();
-            for (Login l : listaLogin) {
-                jComboBoxLogin.addItem(l.getLogin_funcionario());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar login: " + e.getMessage());
-        }
-    }
-
+    FuncionarioDTO dto;
     @Override
     public InterfaceDTO getDados() {
-        if (dto == null) {
+        if(dto == null) {
             dto = new FuncionarioDTO();
         }
-
+        
         dto.nomeFun = jTextField1.getText();
         dto.cpfFun = jTextField2.getText();
         dto.rgFun = jTextField3.getText();
-
+        dto.telefones = telefones;
+        
         int index = jComboBoxLogin.getSelectedIndex();
         if (index >= 0 && index < listaLogin.size()) {
             dto.idLogin = String.valueOf(listaLogin.get(index).getId());
         }
-
+        
         return dto;
     }
 
@@ -263,7 +235,15 @@ public class PainelFuncionario extends InterfacePainel {
         jTextField1.setText(this.dto.nomeFun);
         jTextField2.setText(this.dto.cpfFun);
         jTextField3.setText(this.dto.rgFun);
+    }
 
+    private void carregarCombo() {
+        comboTelefone.removeAllItems();
+         comboTelefone.addItem("— Selecione —");
+        for (TelefoneDTO tel : telefones) {
+            comboTelefone.addItem(tel.getNumTel());
+        }
+        
         if (listaLogin != null && !listaLogin.isEmpty() && this.dto.idLogin != null) {
             int id = Integer.parseInt(this.dto.idLogin);
             for (int i = 0; i < listaLogin.size(); i++) {
@@ -272,6 +252,32 @@ public class PainelFuncionario extends InterfacePainel {
                     break;
                 }
             }
+        }
+        
+    }
+
+    private void atualizarTabela() {
+        int tamanho = telefones.size();
+        Object[][] data = new Object[tamanho][1];
+
+        for (int i = 0; i < tamanho; i++) {
+            data[i][0] = (i < telefones.size()) ? telefones.get(i).numTel : "";
+        }
+
+        jTable1.setModel(new DefaultTableModel(
+                data, new String[]{"Telefone"}));
+    }
+
+    private void carregarComboLogin() {
+        try {
+            listaLogin = loginDao.listar();
+            jComboBoxLogin.removeAllItems();
+             jComboBoxLogin.addItem("— Selecione —");
+            for (Login l : listaLogin){
+                jComboBoxLogin.addItem(l.getLogin_funcionario());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar login: " + e.getMessage());
         }
     }
 }

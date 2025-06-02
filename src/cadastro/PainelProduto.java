@@ -186,6 +186,7 @@ public class PainelProduto extends InterfacePainel {
         
         dto.nomeProd = jTextField1.getText();
         dto.valUnProd = jTextField2.getText();
+        dto.carrinhos = carrinhos;
         return (ProdutoDTO) (InterfaceDTO) dto;
     }
     
@@ -193,6 +194,6 @@ public class PainelProduto extends InterfacePainel {
     public void setDados(InterfaceDTO dto){
         this.dto = (ProdutoDTO) dto;
         jTextField1.setText(this.dto.nomeProd);
-        jTextField1.setText(this.dto.valUnProd);
+        jTextField2.setText(this.dto.valUnProd);
     }
 }

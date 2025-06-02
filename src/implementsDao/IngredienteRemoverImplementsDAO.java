@@ -17,10 +17,16 @@ public class IngredienteRemoverImplementsDAO implements IngredienteRemoverDao {
     public void salvar(IngredienteRemover ingredienteRemover) throws SQLException {
         String sql = "INSERT INTO ingredienteRemover (nome, ingredienteEscolha_id) VALUES (?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, ingredienteRemover.getNome());
             stmt.setInt(2, ingredienteRemover.getIngredienteEscolha().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    ingredienteRemover.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

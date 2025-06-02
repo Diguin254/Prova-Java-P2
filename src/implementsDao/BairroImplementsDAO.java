@@ -13,9 +13,15 @@ public class BairroImplementsDAO implements BairroDao {
     public void salvar(Bairro bairro) throws SQLException {
         String sql = "INSERT INTO bairro(nome)VALUES(?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, bairro.getNome());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    bairro.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

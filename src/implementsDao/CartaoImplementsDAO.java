@@ -17,11 +17,17 @@ public class CartaoImplementsDAO implements CartaoDao {
     public void salvar(Cartao cartao) throws SQLException {
         String sql = "INSERT INTO cartao (numeroCartao, cvv, tipoConta) VALUES (?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, cartao.getNumeroCartao());
             stmt.setInt(2, cartao.getCcv());
             stmt.setInt(3, cartao.getTipoConta());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    cartao.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

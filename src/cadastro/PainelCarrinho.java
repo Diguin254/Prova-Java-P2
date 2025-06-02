@@ -117,7 +117,7 @@ public class PainelCarrinho extends InterfacePainel {
             jComboBoxPedido.removeAllItems();
             jComboBoxPedido.addItem("— Selecione —");
             for (Pedido p : listaPed) {
-                jComboBoxPedido.addItem(String.valueOf(p.getNumeroPedido()));
+                jComboBoxPedido.addItem(p.getHoraPedido());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar pedido: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

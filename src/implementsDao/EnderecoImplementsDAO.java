@@ -17,7 +17,7 @@ public class EnderecoImplementsDAO implements EnderecoDao {
     public void salvar(Endereco endereco) throws SQLException {
         String sql = "INSERT INTO endereco (rua, cep, bairro_id, distancia) VALUES (?, ?, ?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, endereco.getRua());
             stmt.setString(2, endereco.getCep());
             stmt.setInt(3, endereco.getBairro().getId());
@@ -33,6 +33,13 @@ public class EnderecoImplementsDAO implements EnderecoDao {
             
             stmt.setDouble(4, d);
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    endereco.setId(rs.getInt(1));
+                }
+            }
+            
         }
     }
 

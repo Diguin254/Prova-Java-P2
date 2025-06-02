@@ -17,9 +17,15 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
     public void salvar(StatusPedido statusPedido) throws SQLException {
         String sql = "INSERT INTO statusPedido(progresso) VALUES (?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, statusPedido.getProgresso());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    statusPedido.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

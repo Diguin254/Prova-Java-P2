@@ -17,10 +17,16 @@ public class ReembolsoImplementsDAO implements ReembolsoDao {
     public void salvar(Reembolso reembolso) throws SQLException {
         String sql = "INSERT INTO reembolso(motivo, pedido_id) VALUES (?, ?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, reembolso.getMotivo());
             stmt.setInt(2, reembolso.getPedido().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    reembolso.setId(rs.getInt(1));
+                }
+            }
         }
     }
 

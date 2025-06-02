@@ -17,9 +17,15 @@ public class IngredienteEscolhaImplementsDAO implements IngredienteEscolhaDao {
     public void salvar(IngredienteEscolha ingredienteEscolha) throws SQLException {
         String sql = "INSERT INTO ingredienteEscolha (carrinho_id) VALUES (?)";
         con = Conexao.getConexao();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, ingredienteEscolha.getCarrinho().getId());
             stmt.executeUpdate();
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    ingredienteEscolha.setId(rs.getInt(1));
+                }
+            }
         }
     }
 
