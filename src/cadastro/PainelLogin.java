@@ -1,13 +1,8 @@
 package cadastro;
 
 import app.InterfacePainel;
-import dto.FuncionarioDTO;
 import dto.InterfaceDTO;
 import dto.LoginDTO;
-import java.util.LinkedList;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author alenc
@@ -19,8 +14,6 @@ public class PainelLogin extends InterfacePainel {
      */
     public PainelLogin() {
         initComponents();
-        atualizarTabela();
-        carregarCombo();
     }
 
     /**
@@ -36,13 +29,6 @@ public class PainelLogin extends InterfacePainel {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        comboFuncionarioNome = new javax.swing.JComboBox<>();
-        comboFuncionarioCpf = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Usuario");
@@ -55,30 +41,6 @@ public class PainelLogin extends InterfacePainel {
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "", "", "", ""
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Nome");
-
-        jLabel4.setText("CPF");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,25 +51,10 @@ public class PainelLogin extends InterfacePainel {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(0, 0, Short.MAX_VALUE))
-                                .addComponent(comboFuncionarioNome, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton1)))
-                    .addComponent(comboFuncionarioCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,45 +68,13 @@ public class PainelLogin extends InterfacePainel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(comboFuncionarioNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboFuncionarioCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(37, 37, 37)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    List<FuncionarioDTO> funcionarios = new LinkedList<>();
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FuncionarioDTO funSelecionado = (FuncionarioDTO) comboFuncionarioNome.getSelectedItem();
-        if (funSelecionado != null) {
-            funcionarios.add(funSelecionado);
-            atualizarTabela();
-            comboFuncionarioNome.setSelectedIndex(-1);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> comboFuncionarioCpf;
-    private javax.swing.JComboBox<String> comboFuncionarioNome;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
@@ -172,7 +87,6 @@ public class PainelLogin extends InterfacePainel {
         
         dto.senhaLogin = jTextField2.getText();
         dto.loginFun = jTextField1.getText();
-        dto.funcionarios = funcionarios;
         return dto;
     }
     
@@ -181,27 +95,5 @@ public class PainelLogin extends InterfacePainel {
         this.dto = (LoginDTO) dto;
         jTextField2.setText(this.dto.senhaLogin);
         jTextField1.setText(this.dto.loginFun);
-    }
-
-    private void carregarCombo() {
-        comboFuncionarioNome.removeAllItems();
-        comboFuncionarioCpf.removeAllItems();
-        for (FuncionarioDTO fun : funcionarios) {
-            comboFuncionarioNome.addItem(fun.getNomeFun());
-            comboFuncionarioCpf.addItem(fun.getCpfFun());
-        }
-    }
-
-    private void atualizarTabela() {
-        int tamanho = funcionarios.size();
-        Object[][] data = new Object[tamanho][2];
-
-        for (int i = 0; i < tamanho; i++) {
-            data[i][0] = (i < funcionarios.size()) ? funcionarios.get(i).nomeFun : "";
-            data[i][1] = (i < funcionarios.size()) ? funcionarios.get(i).cpfFun : "";
-        }
-
-        jTable1.setModel(new DefaultTableModel(
-                data, new String[]{"Nome", "CPF"}));
     }
 }
