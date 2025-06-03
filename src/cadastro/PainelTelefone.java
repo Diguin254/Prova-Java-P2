@@ -157,7 +157,7 @@ public class PainelTelefone extends InterfacePainel {
             listaCliente = clienteDao.listar();
             jComboBoxCliente.removeAllItems();
 
-            jComboBoxCliente.addItem("Selecione");
+            jComboBoxCliente.addItem("— Selecione —");
 
             for (Cliente c : listaCliente) {
                 jComboBoxCliente.addItem(c.getNome());
@@ -172,7 +172,7 @@ public class PainelTelefone extends InterfacePainel {
             listaFuncionario = funcionarioDao.listar();
             jComboBoxFuncionario.removeAllItems();
 
-            jComboBoxFuncionario.addItem("Selecione");
+            jComboBoxFuncionario.addItem("— Selecione —");
 
             for (Funcionario f : listaFuncionario) {
                 jComboBoxFuncionario.addItem(f.getNome());
@@ -194,13 +194,19 @@ public class PainelTelefone extends InterfacePainel {
             dto.numTel = jTextField2.getText();
 
             int index = jComboBoxCliente.getSelectedIndex();
-            if (index >= 0 && index < listaCliente.size()) {
-                dto.idCliente = String.valueOf(listaCliente.get(index).getId());
+            if (index > 0 && index <= listaCliente.size()) {
+                Cliente escolhido = listaCliente.get(index - 1);
+                dto.idCliente = String.valueOf(escolhido.getId());
+            } else {
+                dto.idCliente = null;
             }
 
             int indexF = jComboBoxFuncionario.getSelectedIndex();
-            if (indexF >= 0 && indexF < listaFuncionario.size()) {
-                dto.idFuncionario = String.valueOf(listaFuncionario.get(indexF).getId());
+            if (indexF > 0 && indexF <= listaFuncionario.size()) {
+                Funcionario escolhido = listaFuncionario.get(indexF - 1);
+                dto.idFuncionario = String.valueOf(escolhido.getId());
+            } else {
+                dto.idFuncionario = null;
             }
 
             return dto;
@@ -219,21 +225,22 @@ public class PainelTelefone extends InterfacePainel {
                 int id = Integer.parseInt(this.dto.idCliente);
                 for (int i = 0; i < listaCliente.size(); i++) {
                     if (listaCliente.get(i).getId() == id) {
-                        jComboBoxCliente.setSelectedIndex(i);
-                        break;
+                        jComboBoxCliente.setSelectedIndex(i + 1);
+                        return;
                     }
                 }
             }
-
+            jComboBoxCliente.setSelectedIndex(0);
             if (listaFuncionario != null && !listaFuncionario.isEmpty() && this.dto.idFuncionario != null) {
                 int id = Integer.parseInt(this.dto.idFuncionario);
                 for (int i = 0; i < listaFuncionario.size(); i++) {
                     if (listaFuncionario.get(i).getId() == id) {
-                        jComboBoxFuncionario.setSelectedIndex(i);
-                        break;
+                        jComboBoxFuncionario.setSelectedIndex(i + 1);
+                        return;
                     }
                 }
             }
+            jComboBoxFuncionario.setSelectedIndex(0);
         }
 
     }

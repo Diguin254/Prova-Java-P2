@@ -164,6 +164,7 @@ public class PainelDelivery extends InterfacePainel {
         try {
             listaEndereco = enderecoDao.listar();
             jComboBox1.removeAllItems();
+            jComboBox1.addItem("— Selecione —");
             for (Endereco end : listaEndereco) {
                 jComboBox1.addItem(end.getRua());
             }
@@ -182,11 +183,14 @@ public class PainelDelivery extends InterfacePainel {
         dto.complementoD = jTextField3.getText();
 
         int index = jComboBox1.getSelectedIndex();
-        if (index >= 0 && index < listaEndereco.size()) {
-            dto.idEndereco = String.valueOf(listaEndereco.get(index).getId());
+        if (index > 0 && index <= listaEndereco.size()) {
+            Endereco escolhido = listaEndereco.get(index - 1);
+            dto.idEndereco = String.valueOf(escolhido.getId());
+        } else {
+            dto.idEndereco = null;
         }
 
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
@@ -200,11 +204,12 @@ public class PainelDelivery extends InterfacePainel {
             int id = Integer.parseInt(this.dto.idEndereco);
             for (int i = 0; i < listaEndereco.size(); i++) {
                 if (listaEndereco.get(i).getId() == id) {
-                    jComboBox1.setSelectedIndex(i);
-                    break;
+                    jComboBox1.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBox1.setSelectedIndex(0);
     }
 
 }

@@ -154,7 +154,7 @@ public class PainelCarrinho extends InterfacePainel {
         }
         
         int indexPro = jComboBoxProduto.getSelectedIndex();
-        if (indexPro >= 0 && indexPro < listaProd.size()) {
+        if (indexPro > 0 && indexPro <= listaProd.size()) {
             Produto escolhido = listaProd.get(indexP - 1);
             dto.idProduto = String.valueOf(escolhido.getId());
         } else {

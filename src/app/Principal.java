@@ -506,22 +506,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemPedidoActionPerformed
 
     private void jMenuItemStatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemStatusPedidoActionPerformed
-        try {
-            List<InterfaceDTO> listaPedidoDTO = pedidoController.listar();
-            if (listaPedidoDTO.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Status de Pedido.\nNão existe nenhum Pedido cadastrado.\nCadastre um Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
             new CadastroPadrao(this, new PainelStatusPedido(), new StatusPedidoController(), true).setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao verificar existência de Pedidos:\n" + ex.getMessage(),
-                    "Erro de Banco",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
     }//GEN-LAST:event_jMenuItemStatusPedidoActionPerformed
 
     private void jMenuItemCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCupomActionPerformed
@@ -530,8 +515,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItemDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeliveryActionPerformed
         try {
-            List<InterfaceDTO> listaDeliverysDTO = deliveryController.listar();
-            if (listaDeliverysDTO.isEmpty()) {
+            List<InterfaceDTO> listaEnderecoDTO = enderecoController.listar();
+            if (listaEnderecoDTO.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Delivery.\nNão existe nenhum Endereço cadastrado.\nCadastre um Endereço antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
