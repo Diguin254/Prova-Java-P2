@@ -22,7 +22,7 @@
 //id SERIAL PRIMARY KEY, 
 //numeroCartao text, 
 //cvv text, 
-//tipoConta integer ---1 credito, 2 debito 
+//tipoConta integer
 //); 
 //
 //-- dinheiro definition 

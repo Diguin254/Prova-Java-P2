@@ -15,7 +15,7 @@ import java.sql.*;
 
 /**
  *
- * @author Cliente
+ * @author alenca
  */
 public class ListagemCliente extends Listagem<ClienteDTO> {
 

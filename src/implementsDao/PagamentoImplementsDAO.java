@@ -35,7 +35,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
 
     @Override
     public void editar(Pagamento pagamento) throws SQLException {
-        String sql = "UPDATE pagamento SET metodoPagamento_id = ?, cupom_id = ?, pedido_id = ? WHERE id = ?";
+        String sql = "UPDATE pagamento SET metodo_pagamento_id = ?, cupom_id = ?, pedido_id = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, pagamento.getMetodoPagamento().getId());
@@ -59,7 +59,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
     @Override
     public List<Pagamento> listar() throws SQLException {
         List<Pagamento> pagamentos = new LinkedList<>();
-        String sql = "SELECT id, metodoPagamento_id, cupom_id, pedido_id FROM pagamento";
+        String sql = "SELECT id, metodo_pagamento_id, cupom_id, pedido_id FROM pagamento";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             while (res.next()) {
@@ -67,7 +67,7 @@ public class PagamentoImplementsDAO implements PagamentoDao {
                 pagamento.setId(res.getInt("id"));
 
                 MetodoPagamento metodoPagamento = new MetodoPagamento();
-                metodoPagamento.setId(res.getInt("metodoPagamento_id"));
+                metodoPagamento.setId(res.getInt("metodo_pagamento_id"));
                 pagamento.setMetodoPagamento(metodoPagamento);
 
                 Cupom cupom = new Cupom();

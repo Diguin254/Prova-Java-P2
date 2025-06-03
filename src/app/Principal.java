@@ -55,7 +55,28 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import listagem.ListagemAdicional;
+import listagem.ListagemBairro;
+import listagem.ListagemCarrinho;
+import listagem.ListagemCartao;
 import listagem.ListagemCliente;
+import listagem.ListagemCupom;
+import listagem.ListagemDelivery;
+import listagem.ListagemDinheiro;
+import listagem.ListagemEndereco;
+import listagem.ListagemEntrega;
+import listagem.ListagemEscolha;
+import listagem.ListagemFuncionario;
+import listagem.ListagemLogin;
+import listagem.ListagemMetPag;
+import listagem.ListagemPagamento;
+import listagem.ListagemPedido;
+import listagem.ListagemProduto;
+import listagem.ListagemReembolso;
+import listagem.ListagemRemover;
+import listagem.ListagemStatus;
+import listagem.ListagemTaxa;
+import listagem.ListagemTelefone;
 
 /**
  *
@@ -371,12 +392,27 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setText("Listar");
 
         jMenuListarBairro.setText("Bairro");
+        jMenuListarBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarBairroActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarBairro);
 
         jMenuListarCarrinho.setText("Carrinho");
+        jMenuListarCarrinho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarCarrinhoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarCarrinho);
 
         jMenuListarCartao.setText("Cartão");
+        jMenuListarCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarCartaoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarCartao);
 
         jMenuListarCliente.setText("Cliente");
@@ -388,9 +424,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuListarCliente);
 
         jMenuListarCupom.setText("Cupom");
+        jMenuListarCupom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarCupomActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarCupom);
 
         jMenuListarDelivery.setText("Delivery");
+        jMenuListarDelivery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarDeliveryActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarDelivery);
 
         jMenuListarDinheiro.setText("Dinheiro");
@@ -402,48 +448,123 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuListarDinheiro);
 
         jMenuListarEndereco.setText("Endereço");
+        jMenuListarEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarEnderecoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarEndereco);
 
         jMenuListarEntrega.setText("Entrega");
+        jMenuListarEntrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarEntregaActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarEntrega);
 
         jMenuListarFuncionario.setText("Funcionário");
+        jMenuListarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarFuncionarioActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarFuncionario);
 
         jMenuListarAdicional.setText("Ingrediente Adicional");
+        jMenuListarAdicional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarAdicionalActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarAdicional);
 
         jMenuListarEscolha.setText("Ingrediente Escolha");
+        jMenuListarEscolha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarEscolhaActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarEscolha);
 
         jMenuListarRemover.setText("Ingrediente Remover");
+        jMenuListarRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarRemoverActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarRemover);
 
         jMenuListarLogin.setText(" Login");
+        jMenuListarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarLoginActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarLogin);
 
         jMenuListarMetPag.setText("Método de Pagamento");
+        jMenuListarMetPag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarMetPagActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarMetPag);
 
         jMenuListarPagamento.setText("Pagamento");
+        jMenuListarPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarPagamentoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarPagamento);
 
         jMenuListarPedido.setText("Pedido");
+        jMenuListarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarPedidoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarPedido);
 
         jMenuListarProduto.setText("Produto");
+        jMenuListarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarProdutoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarProduto);
 
         jMenuListarReembolso.setText("Reembolso");
+        jMenuListarReembolso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarReembolsoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarReembolso);
 
         jMenuListarStatus.setText("Status do Pedido");
+        jMenuListarStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarStatusActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarStatus);
 
         jMenuListarTaxa.setText("Taxa de Entrega");
+        jMenuListarTaxa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarTaxaActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarTaxa);
 
         jMenuListarTelefone.setText("Telefone");
+        jMenuListarTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarTelefoneActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuListarTelefone);
 
         jMenuBar1.add(jMenu1);
@@ -806,13 +927,114 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCartaoActionPerformed
 
     private void jMenuListarDinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarDinheiroActionPerformed
-        // TODO add your handling code here:
+       ListagemDinheiro dialog = new ListagemDinheiro(this, true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_jMenuListarDinheiroActionPerformed
 
     private void jMenuListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarClienteActionPerformed
         ListagemCliente dialog = new ListagemCliente(this, true);
         dialog.setVisible(true);
     }//GEN-LAST:event_jMenuListarClienteActionPerformed
+
+    private void jMenuListarBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarBairroActionPerformed
+        ListagemBairro dialog = new ListagemBairro(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarBairroActionPerformed
+
+    private void jMenuListarCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarCarrinhoActionPerformed
+        ListagemCarrinho dialog = new ListagemCarrinho(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarCarrinhoActionPerformed
+
+    private void jMenuListarCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarCartaoActionPerformed
+        ListagemCartao dialog = new ListagemCartao(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarCartaoActionPerformed
+
+    private void jMenuListarCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarCupomActionPerformed
+        ListagemCupom dialog = new ListagemCupom(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarCupomActionPerformed
+
+    private void jMenuListarDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarDeliveryActionPerformed
+        ListagemDelivery dialog = new ListagemDelivery(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarDeliveryActionPerformed
+
+    private void jMenuListarEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarEnderecoActionPerformed
+        ListagemEndereco dialog = new ListagemEndereco(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarEnderecoActionPerformed
+
+    private void jMenuListarEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarEntregaActionPerformed
+        ListagemEntrega dialog = new ListagemEntrega(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarEntregaActionPerformed
+
+    private void jMenuListarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarFuncionarioActionPerformed
+        ListagemFuncionario dialog = new ListagemFuncionario(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarFuncionarioActionPerformed
+
+    private void jMenuListarAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarAdicionalActionPerformed
+        ListagemAdicional dialog = new ListagemAdicional(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarAdicionalActionPerformed
+
+    private void jMenuListarEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarEscolhaActionPerformed
+       ListagemEscolha dialog = new ListagemEscolha(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarEscolhaActionPerformed
+
+    private void jMenuListarRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarRemoverActionPerformed
+        ListagemRemover dialog = new ListagemRemover(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarRemoverActionPerformed
+
+    private void jMenuListarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarLoginActionPerformed
+        ListagemLogin dialog = new ListagemLogin(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarLoginActionPerformed
+
+    private void jMenuListarMetPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarMetPagActionPerformed
+        ListagemMetPag dialog = new ListagemMetPag(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarMetPagActionPerformed
+
+    private void jMenuListarPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarPagamentoActionPerformed
+        ListagemPagamento dialog = new ListagemPagamento(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarPagamentoActionPerformed
+
+    private void jMenuListarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarPedidoActionPerformed
+        ListagemPedido dialog = new ListagemPedido(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarPedidoActionPerformed
+
+    private void jMenuListarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarProdutoActionPerformed
+        ListagemProduto dialog = new ListagemProduto(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarProdutoActionPerformed
+
+    private void jMenuListarReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarReembolsoActionPerformed
+        ListagemReembolso dialog = new ListagemReembolso(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarReembolsoActionPerformed
+
+    private void jMenuListarStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarStatusActionPerformed
+        ListagemStatus dialog = new ListagemStatus(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarStatusActionPerformed
+
+    private void jMenuListarTaxaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarTaxaActionPerformed
+        ListagemTaxa dialog = new ListagemTaxa(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarTaxaActionPerformed
+
+    private void jMenuListarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarTelefoneActionPerformed
+        ListagemTelefone dialog = new ListagemTelefone(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarTelefoneActionPerformed
 
     /**
      * @param args the command line arguments

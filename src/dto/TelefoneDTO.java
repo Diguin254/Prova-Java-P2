@@ -16,6 +16,22 @@ public class TelefoneDTO implements InterfaceDTO{
 
     }
 
+    public String getIdTel() {
+        return idTel;
+    }
+
+    public void setIdTel(String idTel) {
+        this.idTel = idTel;
+    }
+
+    public String getDddTel() {
+        return dddTel;
+    }
+
+    public void setDddTel(String dddTel) {
+        this.dddTel = dddTel;
+    }
+
     public String getNumTel() {
         return numTel;
     }
