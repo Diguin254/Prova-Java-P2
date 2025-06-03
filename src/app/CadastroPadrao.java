@@ -6,7 +6,6 @@ package app;
 
 import app.InterfacePainel;
 import cadastro.PainelBairros;
-import cadastro.PainelBairros;
 import controller.BairroController;
 import controller.InterfaceController;
 import dto.BairroDTO;

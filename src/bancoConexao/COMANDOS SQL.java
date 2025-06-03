@@ -41,7 +41,6 @@
 //CREATE TABLE statusPedido ( 
 //id SERIAL PRIMARY KEY, 
 //progresso text, 
-//pedido_id integer
 //);
 //
 //-- funcionario definition 
@@ -106,7 +105,7 @@
 //-- pedido definition 
 //CREATE TABLE pedido ( 
 //id SERIAL PRIMARY KEY,
-//horaPedido date, 
+//horaPedido TIME, 
 //numeroPedido integer,
 //dataPedido date, 
 //cliente_id integer, 

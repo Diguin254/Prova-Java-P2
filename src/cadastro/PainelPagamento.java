@@ -13,7 +13,10 @@ import dto.PagamentoDTO;
 import implementsDao.CupomImplementsDAO;
 import implementsDao.MetodoPagamentoImplementsDAO;
 import implementsDao.PedidoImplementsDAO;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import model.Cupom;
 import model.MetodoPagamento;
@@ -28,6 +31,7 @@ public class PainelPagamento extends InterfacePainel {
     /**
      * Creates new form PainelPagamento
      */
+    private Map<String, Integer> mapaMetodos = new HashMap<>();
     private final MetodoPagamentoDao metPagDao = new MetodoPagamentoImplementsDAO();
     private List<MetodoPagamento> listaMetPag;
     private final CupomDao cupomDao = new CupomImplementsDAO();
@@ -121,13 +125,26 @@ public class PainelPagamento extends InterfacePainel {
         try {
             listaMetPag = metPagDao.listar();
             jComboBoxMetPag.removeAllItems();
+            mapaMetodos.clear();
+
             for (MetodoPagamento met : listaMetPag) {
-                jComboBoxMetPag.addItem(String.valueOf(met.getCartao()));
-                jComboBoxMetPag.addItem(String.valueOf(met.getDinheiro()));
-                jComboBoxMetPag.addItem(String.valueOf(met.getPix()));
+                int id = met.getId();
+
+                if (met.getPix() != null) {
+                    jComboBoxMetPag.addItem("PIX");
+                    mapaMetodos.put("PIX", id);
+                }
+                if (met.getDinheiro() != null) {
+                    jComboBoxMetPag.addItem("DINHEIRO");
+                    mapaMetodos.put("DINHEIRO", id);
+                }
+                if (met.getCartao() != null) {
+                    jComboBoxMetPag.addItem("CARTÃO");
+                    mapaMetodos.put("CARTÃO", id);
+                }
             }
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar metodo de pagamento: " + e.getMessage());
         }
     }
 
@@ -148,7 +165,7 @@ public class PainelPagamento extends InterfacePainel {
             listaPedido = pedidoDao.listar();
             jComboBoxPedido.removeAllItems();
             for (Pedido p : listaPedido) {
-                jComboBoxPedido.addItem(String.valueOf(p.getCliente()+ " - " + p.getDataPedido()+ " - " + p.getNumeroPedido()));
+                jComboBoxPedido.addItem(String.valueOf(p.getCliente() + " - " + p.getDataPedido() + " - " + p.getNumeroPedido()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar pedido: " + e.getMessage());
@@ -160,10 +177,17 @@ public class PainelPagamento extends InterfacePainel {
         if (dto == null) {
             dto = new PagamentoDTO();
         }
-
         int indexM = jComboBoxMetPag.getSelectedIndex();
-        if (indexM >= 0 && indexM < listaMetPag.size()) {
-            dto.idMetPag = String.valueOf(listaMetPag.get(indexM).getId());
+        if (indexM >= 0) {
+            String tipoSelecionado = (String) jComboBoxMetPag.getSelectedItem();
+            Integer idMetodo = mapaMetodos.get(tipoSelecionado);
+
+            if (idMetodo == null) {
+                JOptionPane.showMessageDialog(this, "Método de pagamento inválido.");
+                return null;
+            }
+
+            dto.idMetPag = String.valueOf(idMetodo);
         }
 
         int indexC = jComboBoxCupom.getSelectedIndex();
@@ -175,7 +199,7 @@ public class PainelPagamento extends InterfacePainel {
         if (indexP >= 0 && indexP < listaPedido.size()) {
             dto.idPedidoP = String.valueOf(listaPedido.get(indexP).getId());
         }
-        
+
         return (InterfaceDTO) dto;
     }
 
@@ -183,16 +207,6 @@ public class PainelPagamento extends InterfacePainel {
     public void setDados(InterfaceDTO dto) {
         this.dto = (PagamentoDTO) dto;
 
-        if (listaMetPag != null && !listaMetPag.isEmpty() && this.dto.idMetPag != null) {
-            int id = Integer.parseInt(this.dto.idMetPag);
-            for (int i = 0; i < listaMetPag.size(); i++) {
-                if (listaMetPag.get(i).getId() == id) {
-                    jComboBoxMetPag.setSelectedIndex(i);
-                    break;
-                }
-            }
-        }
-        
         if (listaCupom != null && !listaCupom.isEmpty() && this.dto.idCupomP != null) {
             int id = Integer.parseInt(this.dto.idCupomP);
             for (int i = 0; i < listaCupom.size(); i++) {
@@ -202,7 +216,7 @@ public class PainelPagamento extends InterfacePainel {
                 }
             }
         }
-        
+
         if (listaPedido != null && !listaPedido.isEmpty() && this.dto.idPedidoP != null) {
             int id = Integer.parseInt(this.dto.idPedidoP);
             for (int i = 0; i < listaPedido.size(); i++) {
@@ -213,4 +227,5 @@ public class PainelPagamento extends InterfacePainel {
             }
         }
     }
+
 }

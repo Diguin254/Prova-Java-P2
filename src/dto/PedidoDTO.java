@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import model.Cliente;
-import model.Entrega;
 import model.Pedido;
 import model.StatusPedido;
 import model.Carrinho;

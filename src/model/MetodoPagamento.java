@@ -51,7 +51,7 @@ public class MetodoPagamento {
 
     @Override
     public String toString() {
-        return "MetodoPagamento{" + "id=" + id + ", pix=" + pix + ", dinheiro=" + dinheiro + ", cartao=" + cartao + '}';
+        return  id + ", pix=" + pix + ", dinheiro=" + dinheiro + ", cartao=" + cartao;
     }
 
 }

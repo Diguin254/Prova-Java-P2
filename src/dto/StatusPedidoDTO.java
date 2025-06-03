@@ -10,7 +10,6 @@ public class StatusPedidoDTO implements InterfaceDTO{
 
     public String idStatPed;
     public String progStatPed;
-    public String idPedidoSP;
 
     public String getIdStatPed() {
         return idStatPed;
@@ -28,14 +27,6 @@ public class StatusPedidoDTO implements InterfaceDTO{
         this.progStatPed = progStatPed;
     }
 
-    public String getIdPedidoSP() {
-        return idPedidoSP;
-    }
-
-    public void setIdPedidoSP(String idPedidoSP) {
-        this.idPedidoSP = idPedidoSP;
-    }
-
     public StatusPedido builder() {
         StatusPedido sp = new StatusPedido();
         sp.setId(idStatPed == null ? 0 : Integer.valueOf(idStatPed));
@@ -46,7 +37,7 @@ public class StatusPedidoDTO implements InterfaceDTO{
 
     @Override
     public String toString() {
-        return "StatusPedidoDTO{" + "idStatPed=" + idStatPed + ", progStatPed=" + progStatPed + ", idPedidoSP=" + idPedidoSP + '}';
+        return "StatusPedidoDTO{" + "idStatPed=" + idStatPed + ", progStatPed=" + progStatPed + '}';
     }
     
     

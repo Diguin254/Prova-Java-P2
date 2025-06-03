@@ -31,7 +31,7 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
 
     @Override
     public void editar(StatusPedido statusPedido) throws SQLException {
-        String sql = "UPDATE statusPedido SET progresso = ?, pedido_id = ? WHERE id = ?";
+        String sql = "UPDATE statusPedido SET progresso = ? WHERE id = ?";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, statusPedido.getProgresso());
@@ -53,7 +53,7 @@ public class StatusPedidoImplementsDAO implements StatusPedidoDao {
     @Override
     public List<StatusPedido> listar() throws SQLException {
         List<StatusPedido> statusPedidos = new LinkedList<>();
-        String sql = "SELECT id, progresso, pedido_id FROM statusPedido";
+        String sql = "SELECT id, progresso FROM statusPedido";
         con = Conexao.getConexao();
         try (PreparedStatement stmt = con.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
 

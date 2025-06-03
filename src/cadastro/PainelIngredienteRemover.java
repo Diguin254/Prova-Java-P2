@@ -22,13 +22,13 @@ public class PainelIngredienteRemover extends InterfacePainel {
     /**
      * Creates new form PainelIngredienteRemover
      */
-    private final IngredienteEscolhaDao ingEscolhaDao = new IngredienteEscolhaImplementsDAO();
-    private List<IngredienteEscolha> listaIngredienteEscolha;
+    private final IngredienteEscolhaDao escolhaDao = new IngredienteEscolhaImplementsDAO();
+    private List<IngredienteEscolha> listaEscolha;
     IngredienteRemoverDTO dto;
 
     public PainelIngredienteRemover() {
         initComponents();
-        comboCarregarIngredienteEscolha();
+        comboingrediente();
     }
 
     /**
@@ -43,7 +43,7 @@ public class PainelIngredienteRemover extends InterfacePainel {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboEscolha = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nome do Ingrediente");
@@ -61,7 +61,7 @@ public class PainelIngredienteRemover extends InterfacePainel {
                 .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -74,31 +74,18 @@ public class PainelIngredienteRemover extends InterfacePainel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(179, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboEscolha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
-    private void comboCarregarIngredienteEscolha() {
-        try {
-            listaIngredienteEscolha = ingEscolhaDao.listar();
-            jComboBox1.removeAllItems();
-            jComboBox1.addItem("— Selecione —");
-            for (IngredienteEscolha ing : listaIngredienteEscolha) {
-                jComboBox1.addItem(String.valueOf(ing.toString()));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar ingrediente: " + e.getMessage());
-        }
-    }
 
     @Override
     public InterfaceDTO getDados() {
@@ -108,14 +95,14 @@ public class PainelIngredienteRemover extends InterfacePainel {
 
         dto.nomeIngrRem = jTextField1.getText();
 
-        int index = jComboBox1.getSelectedIndex();
-        if (index > 0 && index <= listaIngredienteEscolha.size()) {
-            IngredienteEscolha escolhido = listaIngredienteEscolha.get(index - 1);
+        int indexEsc = comboEscolha.getSelectedIndex();
+        if (indexEsc > 0 && indexEsc <= listaEscolha.size()) {
+            IngredienteEscolha escolhido = listaEscolha.get(indexEsc - 1);
             dto.idIngrEsco = String.valueOf(escolhido.getId());
         } else {
             dto.idIngrEsco = null;
         }
-
+        
         return (InterfaceDTO) dto;
     }
 
@@ -124,15 +111,29 @@ public class PainelIngredienteRemover extends InterfacePainel {
         this.dto = (IngredienteRemoverDTO) dto;
         jTextField1.setText(this.dto.nomeIngrRem);
 
-        if (listaIngredienteEscolha != null && !listaIngredienteEscolha.isEmpty() && this.dto.idIngrEsco != null) {
-            int id = Integer.parseInt(this.dto.idIngrEsco);
-            for (int i = 0; i < listaIngredienteEscolha.size(); i++) {
-                if (listaIngredienteEscolha.get(i).getId() == id) {
-                    jComboBox1.setSelectedIndex(i + 1);
+        if (listaEscolha != null && !listaEscolha.isEmpty() && this.dto.idIngrEsco != null) {
+            int idEsc = Integer.parseInt(this.dto.idIngrEsco);
+            for (int i = 0; i < listaEscolha.size(); i++) {
+                if (listaEscolha.get(i).getId() == idEsc) {
+                    comboEscolha.setSelectedIndex(i + 1);
                     return;
                 }
             }
         }
-        jComboBox1.setSelectedIndex(0);
+        comboEscolha.setSelectedIndex(0);
+
+    }
+
+    private void comboingrediente() {
+        try {
+            listaEscolha = escolhaDao.listar();
+            comboEscolha.removeAllItems();
+            comboEscolha.addItem("— Selecione —");
+            for (IngredienteEscolha esc : listaEscolha) {
+                comboEscolha.addItem(String.valueOf(esc.getId()));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar Ingrediente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

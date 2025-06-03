@@ -22,12 +22,11 @@ public class PainelIngredienteAdicional extends InterfacePainel {
     /**
      * Creates new form PainelIngredienteAdicional
      */
-    private final IngredienteEscolhaDao dao = new IngredienteEscolhaImplementsDAO();
-    private List<IngredienteEscolha> listaIngrediente;
-
+    private final IngredienteEscolhaDao escolhaDao = new IngredienteEscolhaImplementsDAO();
+    private List<IngredienteEscolha> listaEscolha;
     public PainelIngredienteAdicional() {
         initComponents();
-        comboEscolha();
+        carregarIngrediente();
     }
 
     /**
@@ -53,7 +52,7 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         jLabel2.setText("Nome do Ingrediente");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Ingrediente Escolha");
+        jLabel3.setText("Ingrediente");
 
         comboEscolha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -62,6 +61,10 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(100, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -72,10 +75,6 @@ public class PainelIngredienteAdicional extends InterfacePainel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
@@ -119,39 +118,40 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         }
 
         dto.nomeIngrAdc = jTextField2.getText();
-        
+
         String textoValor = jTextField1.getText().trim();
-        if(textoValor.isEmpty()){
+        if (textoValor.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-            "Informe um valor para o ingrediente.",
-            "Atenção",
-            JOptionPane.WARNING_MESSAGE);
-        return null;
+                    "Informe um valor para o ingrediente.",
+                    "Atenção",
+                    JOptionPane.WARNING_MESSAGE);
+            return null;
         }
-        
-        textoValor = textoValor.replace(",",".");
-        
+
+        textoValor = textoValor.replace(",", ".");
+
         try {
-        // apenas para validar, mas não armazenamos o double aqui
-        Double.parseDouble(textoValor);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this,
-            "Formato de valor inválido! Digite apenas números. " +
-            "Se precisar de casas decimais, use vírgula ou ponto.",
-            "Atenção",
-            JOptionPane.WARNING_MESSAGE);
-        return null;
-    }
-        
+            // apenas para validar, mas não armazenamos o double aqui
+            Double.parseDouble(textoValor);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Formato de valor inválido! Digite apenas números. "
+                    + "Se precisar de casas decimais, use vírgula ou ponto.",
+                    "Atenção",
+                    JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+
         dto.valorIngrAdc = jTextField1.getText();
         
-        int index = comboEscolha.getSelectedIndex();
-        if (index > 0 && index <= listaIngrediente.size()) {
-            IngredienteEscolha escolhido = listaIngrediente.get(index - 1);
-            dto.idIngrAdc = String.valueOf(escolhido.getId());
+        int indexEsc = comboEscolha.getSelectedIndex();
+        if (indexEsc > 0 && indexEsc <= listaEscolha.size()) {
+            IngredienteEscolha escolhido = listaEscolha.get(indexEsc - 1);
+            dto.idIngrEsc = String.valueOf(escolhido.getId());
         } else {
-            dto.idIngrAdc = null;
+            dto.idIngrEsc = null;
         }
+        
 
         return (InterfaceDTO) dto;
     }
@@ -162,29 +162,28 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         jTextField2.setText(this.dto.nomeIngrAdc);
         jTextField1.setText(this.dto.valorIngrAdc);
         
-        if (listaIngrediente != null && !listaIngrediente.isEmpty() && this.dto.idIngrAdc != null) {
-            int id = Integer.parseInt(this.dto.idIngrAdc);
-            for (int i = 0; i < listaIngrediente.size(); i++) {
-                if (listaIngrediente.get(i).getId() == id) {
+        if (listaEscolha != null && !listaEscolha.isEmpty() && this.dto.idIngrEsc != null) {
+            int idEsc = Integer.parseInt(this.dto.idIngrEsc);
+            for (int i = 0; i < listaEscolha.size(); i++) {
+                if (listaEscolha.get(i).getId() == idEsc) {
                     comboEscolha.setSelectedIndex(i + 1);
                     return;
                 }
             }
         }
-        comboEscolha.setSelectedIndex(0);
-
+       comboEscolha.setSelectedIndex(0);
     }
 
-    private void comboEscolha() {
+    private void carregarIngrediente() {
         try {
-            listaIngrediente = dao.listar();
+            listaEscolha = escolhaDao.listar();
             comboEscolha.removeAllItems();
             comboEscolha.addItem("— Selecione —");
-            for (IngredienteEscolha ing : listaIngrediente) {
-                comboEscolha.addItem(String.valueOf(ing.getId()));
+            for (IngredienteEscolha esc : listaEscolha) {
+                comboEscolha.addItem(String.valueOf(esc.getId()));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar bairros: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao carregar Ingrediente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

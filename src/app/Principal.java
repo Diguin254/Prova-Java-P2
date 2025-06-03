@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package app;
 
+import app.CadastroPadrao;
 import cadastro.PainelBairros;
 import cadastro.PainelCarrinho;
 import cadastro.PainelCartao;
@@ -48,8 +45,14 @@ import controller.ReembolsoController;
 import controller.StatusPedidoController;
 import controller.TaxaEntregaController;
 import controller.TelefoneController;
+import dto.InterfaceDTO;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -59,6 +62,29 @@ import javax.swing.Timer;
  */
 public class Principal extends javax.swing.JFrame {
 
+    private final BairroController bairroController = new BairroController();
+    private final ClienteController clienteController = new ClienteController();
+    private final CarrinhoController carrinhoController = new CarrinhoController();
+    private final CartaoController cartaoController = new CartaoController();
+    private final CupomController cupomController = new CupomController();
+    private final DeliveryController deliveryController = new DeliveryController();
+    private final DinheiroController dinheiroController = new DinheiroController();
+    private final EnderecoController enderecoController = new EnderecoController();
+    private final EntregaController entregaController = new EntregaController();
+    private final FuncionarioController funcionarioController = new FuncionarioController();
+    private final IngredienteAdicionalController ingredienteAdicionalController = new IngredienteAdicionalController();
+    private final IngredienteEscolhaController ingredienteEscolhaController = new IngredienteEscolhaController();
+    private final IngredienteRemoverController ingredienteRemoverController = new IngredienteRemoverController();
+    private final LoginController loginController = new LoginController();
+    private final MetodoPagamentoController metodoPagamentoController = new MetodoPagamentoController();
+    private final PagamentoController pagamentoController = new PagamentoController();
+    private final PedidoController pedidoController = new PedidoController();
+    private final ProdutoController produtoController = new ProdutoController();
+    private final ReembolsoController reembolsoController = new ReembolsoController();
+    private final StatusPedidoController statusPedidoController = new StatusPedidoController();
+    private final TaxaEntregaController taxaEntregaController = new TaxaEntregaController();
+    private final TelefoneController telefoneController = new TelefoneController();
+
     public Principal() {
         initComponents();
         setSize(600, 400);
@@ -66,21 +92,21 @@ public class Principal extends javax.swing.JFrame {
         atualizarHora();
         setVisible(true);
     }
-    
-    private void atualizarHora(){
-        Timer timer = new Timer(1000, e -> { // Cria um Timer para atualizar a cada segundo
-             Date dataHoraAtual = new Date();
-        String horaFormatada = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
 
-        // Atualiza o JLabel utilizando SwingUtilities.invokeLater
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                jhora.setText(horaFormatada);
-            }
+    private void atualizarHora() {
+        Timer timer = new Timer(1000, e -> { // Cria um Timer para atualizar a cada segundo
+            Date dataHoraAtual = new Date();
+            String horaFormatada = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+
+            // Atualiza o JLabel utilizando SwingUtilities.invokeLater
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    jhora.setText(horaFormatada);
+                }
+            });
         });
-    });
-    timer.start(); // Inicia o Timer
+        timer.start(); // Inicia o Timer
     }
 
     /**
@@ -340,11 +366,41 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemClienteActionPerformed
 
     private void jMenuItemFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFuncionarioActionPerformed
-        new CadastroPadrao(this, new PainelFuncionario(), new FuncionarioController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaLoginDTO = loginController.listar();
+            if (listaLoginDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Funcionario.\nNão existe nenhum Login cadastrado.\nCadastre um Login antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelFuncionario(), new FuncionarioController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Login:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemFuncionarioActionPerformed
 
     private void jMenuItemEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEnderecoActionPerformed
-        new CadastroPadrao(this, new PainelEndereco(), new EnderecoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaBairrosDTO = bairroController.listar();
+            if (listaBairrosDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Endereço.\nNão existe nenhum Bairro cadastrado.\nCadastre um Bairro antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelEndereco(), new EnderecoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Bairros:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemEnderecoActionPerformed
 
     private void jMenuItemLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoginActionPerformed
@@ -356,23 +412,116 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemProdutoActionPerformed
 
     private void jMenuItemTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTelefoneActionPerformed
-        new CadastroPadrao(this, new PainelTelefone(), new TelefoneController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaClienteDTO = clienteController.listar();
+            List<InterfaceDTO> listaFuncionarioDTO = funcionarioController.listar();
+            if (listaClienteDTO.isEmpty() || listaFuncionarioDTO.isEmpty()) {
+                if (listaClienteDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Telefone.\nNão existe nenhum Cliente cadastrado.\nCadastre um Cliente antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaFuncionarioDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Telefone.\nNão existe nenhum Funcionário cadastrado.\nCadastre um Funcionário antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
+            }
+            new CadastroPadrao(this, new PainelTelefone(), new TelefoneController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Cliente - Funcionário:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemTelefoneActionPerformed
 
     private void jMenuItemCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCarrinhoActionPerformed
-        new CadastroPadrao(this, new PainelCarrinho(), new CarrinhoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaPedidosDTO = pedidoController.listar();
+            List<InterfaceDTO> listaProdutosDTO = produtoController.listar();
+            if (listaPedidosDTO.isEmpty() || listaProdutosDTO.isEmpty()) {
+                if (listaPedidosDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Carrinho.\nNão existe nenhum Pedido cadastrado.\nCadastre um Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaProdutosDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Carrinho.\nNão existe nenhum Produto cadastrado.\nCadastre um Produto antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
+            }
+            new CadastroPadrao(this, new PainelCarrinho(), new CarrinhoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Pedidos/Produtos:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemCarrinhoActionPerformed
 
     private void jMenuItemAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAdicionalActionPerformed
-        new CadastroPadrao(this, new PainelIngredienteAdicional(), new IngredienteAdicionalController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaAdicionaisDTO = ingredienteEscolhaController.listar();
+            if (listaAdicionaisDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Ingrediente Adicional.\nNão existe nenhum Ingrediente cadastrado.\nCadastre um Ingrediente antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelIngredienteAdicional(), new IngredienteAdicionalController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Ingredientes:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemAdicionalActionPerformed
 
     private void jMenuItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPedidoActionPerformed
-        new CadastroPadrao(this, new PainelPedido(), new PedidoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaClienteDTO = clienteController.listar();
+            List<InterfaceDTO> listaStatusPedidoDTO = statusPedidoController.listar();
+            if (listaClienteDTO.isEmpty() || listaStatusPedidoDTO.isEmpty()) {
+                if (listaClienteDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Pedido.\nNão existe nenhum Cliente cadastrado.\nCadastre um Cliente antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaStatusPedidoDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Pedido.\nNão existe nenhum Status de Pedido cadastrado.\nCadastre um Status de Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
+            }
+            new CadastroPadrao(this, new PainelPedido(), new PedidoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Cliente - Status de Pedido:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemPedidoActionPerformed
 
     private void jMenuItemStatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemStatusPedidoActionPerformed
-        new CadastroPadrao(this, new PainelStatusPedido(), new StatusPedidoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaPedidoDTO = pedidoController.listar();
+            if (listaPedidoDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Status de Pedido.\nNão existe nenhum Pedido cadastrado.\nCadastre um Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelStatusPedido(), new StatusPedidoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Pedidos:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemStatusPedidoActionPerformed
 
     private void jMenuItemCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCupomActionPerformed
@@ -380,7 +529,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCupomActionPerformed
 
     private void jMenuItemDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeliveryActionPerformed
-        new CadastroPadrao(this, new PainelDelivery(), new DeliveryController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaDeliverysDTO = deliveryController.listar();
+            if (listaDeliverysDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Delivery.\nNão existe nenhum Endereço cadastrado.\nCadastre um Endereço antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelDelivery(), new DeliveryController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Endereços:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemDeliveryActionPerformed
 
     private void jMenuItemDinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDinheiroActionPerformed
@@ -388,31 +552,168 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemDinheiroActionPerformed
 
     private void jMenuItemEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEntregaActionPerformed
-        new CadastroPadrao(this, new PainelEntrega(), new EntregaController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaDeliverysDTO = deliveryController.listar();
+            List<InterfaceDTO> listaClientesDTO = clienteController.listar();
+            List<InterfaceDTO> listaPedidosDTO = pedidoController.listar();
+            List<InterfaceDTO> listaStatusPedidosDTO = statusPedidoController.listar();
+            if (listaDeliverysDTO.isEmpty() || listaClientesDTO.isEmpty() || listaPedidosDTO.isEmpty() || listaStatusPedidosDTO.isEmpty()) {
+                if (listaDeliverysDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Entrega.\nNão existe nenhum Delivery cadastrado.\nCadastre um Delivery antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaClientesDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Entrega.\nNão existe nenhum Cliente cadastrado.\nCadastre um Cliente antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaPedidosDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Entrega.\nNão existe nenhum Pedido cadastrado.\nCadastre um Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaStatusPedidosDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Entrega.\nNão existe nenhum Status de Pedido cadastrado.\nCadastre um Status de Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
+            }
+            new CadastroPadrao(this, new PainelEntrega(), new EntregaController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Delivery - Cliente - Pedido - Status do Pedido:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemEntregaActionPerformed
 
     private void jMenuItemEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEscolhaActionPerformed
-        new CadastroPadrao(this, new PainelIngredienteEscolha(), new IngredienteEscolhaController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaCarrinhosDTO = carrinhoController.listar();
+            if (listaCarrinhosDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Escolha de Ingrediente.\nNão existe nenhum Carrinho cadastrado.\nCadastre um Carrinho antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelIngredienteEscolha(), new IngredienteEscolhaController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Escolha de Ingrediente:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemEscolhaActionPerformed
 
     private void jMenuItemRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRemoverActionPerformed
-        new CadastroPadrao(this, new PainelIngredienteRemover(), new IngredienteRemoverController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaIngredientesDTO = ingredienteEscolhaController.listar();
+            if (listaIngredientesDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Remoção de Ingrediente.\nNão existe nenhum Ingrediente cadastrado.\nCadastre um Ingrediente antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelIngredienteRemover(), new IngredienteRemoverController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Remoção de Ingrediente:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemRemoverActionPerformed
 
     private void jMenuItemMetPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMetPagamentoActionPerformed
-        new CadastroPadrao(this, new PainelMetPagamento(), new MetodoPagamentoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaDinheiroDTO = dinheiroController.listar();
+            List<InterfaceDTO> listaCartaoDTO = cartaoController.listar();
+            if (listaDinheiroDTO.isEmpty() || listaCartaoDTO.isEmpty()) {
+                if (listaDinheiroDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Metodo de Pagamento.\nNão existe nenhum Dinheiro cadastrado.\nCadastre um Dinheiro antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaCartaoDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Metodo de Pagamento.\nNão existe nenhum Cartao cadastrado.\nCadastre um Cartao antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
+            }
+            new CadastroPadrao(this, new PainelMetPagamento(), new MetodoPagamentoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Dinheiro/Cartao:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemMetPagamentoActionPerformed
 
     private void jMenuItemPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPagamentoActionPerformed
-        new CadastroPadrao(this, new PainelPagamento(), new PagamentoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaMetPagDTO = metodoPagamentoController.listar();
+            List<InterfaceDTO> listaCupomDTO = cupomController.listar();
+            List<InterfaceDTO> listaPedidoDTO = pedidoController.listar();
+            if (listaMetPagDTO.isEmpty() || listaCupomDTO.isEmpty() || listaPedidoDTO.isEmpty()) {
+                if (listaMetPagDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Pagamento.\nNão existe nenhum Metodo de Pagamento cadastrado.\nCadastre um Metodo de Pagamento antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaCupomDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Pagamento.\nNão existe nenhum Cupom cadastrado.\nCadastre um Cupom antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                if (listaPedidoDTO.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Pagamento.\nNão existe nenhum Pedido cadastrado.\nCadastre um Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
+            }
+            new CadastroPadrao(this, new PainelPagamento(), new PagamentoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Metodo de Pagamento - Cupom - Pedido:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemPagamentoActionPerformed
 
     private void jMenuItemReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReembolsoActionPerformed
-        new CadastroPadrao(this, new PainelReembolso(), new ReembolsoController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaPedidoDTO = pedidoController.listar();
+            if (listaPedidoDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Reembolso.\nNão existe nenhum Pedido cadastrado.\nCadastre um Pedido antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelReembolso(), new ReembolsoController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Pedidos:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jMenuItemReembolsoActionPerformed
 
     private void jMenuItemTaxaEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTaxaEntregaActionPerformed
-        new CadastroPadrao(this, new PainelTaxaEntrega(), new TaxaEntregaController(), true).setVisible(true);
+        try {
+            List<InterfaceDTO> listaEnderecoDTO = enderecoController.listar();
+            if (listaEnderecoDTO.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Não é possível abrir o cadastro de Taxa de Entrega.\nNão existe nenhum Endereço cadastrado.\nCadastre um Endereço antes de prosseguir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            new CadastroPadrao(this, new PainelTaxaEntrega(), new TaxaEntregaController(), true).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao verificar existência de Endereços:\n" + ex.getMessage(),
+                    "Erro de Banco",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        
+        
     }//GEN-LAST:event_jMenuItemTaxaEntregaActionPerformed
 
     private void jMenuItemCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCartaoActionPerformed
@@ -482,6 +783,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jbSair;
     private javax.swing.JLabel jhora;
     // End of variables declaration//GEN-END:variables
-
 
 }

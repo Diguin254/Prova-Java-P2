@@ -6,13 +6,7 @@ package cadastro;
 
 import app.InterfacePainel;
 import dto.ClienteDTO;
-import dto.EntregaDTO;
 import dto.InterfaceDTO;
-import dto.PedidoDTO;
-import dto.TelefoneDTO;
-import java.util.LinkedList;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *

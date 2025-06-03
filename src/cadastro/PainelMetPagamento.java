@@ -34,7 +34,7 @@ public class PainelMetPagamento extends InterfacePainel {
     public PainelMetPagamento() {
         initComponents();
         comboCarregarDinheiro();
-        comboCarregarBoxCartao();
+        comboCarregarCartao();
     }
 
     /**
@@ -135,12 +135,12 @@ public class PainelMetPagamento extends InterfacePainel {
         }
     }
 
-    private void comboCarregarBoxCartao() {
+    private void comboCarregarCartao() {
         try {
             listaCartao = cartaoDao.listar();
-            jComboBoxDinheiro.removeAllItems();
+            jComboBoxCartao.removeAllItems();
             for (Cartao c : listaCartao) {
-                jComboBoxDinheiro.addItem(String.valueOf(c.getNumeroCartao() + " - " + c.getTipoConta()));
+                jComboBoxCartao.addItem(String.valueOf(c.getNumeroCartao() + " - " + c.getTipoConta()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar cartao: " + e.getMessage());
