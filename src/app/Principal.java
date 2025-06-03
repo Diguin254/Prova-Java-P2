@@ -55,6 +55,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import listagem.ListagemCliente;
 
 /**
  *
@@ -147,6 +148,28 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemTaxaEntrega = new javax.swing.JMenuItem();
         jMenuItemTelefone = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenuListarBairro = new javax.swing.JMenuItem();
+        jMenuListarCarrinho = new javax.swing.JMenuItem();
+        jMenuListarCartao = new javax.swing.JMenuItem();
+        jMenuListarCliente = new javax.swing.JMenuItem();
+        jMenuListarCupom = new javax.swing.JMenuItem();
+        jMenuListarDelivery = new javax.swing.JMenuItem();
+        jMenuListarDinheiro = new javax.swing.JMenuItem();
+        jMenuListarEndereco = new javax.swing.JMenuItem();
+        jMenuListarEntrega = new javax.swing.JMenuItem();
+        jMenuListarFuncionario = new javax.swing.JMenuItem();
+        jMenuListarAdicional = new javax.swing.JMenuItem();
+        jMenuListarEscolha = new javax.swing.JMenuItem();
+        jMenuListarRemover = new javax.swing.JMenuItem();
+        jMenuListarLogin = new javax.swing.JMenuItem();
+        jMenuListarMetPag = new javax.swing.JMenuItem();
+        jMenuListarPagamento = new javax.swing.JMenuItem();
+        jMenuListarPedido = new javax.swing.JMenuItem();
+        jMenuListarProduto = new javax.swing.JMenuItem();
+        jMenuListarReembolso = new javax.swing.JMenuItem();
+        jMenuListarStatus = new javax.swing.JMenuItem();
+        jMenuListarTaxa = new javax.swing.JMenuItem();
+        jMenuListarTelefone = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -346,6 +369,83 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu1.setText("Listar");
+
+        jMenuListarBairro.setText("Bairro");
+        jMenu1.add(jMenuListarBairro);
+
+        jMenuListarCarrinho.setText("Carrinho");
+        jMenu1.add(jMenuListarCarrinho);
+
+        jMenuListarCartao.setText("Cartão");
+        jMenu1.add(jMenuListarCartao);
+
+        jMenuListarCliente.setText("Cliente");
+        jMenuListarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarClienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuListarCliente);
+
+        jMenuListarCupom.setText("Cupom");
+        jMenu1.add(jMenuListarCupom);
+
+        jMenuListarDelivery.setText("Delivery");
+        jMenu1.add(jMenuListarDelivery);
+
+        jMenuListarDinheiro.setText("Dinheiro");
+        jMenuListarDinheiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuListarDinheiroActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuListarDinheiro);
+
+        jMenuListarEndereco.setText("Endereço");
+        jMenu1.add(jMenuListarEndereco);
+
+        jMenuListarEntrega.setText("Entrega");
+        jMenu1.add(jMenuListarEntrega);
+
+        jMenuListarFuncionario.setText("Funcionário");
+        jMenu1.add(jMenuListarFuncionario);
+
+        jMenuListarAdicional.setText("Ingrediente Adicional");
+        jMenu1.add(jMenuListarAdicional);
+
+        jMenuListarEscolha.setText("Ingrediente Escolha");
+        jMenu1.add(jMenuListarEscolha);
+
+        jMenuListarRemover.setText("Ingrediente Remover");
+        jMenu1.add(jMenuListarRemover);
+
+        jMenuListarLogin.setText(" Login");
+        jMenu1.add(jMenuListarLogin);
+
+        jMenuListarMetPag.setText("Método de Pagamento");
+        jMenu1.add(jMenuListarMetPag);
+
+        jMenuListarPagamento.setText("Pagamento");
+        jMenu1.add(jMenuListarPagamento);
+
+        jMenuListarPedido.setText("Pedido");
+        jMenu1.add(jMenuListarPedido);
+
+        jMenuListarProduto.setText("Produto");
+        jMenu1.add(jMenuListarProduto);
+
+        jMenuListarReembolso.setText("Reembolso");
+        jMenu1.add(jMenuListarReembolso);
+
+        jMenuListarStatus.setText("Status do Pedido");
+        jMenu1.add(jMenuListarStatus);
+
+        jMenuListarTaxa.setText("Taxa de Entrega");
+        jMenu1.add(jMenuListarTaxa);
+
+        jMenuListarTelefone.setText("Telefone");
+        jMenu1.add(jMenuListarTelefone);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -705,6 +805,15 @@ public class Principal extends javax.swing.JFrame {
         new CadastroPadrao(this, new PainelCartao(), new CartaoController(), true).setVisible(true);
     }//GEN-LAST:event_jMenuItemCartaoActionPerformed
 
+    private void jMenuListarDinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarDinheiroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuListarDinheiroActionPerformed
+
+    private void jMenuListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListarClienteActionPerformed
+        ListagemCliente dialog = new ListagemCliente(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuListarClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -763,6 +872,28 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemStatusPedido;
     private javax.swing.JMenuItem jMenuItemTaxaEntrega;
     private javax.swing.JMenuItem jMenuItemTelefone;
+    private javax.swing.JMenuItem jMenuListarAdicional;
+    private javax.swing.JMenuItem jMenuListarBairro;
+    private javax.swing.JMenuItem jMenuListarCarrinho;
+    private javax.swing.JMenuItem jMenuListarCartao;
+    private javax.swing.JMenuItem jMenuListarCliente;
+    private javax.swing.JMenuItem jMenuListarCupom;
+    private javax.swing.JMenuItem jMenuListarDelivery;
+    private javax.swing.JMenuItem jMenuListarDinheiro;
+    private javax.swing.JMenuItem jMenuListarEndereco;
+    private javax.swing.JMenuItem jMenuListarEntrega;
+    private javax.swing.JMenuItem jMenuListarEscolha;
+    private javax.swing.JMenuItem jMenuListarFuncionario;
+    private javax.swing.JMenuItem jMenuListarLogin;
+    private javax.swing.JMenuItem jMenuListarMetPag;
+    private javax.swing.JMenuItem jMenuListarPagamento;
+    private javax.swing.JMenuItem jMenuListarPedido;
+    private javax.swing.JMenuItem jMenuListarProduto;
+    private javax.swing.JMenuItem jMenuListarReembolso;
+    private javax.swing.JMenuItem jMenuListarRemover;
+    private javax.swing.JMenuItem jMenuListarStatus;
+    private javax.swing.JMenuItem jMenuListarTaxa;
+    private javax.swing.JMenuItem jMenuListarTelefone;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbSair;

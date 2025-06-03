@@ -40,7 +40,7 @@
 //-- status_pedido definition 
 //CREATE TABLE statusPedido ( 
 //id SERIAL PRIMARY KEY, 
-//progresso text, 
+//progresso text 
 //);
 //
 //-- funcionario definition 
@@ -187,29 +187,3 @@
 //endereco_id integer,
 //FOREIGN KEY(endereco_id) REFERENCES endereco(id)
 //);
-
-
-
-
-
-
-
-
-//
-//problema ao salvar em
-//
-//TIPOENTREGA
-//
-//INGREDIENTE ADICIONAL
-//
-//INGREDIENTE ESCOLHA
-//
-//INGREDIENTE REMOVER
-//
-//METODO DE PAGAMENTO
-//
-//PAGAMENTO
-//
-//PEDIDO
-//
-//REEMBOLSO
