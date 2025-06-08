@@ -95,5 +95,13 @@ public class EntregaDTO implements InterfaceDTO {
     public String toString() {
         return "EntregaDTO{" + "idEntrega=" + idEntrega + ", idCliente=" + idCliente + ", tipoEntregaE=" + tipoEntregaE + ", idDelivery=" + idDelivery + ", idPedido=" + idPedido + ", idStatusPedido=" + idStatusPedido + '}';
     }
+@Override
+    public int getId() {
+        return (idEntrega == null || idEntrega.isBlank()) ? 0 : Integer.parseInt(idEntrega);
+    }
 
+    @Override
+    public void setId(int id) {
+        this.idEntrega = String.valueOf(id);
+    }
 }

@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelDinheiro;
 import controller.DinheiroController;
 import dto.DinheiroDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemDinheiro extends Listagem<DinheiroDTO> {
 
-    private DinheiroController controller;
+    private final DinheiroController controller;
 
     public ListagemDinheiro(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Dinheiro");
@@ -33,26 +35,43 @@ public class ListagemDinheiro extends Listagem<DinheiroDTO> {
     }
 
     @Override
-    public Object[] toLinha(DinheiroDTO d) {
+    public Object[] linha(DinheiroDTO d) {
         return new Object[]{d.getIdDinheiro(), d.getValorD()};
     }
 
     @Override
     public List<DinheiroDTO> obterLista() {
         try {
-        List<InterfaceDTO> listaGenerica = controller.listar();
+            List<InterfaceDTO> listaGenerica = controller.listar();
 
-        List<DinheiroDTO> listaDinheiros = new LinkedList<>();
+            List<DinheiroDTO> listaDinheiros = new LinkedList<>();
 
-        if (listaGenerica != null) {
-            for (InterfaceDTO iDto : listaGenerica) {
-                listaDinheiros.add((DinheiroDTO) iDto);
+            if (listaGenerica != null) {
+                for (InterfaceDTO iDto : listaGenerica) {
+                    listaDinheiros.add((DinheiroDTO) iDto);
+                }
             }
-        }
-        return listaDinheiros;
-        
+            return listaDinheiros;
+
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(DinheiroDTO objeto) throws SQLException {
+        PainelDinheiro painel = new PainelDinheiro();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(DinheiroDTO objeto) throws SQLException {
+        controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(DinheiroDTO objeto) {
+        return objeto.getIdDinheiro();
     }
 }

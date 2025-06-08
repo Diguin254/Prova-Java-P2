@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelIngredienteEscolha;
 import controller.IngredienteEscolhaController;
 import dto.IngredienteEscolhaDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemEscolha extends Listagem<IngredienteEscolhaDTO> {
 
-    private IngredienteEscolhaController controller;
+    private final IngredienteEscolhaController controller;
 
     public ListagemEscolha(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Ingrediente Escolha");
@@ -29,12 +31,12 @@ public class ListagemEscolha extends Listagem<IngredienteEscolhaDTO> {
 
     @Override
     public String[] getColunas() {
-        return new String[]{"ID Ingrediente Escolha", "ID Carrinho"};
+        return new String[]{"ID Ingrediente Escolha", "ID IngredienteEscolha"};
     }
 
     @Override
-    public Object[] toLinha(IngredienteEscolhaDTO esc) {
-        return new Object[]{esc.getIdIngrEsc(), esc.getIdCarrinho()};
+    public Object[] linha(IngredienteEscolhaDTO esc) {
+        return new Object[]{esc.getIdIngrEsc(), esc.getIdIngrEsc()};
     }
 
     @Override
@@ -54,5 +56,22 @@ public class ListagemEscolha extends Listagem<IngredienteEscolhaDTO> {
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(IngredienteEscolhaDTO objeto) throws SQLException{
+        PainelIngredienteEscolha painel = new PainelIngredienteEscolha();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(IngredienteEscolhaDTO objeto) throws SQLException{
+            controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(IngredienteEscolhaDTO objeto) {
+        return objeto.getIdIngrEsc();
     }
 }

@@ -40,8 +40,11 @@ public class PainelDinheiro extends InterfacePainel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addComponent(jTextField1)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -49,8 +52,8 @@ public class PainelDinheiro extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -66,15 +69,19 @@ public class PainelDinheiro extends InterfacePainel {
             dto = new DinheiroDTO();
         }
         
-        dto.valorD = jTextField1.getText();
+        dto.valorD = jTextField1.getText().replace(",", ".");
         
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (DinheiroDTO) dto;
-        
-        jTextField1.setText(this.dto.valorD);
+        if (dto != null) {
+            this.dto = (DinheiroDTO) dto;
+            jTextField1.setText(this.dto.valorD);
+        } else {
+            this.dto = new DinheiroDTO();
+            jTextField1.setText("");
+        }
     }
 }

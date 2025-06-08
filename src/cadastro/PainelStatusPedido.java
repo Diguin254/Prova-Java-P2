@@ -7,6 +7,7 @@ package cadastro;
 import app.InterfacePainel;
 import dto.InterfaceDTO;
 import dto.StatusPedidoDTO;
+
 /**
  *
  * @author alenc
@@ -53,8 +54,8 @@ public class PainelStatusPedido extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(236, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -72,13 +73,17 @@ public class PainelStatusPedido extends InterfacePainel {
 
         dto.progStatPed = jTextField1.getText();
 
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (StatusPedidoDTO) dto;
-        jTextField1.setText(this.dto.progStatPed);
-
+        if (dto != null) {
+            this.dto = (StatusPedidoDTO) dto;
+            jTextField1.setText(this.dto.progStatPed);
+        } else {
+            this.dto = new StatusPedidoDTO();
+            jTextField1.setText("");
+        }
     }
 }

@@ -72,5 +72,13 @@ public class DeliveryDTO implements InterfaceDTO{
         return "DeliveryDTO{" + "idDelivery=" + idDelivery + ", chaveEntregaD=" + chaveEntregaD + ", numeroD=" + numeroD + ", complementoD=" + complementoD + ", idEndereco=" + idEndereco + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idDelivery == null || idDelivery.isBlank()) ? 0 : Integer.parseInt(idDelivery);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idDelivery = String.valueOf(id);
+    }
 }

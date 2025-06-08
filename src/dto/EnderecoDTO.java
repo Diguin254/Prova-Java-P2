@@ -75,5 +75,13 @@ public class EnderecoDTO implements InterfaceDTO{
         return "EnderecoDTO{" + "idEndereco=" + idEndereco + ", ruaEnd=" + ruaEnd + ", cepEnd=" + cepEnd + ", idBairro=" + idBairro + ", distanciaEnd=" + distanciaEnd + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idEndereco == null || idEndereco.isBlank()) ? 0 : Integer.parseInt(idEndereco);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idEndereco = String.valueOf(id);
+    }
 }

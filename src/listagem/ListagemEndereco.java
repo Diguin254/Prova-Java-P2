@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelEndereco;
 import controller.EnderecoController;
 import dto.EnderecoDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemEndereco extends Listagem<EnderecoDTO> {
 
-    private EnderecoController controller;
+    private final EnderecoController controller;
 
     public ListagemEndereco(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Enderecos");
@@ -33,7 +35,7 @@ public class ListagemEndereco extends Listagem<EnderecoDTO> {
     }
 
     @Override
-    public Object[] toLinha(EnderecoDTO d) {
+    public Object[] linha(EnderecoDTO d) {
         return new Object[]{d.getIdEndereco(), d.getCepEnd(), d.getDistanciaEnd(), d.getRuaEnd(), d.getIdBairro()};
     }
 
@@ -54,6 +56,23 @@ public class ListagemEndereco extends Listagem<EnderecoDTO> {
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(EnderecoDTO objeto) throws SQLException{
+        PainelEndereco painel = new PainelEndereco();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(EnderecoDTO objeto) throws SQLException{
+            controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(EnderecoDTO objeto) {
+        return objeto.getIdEndereco();
     }
 }
 

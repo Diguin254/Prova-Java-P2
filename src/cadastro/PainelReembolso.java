@@ -70,12 +70,12 @@ public class PainelReembolso extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -91,6 +91,7 @@ public class PainelReembolso extends InterfacePainel {
         try {
             listaPedido = pedidoDao.listar();
             jComboBox1.removeAllItems();
+            jComboBox1.addItem("Selecione");
             for (Pedido p : listaPedido) {
                 jComboBox1.addItem(String.valueOf(p.getNumeroPedido()));
             }
@@ -101,33 +102,42 @@ public class PainelReembolso extends InterfacePainel {
 
     @Override
     public InterfaceDTO getDados() {
-        if(dto ==  null){
+        if (dto == null) {
             dto = new ReembolsoDTO();
         }
-        
+
         dto.motivoReemb = jTextField1.getText();
-        
-        int indexP = jComboBox1.getSelectedIndex();
-        if (indexP >= 0 && indexP < listaPedido.size()) {
-            dto.idPedidoR = String.valueOf(listaPedido.get(indexP).getId());
+
+        int indiceP = jComboBox1.getSelectedIndex();
+        if (indiceP > 0 && indiceP <= listaPedido.size()) {
+            Pedido escolhido = listaPedido.get(indiceP -1);
+            dto.idPedidoR = String.valueOf(escolhido.getId());
+        } else {
+            dto.idPedidoR = null;
         }
-        
-        return (InterfaceDTO) dto;
+
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (ReembolsoDTO) dto;
-        jTextField1.setText(this.dto.motivoReemb);
-        
+        if (dto != null) {
+            this.dto = (ReembolsoDTO) dto;
+            jTextField1.setText(this.dto.motivoReemb);
+        } else {
+            this.dto = new ReembolsoDTO();
+            jTextField1.setText("");
+        }
+
         if (listaPedido != null && !listaPedido.isEmpty() && this.dto.idPedidoR != null) {
             int idP = Integer.parseInt(this.dto.idPedidoR);
             for (int i = 0; i < listaPedido.size(); i++) {
                 if (listaPedido.get(i).getId() == idP) {
-                    jComboBox1.setSelectedIndex(i);
-                    break;
+                    jComboBox1.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBox1.setSelectedIndex(0);
     }
 }

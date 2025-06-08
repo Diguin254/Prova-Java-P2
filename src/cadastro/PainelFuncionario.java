@@ -13,7 +13,6 @@ import implementsDao.LoginImplementsDAO;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Login;
 
 /**
@@ -27,7 +26,7 @@ public class PainelFuncionario extends InterfacePainel {
      */
     private final LoginDao loginDao = new LoginImplementsDAO();
     private List<Login> listaLogin;
-    
+
     public PainelFuncionario() {
         initComponents();
         carregarComboLogin();
@@ -152,34 +151,42 @@ public class PainelFuncionario extends InterfacePainel {
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
     FuncionarioDTO dto;
+
     @Override
     public InterfaceDTO getDados() {
-        if(dto == null) {
+        if (dto == null) {
             dto = new FuncionarioDTO();
         }
-        
+
         dto.nomeFun = jTextField1.getText();
         dto.cpfFun = jTextField2.getText();
         dto.rgFun = jTextField3.getText();
-        
-        int index = jComboBoxLogin.getSelectedIndex();
-        if (index > 0 && index <= listaLogin.size()) {
-            Login escolhido = listaLogin.get(index - 1);
+
+        int indice = jComboBoxLogin.getSelectedIndex();
+        if (indice > 0 && indice <= listaLogin.size()) {
+            Login escolhido = listaLogin.get(indice - 1);
             dto.idLogin = String.valueOf(escolhido.getId());
         } else {
             dto.idLogin = null;
         }
-        
+
         return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (FuncionarioDTO) dto;
-        jTextField1.setText(this.dto.nomeFun);
-        jTextField2.setText(this.dto.cpfFun);
-        jTextField3.setText(this.dto.rgFun);
-        
+        if (dto != null) {
+            this.dto = (FuncionarioDTO) dto;
+            jTextField1.setText(this.dto.nomeFun);
+            jTextField2.setText(this.dto.cpfFun);
+            jTextField3.setText(this.dto.rgFun);
+        } else {
+            this.dto = new FuncionarioDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+        }
+
         if (listaLogin != null && !listaLogin.isEmpty() && this.dto.idLogin != null) {
             int idC = Integer.parseInt(this.dto.idLogin);
             for (int i = 0; i < listaLogin.size(); i++) {
@@ -196,8 +203,8 @@ public class PainelFuncionario extends InterfacePainel {
         try {
             listaLogin = loginDao.listar();
             jComboBoxLogin.removeAllItems();
-             jComboBoxLogin.addItem("— Selecione —");
-            for (Login l : listaLogin){
+            jComboBoxLogin.addItem("Selecione");
+            for (Login l : listaLogin) {
                 jComboBoxLogin.addItem(l.getLogin_funcionario());
             }
         } catch (Exception e) {

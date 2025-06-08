@@ -64,5 +64,13 @@ public class TelefoneDTO implements InterfaceDTO{
         return numTel;
     }
     
-    
+    @Override
+    public int getId() {
+        return (idTel == null || idTel.isBlank()) ? 0 : Integer.parseInt(idTel);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idTel = String.valueOf(id);
+    }
 }

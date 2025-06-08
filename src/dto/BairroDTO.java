@@ -26,16 +26,28 @@ public class BairroDTO implements InterfaceDTO {
         this.idBairro = idBairro;
     }
 
-    public Bairro builder() {
-        Bairro b = new Bairro();
-        b.setId(idBairro == null ? 0 : Integer.valueOf(idBairro));
-        b.setNome(nomeBairro == null ? "" : nomeBairro);
-        return b;
-    }
 
     @Override
     public String toString() {
         return "BairroDTO{" + "nomeBairro=" + nomeBairro + ", idBairro=" + idBairro + '}';
     }
+
+    public Bairro builder() {
+        Bairro b = new Bairro();
+        b.setId(getId());
+        b.setNome(nomeBairro == null ? "" : nomeBairro);
+        return b;
+    }
+    
+    @Override
+    public int getId() {
+        return (idBairro == null || idBairro.isBlank()) ? 0 : Integer.parseInt(idBairro);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idBairro = String.valueOf(id);
+    }
+    
 
 }

@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelCupom;
 import controller.CupomController;
 import dto.CupomDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemCupom extends Listagem<CupomDTO> {
 
-    private CupomController controller;
+    private final CupomController controller;
 
     public ListagemCupom(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Cupons");
@@ -33,26 +35,43 @@ public class ListagemCupom extends Listagem<CupomDTO> {
     }
 
     @Override
-    public Object[] toLinha(CupomDTO c) {
+    public Object[] linha(CupomDTO c) {
         return new Object[]{c.getIdC(), c.getCodigoC(), c.getValidadeC(), c.getValorC()};
     }
 
     @Override
     public List<CupomDTO> obterLista() {
         try {
-        List<InterfaceDTO> listaGenerica = controller.listar();
+            List<InterfaceDTO> listaGenerica = controller.listar();
 
-        List<CupomDTO> listaCupoms = new LinkedList<>();
+            List<CupomDTO> listaCupoms = new LinkedList<>();
 
-        if (listaGenerica != null) {
-            for (InterfaceDTO iDto : listaGenerica) {
-                listaCupoms.add((CupomDTO) iDto);
+            if (listaGenerica != null) {
+                for (InterfaceDTO iDto : listaGenerica) {
+                    listaCupoms.add((CupomDTO) iDto);
+                }
             }
-        }
-        return listaCupoms;
-        
+            return listaCupoms;
+
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(CupomDTO objeto) throws SQLException {
+        PainelCupom painel = new PainelCupom();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(CupomDTO objeto) throws SQLException {
+        controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(CupomDTO objeto) {
+        return objeto.getIdC();
     }
 }

@@ -3,6 +3,7 @@ package cadastro;
 import app.InterfacePainel;
 import dto.InterfaceDTO;
 import dto.LoginDTO;
+
 /**
  *
  * @author alenc
@@ -79,21 +80,28 @@ public class PainelLogin extends InterfacePainel {
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
     LoginDTO dto;
+
     @Override
-    public InterfaceDTO getDados(){
-        if(dto == null){
+    public InterfaceDTO getDados() {
+        if (dto == null) {
             dto = new LoginDTO();
         }
-        
+
         dto.senhaLogin = jTextField2.getText();
         dto.loginFun = jTextField1.getText();
         return dto;
     }
-    
+
     @Override
-    public void setDados(InterfaceDTO dto){
-        this.dto = (LoginDTO) dto;
-        jTextField2.setText(this.dto.senhaLogin);
-        jTextField1.setText(this.dto.loginFun);
+    public void setDados(InterfaceDTO dto) {
+        if (dto != null) {
+            this.dto = (LoginDTO) dto;
+            jTextField1.setText(this.dto.loginFun);
+            jTextField2.setText(this.dto.senhaLogin);
+        } else {
+            this.dto = new LoginDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+        }
     }
 }

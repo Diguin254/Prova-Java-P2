@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelTelefone;
 import controller.TelefoneController;
 import dto.TelefoneDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemTelefone extends Listagem<TelefoneDTO> {
 
-    private TelefoneController controller;
+    private final TelefoneController controller;
 
     public ListagemTelefone(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Telefones");
@@ -33,26 +35,43 @@ public class ListagemTelefone extends Listagem<TelefoneDTO> {
     }
 
     @Override
-    public Object[] toLinha(TelefoneDTO t) {
+    public Object[] linha(TelefoneDTO t) {
         return new Object[]{t.getIdTel(), t.getDddTel(), t.getNumTel()};
     }
 
     @Override
     public List<TelefoneDTO> obterLista() {
         try {
-        List<InterfaceDTO> listaGenerica = controller.listar();
+            List<InterfaceDTO> listaGenerica = controller.listar();
 
-        List<TelefoneDTO> listaTelefones = new LinkedList<>();
+            List<TelefoneDTO> listaTelefones = new LinkedList<>();
 
-        if (listaGenerica != null) {
-            for (InterfaceDTO iDto : listaGenerica) {
-                listaTelefones.add((TelefoneDTO) iDto);
+            if (listaGenerica != null) {
+                for (InterfaceDTO iDto : listaGenerica) {
+                    listaTelefones.add((TelefoneDTO) iDto);
+                }
             }
-        }
-        return listaTelefones;
-        
+            return listaTelefones;
+
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(TelefoneDTO objeto) throws SQLException {
+        PainelTelefone painel = new PainelTelefone();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(TelefoneDTO objeto) throws SQLException {
+        controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(TelefoneDTO objeto) {
+        return objeto.getIdTel();
     }
 }

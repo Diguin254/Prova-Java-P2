@@ -67,5 +67,13 @@ public class MetodoPagamentoDTO implements InterfaceDTO{
         return "MetodoPagamentoDTO{" + "idMetodoP=" + idMetodoP + ", pixPag=" + pixPag + ", idDinheiroP=" + idDinheiroP + ", idCartaoP=" + idCartaoP + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idMetodoP == null || idMetodoP.isBlank()) ? 0 : Integer.parseInt(idMetodoP);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idMetodoP = String.valueOf(id);
+    }
 }

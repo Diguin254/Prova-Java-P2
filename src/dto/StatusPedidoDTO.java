@@ -40,5 +40,13 @@ public class StatusPedidoDTO implements InterfaceDTO{
         return "StatusPedidoDTO{" + "idStatPed=" + idStatPed + ", progStatPed=" + progStatPed + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idStatPed == null || idStatPed.isBlank()) ? 0 : Integer.parseInt(idStatPed);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idStatPed = String.valueOf(id);
+    }
 }

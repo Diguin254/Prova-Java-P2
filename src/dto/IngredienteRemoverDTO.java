@@ -53,5 +53,13 @@ public class IngredienteRemoverDTO implements InterfaceDTO{
         return "IngredienteRemoverDTO{" + "idIngrRem=" + idIngrRem + ", nomeIngrRem=" + nomeIngrRem + ", idIngrEsco=" + idIngrEsco + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idIngrRem == null || idIngrRem.isBlank()) ? 0 : Integer.parseInt(idIngrRem);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idIngrRem = String.valueOf(id);
+    }
 }

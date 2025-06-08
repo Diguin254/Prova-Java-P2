@@ -78,5 +78,13 @@ public class LoginDTO implements InterfaceDTO{
         return "LoginDTO{" + "idLogin=" + idLogin + ", senhaLogin=" + senhaLogin + ", loginFun=" + loginFun + ", funcionarios=" + funcionarios + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idLogin == null || idLogin.isBlank()) ? 0 : Integer.parseInt(idLogin);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idLogin = String.valueOf(id);
+    }
 }

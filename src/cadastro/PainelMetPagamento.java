@@ -75,20 +75,14 @@ public class PainelMetPagamento extends InterfacePainel {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(100, 100, 100)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(100, 100, 100)
-                                .addComponent(jComboBoxDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 100, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(jComboBoxCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 100, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -97,18 +91,18 @@ public class PainelMetPagamento extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxCartao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addComponent(jComboBoxCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -127,6 +121,7 @@ public class PainelMetPagamento extends InterfacePainel {
         try {
             listaDinheiro = dinheiroDao.listar();
             jComboBoxDinheiro.removeAllItems();
+            jComboBoxDinheiro.addItem("Selecione");
             for (Dinheiro d : listaDinheiro) {
                 jComboBoxDinheiro.addItem(String.valueOf(d.getValorEntregado()));
             }
@@ -139,6 +134,7 @@ public class PainelMetPagamento extends InterfacePainel {
         try {
             listaCartao = cartaoDao.listar();
             jComboBoxCartao.removeAllItems();
+            jComboBoxCartao.addItem("Selecione");
             for (Cartao c : listaCartao) {
                 jComboBoxCartao.addItem(String.valueOf(c.getNumeroCartao() + " - " + c.getTipoConta()));
             }
@@ -155,42 +151,55 @@ public class PainelMetPagamento extends InterfacePainel {
 
         dto.pixPag = jTextField1.getText();
 
-        int indexD = jComboBoxDinheiro.getSelectedIndex();
-        if (indexD >= 0 && indexD < listaDinheiro.size()) {
-            dto.idDinheiroP = String.valueOf(listaDinheiro.get(indexD).getId());
+        int indiceD = jComboBoxDinheiro.getSelectedIndex();
+        if (indiceD > 0 && indiceD <= listaDinheiro.size()) {
+            Dinheiro escolhido = listaDinheiro.get(indiceD - 1);
+            dto.idDinheiroP = String.valueOf(escolhido.getId());
+        } else {
+            dto.idDinheiroP = null;
         }
 
-        int indexC = jComboBoxCartao.getSelectedIndex();
-        if (indexC >= 0 && indexC < listaCartao.size()) {
-            dto.idCartaoP = String.valueOf(listaCartao.get(indexC).getId());
+        int indiceC = jComboBoxCartao.getSelectedIndex();
+        if (indiceC > 0 && indiceC <= listaCartao.size()) {
+            Cartao escolhido = listaCartao.get(indiceC - 1);
+            dto.idCartaoP = String.valueOf(escolhido.getId());
+        } else {
+            dto.idCartaoP = null;
         }
 
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (MetodoPagamentoDTO) dto;
-        jTextField1.setText(this.dto.pixPag);
+        if (dto != null) {
+            this.dto = (MetodoPagamentoDTO) dto;
+            jTextField1.setText(this.dto.pixPag);
+        } else {
+            this.dto = new MetodoPagamentoDTO();
+            jTextField1.setText("");
+        }
 
         if (listaDinheiro != null && !listaDinheiro.isEmpty() && this.dto.idDinheiroP != null) {
             int id = Integer.parseInt(this.dto.idDinheiroP);
             for (int i = 0; i < listaDinheiro.size(); i++) {
                 if (listaDinheiro.get(i).getId() == id) {
-                    jComboBoxDinheiro.setSelectedIndex(i);
-                    break;
+                    jComboBoxDinheiro.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
-        
+        jComboBoxDinheiro.setSelectedIndex(0);
+
         if (listaCartao != null && !listaCartao.isEmpty() && this.dto.idCartaoP != null) {
             int id = Integer.parseInt(this.dto.idCartaoP);
             for (int i = 0; i < listaCartao.size(); i++) {
                 if (listaCartao.get(i).getId() == id) {
-                    jComboBoxCartao.setSelectedIndex(i);
-                    break;
+                    jComboBoxCartao.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBoxCartao.setSelectedIndex(0);
     }
 }

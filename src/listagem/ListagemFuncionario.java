@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelFuncionario;
 import controller.FuncionarioController;
 import dto.FuncionarioDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemFuncionario extends Listagem<FuncionarioDTO> {
 
-    private FuncionarioController controller;
+    private final FuncionarioController controller;
 
     public ListagemFuncionario(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Funcionarios");
@@ -33,7 +35,7 @@ public class ListagemFuncionario extends Listagem<FuncionarioDTO> {
     }
 
     @Override
-    public Object[] toLinha(FuncionarioDTO f) {
+    public Object[] linha(FuncionarioDTO f) {
         return new Object[]{f.getIdFuncionario(), f.getNomeFun(), f.getCpfFun(), f.getRgFun()};
     }
 
@@ -54,5 +56,22 @@ public class ListagemFuncionario extends Listagem<FuncionarioDTO> {
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(FuncionarioDTO objeto) throws SQLException {
+        PainelFuncionario painel = new PainelFuncionario();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(FuncionarioDTO objeto) throws SQLException {
+        controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(FuncionarioDTO objeto) {
+        return objeto.getIdFuncionario();
     }
 }

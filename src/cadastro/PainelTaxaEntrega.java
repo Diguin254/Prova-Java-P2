@@ -70,12 +70,12 @@ public class PainelTaxaEntrega extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -91,7 +91,7 @@ public class PainelTaxaEntrega extends InterfacePainel {
         try {
             listaEnd = endDao.listar();
             jComboBox1.removeAllItems();
-            jComboBox1.addItem("— Selecione —");
+            jComboBox1.addItem("Selecione");
             for (Endereco p : listaEnd) {
                 jComboBox1.addItem(p.getRua());
             }
@@ -105,11 +105,11 @@ public class PainelTaxaEntrega extends InterfacePainel {
         if(dto == null){
             dto = new TaxaEntregaDTO();
         }
-        dto.valEntrega = jTextField1.getText();
+        dto.valEntrega = jTextField1.getText().replace(",", ".");
         
-        int indexE = jComboBox1.getSelectedIndex();
-        if (indexE > 0 && indexE <= listaEnd.size()) {
-            Endereco escolhido = listaEnd.get(indexE - 1);
+        int indiceE = jComboBox1.getSelectedIndex();
+        if (indiceE > 0 && indiceE <= listaEnd.size()) {
+            Endereco escolhido = listaEnd.get(indiceE - 1);
             dto.idEnd = String.valueOf(escolhido.getId());
         } else {
             dto.idEnd = null;
@@ -120,9 +120,14 @@ public class PainelTaxaEntrega extends InterfacePainel {
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (TaxaEntregaDTO) dto;
-        jTextField1.setText(this.dto.valEntrega);
-        
+        if (dto != null) {
+            this.dto = (TaxaEntregaDTO) dto;
+            jTextField1.setText(this.dto.valEntrega);
+        } else {
+            this.dto = new TaxaEntregaDTO();
+            jTextField1.setText("");
+        }
+
         if (listaEnd != null && !listaEnd.isEmpty() && this.dto.idEnd != null) {
             int idC = Integer.parseInt(this.dto.idEnd);
             for (int i = 0; i < listaEnd.size(); i++) {

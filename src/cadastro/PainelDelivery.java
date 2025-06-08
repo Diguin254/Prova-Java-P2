@@ -94,19 +94,12 @@ public class PainelDelivery extends InterfacePainel {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -115,20 +108,20 @@ public class PainelDelivery extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -164,7 +157,7 @@ public class PainelDelivery extends InterfacePainel {
         try {
             listaEndereco = enderecoDao.listar();
             jComboBox1.removeAllItems();
-            jComboBox1.addItem("— Selecione —");
+            jComboBox1.addItem("Selecione");
             for (Endereco end : listaEndereco) {
                 jComboBox1.addItem(end.getRua());
             }
@@ -182,9 +175,9 @@ public class PainelDelivery extends InterfacePainel {
         dto.numeroD = jTextField2.getText();
         dto.complementoD = jTextField3.getText();
 
-        int index = jComboBox1.getSelectedIndex();
-        if (index > 0 && index <= listaEndereco.size()) {
-            Endereco escolhido = listaEndereco.get(index - 1);
+        int indice = jComboBox1.getSelectedIndex();
+        if (indice > 0 && indice <= listaEndereco.size()) {
+            Endereco escolhido = listaEndereco.get(indice - 1);
             dto.idEndereco = String.valueOf(escolhido.getId());
         } else {
             dto.idEndereco = null;
@@ -195,10 +188,17 @@ public class PainelDelivery extends InterfacePainel {
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (DeliveryDTO) dto;
-        jTextField1.setText(this.dto.chaveEntregaD);
-        jTextField2.setText(this.dto.numeroD);
-        jTextField3.setText(this.dto.complementoD);
+        if (dto != null) {
+            this.dto = (DeliveryDTO) dto;
+            jTextField1.setText(this.dto.chaveEntregaD);
+            jTextField2.setText(this.dto.numeroD);
+            jTextField3.setText(this.dto.complementoD);
+        } else {
+            this.dto = new DeliveryDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+        }
 
         if (listaEndereco != null && !listaEndereco.isEmpty() && this.dto.idEndereco != null) {
             int id = Integer.parseInt(this.dto.idEndereco);

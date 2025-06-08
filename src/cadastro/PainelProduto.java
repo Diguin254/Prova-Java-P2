@@ -5,11 +5,8 @@
 package cadastro;
 
 import app.InterfacePainel;
-import dto.CarrinhoDTO;
 import dto.InterfaceDTO;
 import dto.ProdutoDTO;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -84,12 +81,12 @@ public class PainelProduto extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -109,21 +106,28 @@ public class PainelProduto extends InterfacePainel {
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
     ProdutoDTO dto;
+
     @Override
-    public ProdutoDTO getDados(){
-        if(dto == null){
+    public ProdutoDTO getDados() {
+        if (dto == null) {
             dto = new ProdutoDTO();
         }
-        
+
         dto.nomeProd = jTextField1.getText();
-        dto.valUnProd = jTextField2.getText();
-        return (ProdutoDTO) (InterfaceDTO) dto;
+        dto.valUnProd = jTextField2.getText().replace(",", ".");
+        return dto;
     }
-    
+
     @Override
-    public void setDados(InterfaceDTO dto){
-        this.dto = (ProdutoDTO) dto;
-        jTextField1.setText(this.dto.nomeProd);
-        jTextField2.setText(this.dto.valUnProd);
+    public void setDados(InterfaceDTO dto) {
+        if (dto != null) {
+            this.dto = (ProdutoDTO) dto;
+            jTextField1.setText(this.dto.nomeProd);
+            jTextField2.setText(this.dto.valUnProd);
+        } else {
+            this.dto = new ProdutoDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+        }
     }
 }

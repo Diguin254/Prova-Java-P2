@@ -95,4 +95,14 @@ public class FuncionarioDTO implements InterfaceDTO{
     public String toString() {
         return "FuncionarioDTO{" + "idFuncionario=" + idFuncionario + ", nomeFun=" + nomeFun + ", cpfFun=" + cpfFun + ", rgFun=" + rgFun + ", idLogin=" + idLogin + ", telefones=" + telefones + '}';
     }
+    
+    @Override
+    public int getId() {
+        return (idFuncionario == null || idFuncionario.isBlank()) ? 0 : Integer.parseInt(idFuncionario);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idFuncionario = String.valueOf(id);
+    }
 }

@@ -67,4 +67,14 @@ public class CarrinhoDTO implements InterfaceDTO {
     public String toString() {
         return "CarrinhoDTO{" + "idCarrinho=" + idCarrinho + ", qntdItens=" + qntdItens + ", idPedido=" + idPedido + ", idProduto=" + idProduto + '}';
     }
+
+    @Override
+    public int getId() {
+        return (idCarrinho == null || idCarrinho.isBlank()) ? 0 : Integer.parseInt(idCarrinho);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idCarrinho = String.valueOf(id);
+    }
 }

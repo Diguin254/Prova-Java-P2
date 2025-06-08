@@ -24,6 +24,7 @@ public class PainelIngredienteAdicional extends InterfacePainel {
      */
     private final IngredienteEscolhaDao escolhaDao = new IngredienteEscolhaImplementsDAO();
     private List<IngredienteEscolha> listaEscolha;
+
     public PainelIngredienteAdicional() {
         initComponents();
         carregarIngrediente();
@@ -118,50 +119,31 @@ public class PainelIngredienteAdicional extends InterfacePainel {
         }
 
         dto.nomeIngrAdc = jTextField2.getText();
+        dto.valorIngrAdc = jTextField1.getText().replace(",", ".");
 
-        String textoValor = jTextField1.getText().trim();
-        if (textoValor.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Informe um valor para o ingrediente.",
-                    "Atenção",
-                    JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-
-        textoValor = textoValor.replace(",", ".");
-
-        try {
-            // apenas para validar, mas não armazenamos o double aqui
-            Double.parseDouble(textoValor);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Formato de valor inválido! Digite apenas números. "
-                    + "Se precisar de casas decimais, use vírgula ou ponto.",
-                    "Atenção",
-                    JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-
-        dto.valorIngrAdc = jTextField1.getText();
-        
-        int indexEsc = comboEscolha.getSelectedIndex();
-        if (indexEsc > 0 && indexEsc <= listaEscolha.size()) {
-            IngredienteEscolha escolhido = listaEscolha.get(indexEsc - 1);
+        int indiceEsc = comboEscolha.getSelectedIndex();
+        if (indiceEsc > 0 && indiceEsc <= listaEscolha.size()) {
+            IngredienteEscolha escolhido = listaEscolha.get(indiceEsc - 1);
             dto.idIngrEsc = String.valueOf(escolhido.getId());
         } else {
             dto.idIngrEsc = null;
         }
-        
 
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (IngredienteAdicionalDTO) dto;
-        jTextField2.setText(this.dto.nomeIngrAdc);
-        jTextField1.setText(this.dto.valorIngrAdc);
-        
+        if (dto != null) {
+            this.dto = (IngredienteAdicionalDTO) dto;
+            jTextField1.setText(this.dto.nomeIngrAdc);
+            jTextField2.setText(this.dto.valorIngrAdc);
+        } else {
+            this.dto = new IngredienteAdicionalDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+        }
+
         if (listaEscolha != null && !listaEscolha.isEmpty() && this.dto.idIngrEsc != null) {
             int idEsc = Integer.parseInt(this.dto.idIngrEsc);
             for (int i = 0; i < listaEscolha.size(); i++) {
@@ -171,14 +153,14 @@ public class PainelIngredienteAdicional extends InterfacePainel {
                 }
             }
         }
-       comboEscolha.setSelectedIndex(0);
+        comboEscolha.setSelectedIndex(0);
     }
 
     private void carregarIngrediente() {
         try {
             listaEscolha = escolhaDao.listar();
             comboEscolha.removeAllItems();
-            comboEscolha.addItem("— Selecione —");
+            comboEscolha.addItem("Selecione");
             for (IngredienteEscolha esc : listaEscolha) {
                 comboEscolha.addItem(String.valueOf(esc.getId()));
             }

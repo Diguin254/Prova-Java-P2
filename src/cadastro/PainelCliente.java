@@ -52,8 +52,8 @@ public class PainelCliente extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(222, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -77,6 +77,12 @@ public class PainelCliente extends InterfacePainel {
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        jTextField1.setText(this.dto.nomeCliente);
+        if (dto != null) {
+            this.dto = (ClienteDTO) dto;
+            jTextField1.setText(this.dto.nomeCliente);
+        } else {
+            this.dto = new ClienteDTO();
+            jTextField1.setText("");
+        }
     }
 }

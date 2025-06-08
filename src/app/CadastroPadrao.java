@@ -21,6 +21,7 @@ import dto.FuncionarioDTO;
 import dto.IngredienteAdicionalDTO;
 import dto.IngredienteEscolhaDTO;
 import dto.IngredienteRemoverDTO;
+import dto.InterfaceDTO;
 import dto.LoginDTO;
 import dto.MetodoPagamentoDTO;
 import dto.PedidoDTO;
@@ -47,12 +48,22 @@ public class CadastroPadrao extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastroPadrao.class.getName());
     private final InterfacePainel painelCentro;
     private final InterfaceController controller;
+    private InterfaceDTO editar;
 
     public CadastroPadrao(java.awt.Frame parent, InterfacePainel painelCentro, InterfaceController controller, boolean modal) {
+        this(parent, painelCentro, controller, modal, null);
+    }
+
+    public CadastroPadrao(java.awt.Frame parent, InterfacePainel painelCentro, InterfaceController controller, boolean modal, InterfaceDTO dtoParaEditar) {
         super(parent, modal);
         initComponents();
         this.painelCentro = painelCentro;
         this.controller = controller;
+        this.editar = dtoParaEditar;
+
+        if (editar != null) {
+            painelCentro.setDados(editar);
+        }
 
         add((javax.swing.JPanel) painelCentro, BorderLayout.CENTER);
         pack();
@@ -97,22 +108,22 @@ public class CadastroPadrao extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        Object dto = painelCentro.getDados();
-        
-        if(dto == null){
+        InterfaceDTO dto = painelCentro.getDados();
+
+        if (dto == null || !validarDTO(dto)) {
             return;
         }
-        
-        if (!validarDTO(dto)){
-            return;
-        }
-        
+
         try {
-            controller.salvar(painelCentro.getDados());
+            if (editar == null) {
+                controller.salvar(dto);
+            } else {
+                dto.setId(editar.getId());
+                controller.editar(dto);
+            }
             dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroPadrao.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Erro ao salvar:\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao salvar/editar: \n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
@@ -151,8 +162,8 @@ public class CadastroPadrao extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                InterfacePainel painel = new PainelBairros();
-                InterfaceController controller = new BairroController();
+                InterfacePainel painel = null;
+                InterfaceController controller = null;
 
                 CadastroPadrao dialog = new CadastroPadrao(new javax.swing.JFrame(), painel, controller, true);
                 dialog.setVisible(true);
@@ -250,63 +261,63 @@ public class CadastroPadrao extends javax.swing.JDialog {
                 return false;
             }
         }
-        
+
         if (dto instanceof IngredienteRemoverDTO ingRem) {
             if (ingRem.nomeIngrRem == null || ingRem.nomeIngrRem.trim().isEmpty()) {
                 mostrarAlerta("Informe o nome do ingrediente.");
                 return false;
             }
         }
-        
+
         if (dto instanceof LoginDTO login) {
             if (login.loginFun == null || login.loginFun.trim().isEmpty() || login.senhaLogin == null || login.senhaLogin.trim().isEmpty()) {
                 mostrarAlerta("Informe todos os dados.");
                 return false;
             }
         }
-        
+
         if (dto instanceof MetodoPagamentoDTO metPag) {
             if (metPag.pixPag == null || metPag.pixPag.trim().isEmpty()) {
                 mostrarAlerta("Informe os dados do pix.");
                 return false;
             }
         }
-        
+
         if (dto instanceof PedidoDTO pedido) {
             if (pedido.nPed == null || pedido.nPed.trim().isEmpty() || pedido.horaPed == null || pedido.horaPed.trim().isEmpty()) {
                 mostrarAlerta("Informe todos os dados.");
                 return false;
             }
         }
-        
+
         if (dto instanceof ProdutoDTO produto) {
             if (produto.nomeProd == null || produto.nomeProd.trim().isEmpty() || produto.valUnProd == null || produto.valUnProd.trim().isEmpty()) {
                 mostrarAlerta("Informe todos os dados.");
                 return false;
             }
         }
-        
+
         if (dto instanceof ReembolsoDTO reembolso) {
             if (reembolso.motivoReemb == null || reembolso.motivoReemb.trim().isEmpty()) {
                 mostrarAlerta("Informe o motivo do reembolso.");
                 return false;
             }
         }
-        
+
         if (dto instanceof StatusPedidoDTO status) {
             if (status.progStatPed == null || status.progStatPed.trim().isEmpty()) {
                 mostrarAlerta("Informe o progresso do pedido.");
                 return false;
             }
         }
-        
+
         if (dto instanceof TaxaEntregaDTO taxa) {
             if (taxa.valEntrega == null || taxa.valEntrega.trim().isEmpty()) {
                 mostrarAlerta("Informe o valor da taxa da entrega.");
                 return false;
             }
         }
-        
+
         if (dto instanceof TelefoneDTO tel) {
             if (tel.dddTel == null || tel.dddTel.trim().isEmpty() || tel.numTel == null || tel.numTel.trim().isEmpty()) {
                 mostrarAlerta("Informe todos os dados.");

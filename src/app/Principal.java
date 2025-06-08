@@ -92,20 +92,13 @@ public class Principal extends javax.swing.JFrame {
     private final DeliveryController deliveryController = new DeliveryController();
     private final DinheiroController dinheiroController = new DinheiroController();
     private final EnderecoController enderecoController = new EnderecoController();
-    private final EntregaController entregaController = new EntregaController();
     private final FuncionarioController funcionarioController = new FuncionarioController();
-    private final IngredienteAdicionalController ingredienteAdicionalController = new IngredienteAdicionalController();
     private final IngredienteEscolhaController ingredienteEscolhaController = new IngredienteEscolhaController();
-    private final IngredienteRemoverController ingredienteRemoverController = new IngredienteRemoverController();
     private final LoginController loginController = new LoginController();
     private final MetodoPagamentoController metodoPagamentoController = new MetodoPagamentoController();
-    private final PagamentoController pagamentoController = new PagamentoController();
     private final PedidoController pedidoController = new PedidoController();
     private final ProdutoController produtoController = new ProdutoController();
-    private final ReembolsoController reembolsoController = new ReembolsoController();
     private final StatusPedidoController statusPedidoController = new StatusPedidoController();
-    private final TaxaEntregaController taxaEntregaController = new TaxaEntregaController();
-    private final TelefoneController telefoneController = new TelefoneController();
 
     public Principal() {
         initComponents();
@@ -141,9 +134,9 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jbSair = new javax.swing.JButton();
         jhora = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jbSair = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemBairro = new javax.swing.JMenuItem();
@@ -194,20 +187,19 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jhora.setText("Hora");
-        jPanel1.add(jhora);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
-
         jbSair.setText("Sair");
         jbSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSairActionPerformed(evt);
             }
         });
-        jPanel2.add(jbSair);
+        jPanel1.add(jbSair);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        jhora.setText("Hora");
+        jPanel1.add(jhora);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jMenu2.setText("Cadastros");
 
@@ -389,7 +381,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu1.setText("Listar");
+        jMenu1.setText("Listar - Editar - Remover");
 
         jMenuListarBairro.setText("Bairro");
         jMenuListarBairro.addActionListener(new java.awt.event.ActionListener() {

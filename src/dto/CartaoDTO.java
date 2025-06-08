@@ -61,5 +61,13 @@ public class CartaoDTO implements InterfaceDTO{
         return "CartaoDTO{" + "idCartao=" + idCartao + ", nCartao=" + nCartao + ", codCartao=" + codCartao + ", tipoCartao=" + tipoCartao + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idCartao == null || idCartao.isBlank()) ? 0 : Integer.parseInt(idCartao);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idCartao = String.valueOf(id);
+    }
 }

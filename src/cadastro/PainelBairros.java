@@ -38,6 +38,7 @@ public class PainelBairros extends InterfacePainel {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nome do Bairro");
+        jLabel1.setAutoscrolls(true);
 
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setPreferredSize(new java.awt.Dimension(200, 22));
@@ -64,7 +65,7 @@ public class PainelBairros extends InterfacePainel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -78,19 +79,25 @@ public class PainelBairros extends InterfacePainel {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
     BairroDTO dto;
+
     @Override
-    public BairroDTO getDados(){
-        if(dto == null){
+    public BairroDTO getDados() {
+        if (dto == null) {
             dto = new BairroDTO();
         }
-        
+
         dto.nomeBairro = jTextField1.getText();
-        return (BairroDTO) (InterfaceDTO) dto;
+        return dto;
     }
-    
+
     @Override
-    public void setDados(InterfaceDTO dto){
-        this.dto = (BairroDTO) dto;
-        jTextField1.setText(this.dto.nomeBairro);
+    public void setDados(InterfaceDTO dto) {
+        if (dto != null) {
+            this.dto = (BairroDTO) dto;
+            jTextField1.setText(this.dto.nomeBairro);
+        } else {
+            this.dto = new BairroDTO();
+            jTextField1.setText("");
+        }
     }
 }

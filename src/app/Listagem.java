@@ -4,9 +4,13 @@
  */
 package app;
 
+import controller.InterfaceController;
+import dto.InterfaceDTO;
 import java.awt.Frame;
 import java.util.List;
+import java.sql.*;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,11 +18,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author alenc
  */
-public abstract class Listagem<T> extends JDialog {
+public abstract class Listagem<Tabela extends InterfaceDTO> extends JDialog {
 
     /**
      * Creates new form Listagem
      */
+    
+    private List<Tabela> listaObjetos;
+    private InterfaceController controller;
+    
     public Listagem(Frame parent, boolean modal, String tituloJanela) {
         super(parent, tituloJanela, modal);
         initComponents();
@@ -37,6 +45,7 @@ public abstract class Listagem<T> extends JDialog {
         jPanel3 = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
+        bntDeletar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDados = new javax.swing.JTable();
 
@@ -51,7 +60,20 @@ public abstract class Listagem<T> extends JDialog {
         jPanel3.add(btnFechar);
 
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnAtualizar);
+
+        bntDeletar.setText("Deletar");
+        bntDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntDeletarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bntDeletar);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -77,11 +99,65 @@ public abstract class Listagem<T> extends JDialog {
         dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+         int linha = tblDados.getSelectedRow();
+        if (linha < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um linha para editar.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            Tabela objeto = listaObjetos.get(linha);
+            onEditar(objeto);
+            carregarTabela();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao editar: " + e.getMessage(), "Falha", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void bntDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntDeletarActionPerformed
+        int linha = tblDados.getSelectedRow();
+        if (linha < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione uma linha para excluir.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Tabela objeto = listaObjetos.get(linha);
+        String id = getIdObjeto(objeto);
+        int confirma = JOptionPane.showConfirmDialog(this, "Confirma exclusão do ID " + id + "?", "Excluir", JOptionPane.YES_NO_OPTION);
+        if (confirma != JOptionPane.YES_OPTION) {
+            return;
+        }
+        try {
+            onDeletar(objeto);
+            carregarTabela();
+        } catch (SQLException ex) {
+            if("23503".equals(ex.getSQLState())){
+                String mensagem = ex.getMessage();
+                String tabelaFilho = null;
+                int indice = mensagem.indexOf("em \"");
+                if(indice >= 0){
+                    int inicio = indice + 4;
+                    int fim = mensagem.indexOf("\"", inicio);
+                    if(fim > inicio) {
+                        tabelaFilho = mensagem.substring(inicio, fim);
+                    }
+                }
+                if(tabelaFilho != null) {
+                    JOptionPane.showMessageDialog(this, "Não foi possível excluir esse registro pois existem dados em\n" + tabelaFilho + " que ainda o referenciam.\nPor favor, exclua primeiro os registros em '" +tabelaFilho + "'.", "Falha ao excluir", JOptionPane.WARNING_MESSAGE );
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não foi possível excluir esse registro pois existem dependentes no banco.", "Falha ao excluir", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao excluir: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_bntDeletarActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntDeletar;
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JPanel jPanel3;
@@ -98,21 +174,23 @@ public abstract class Listagem<T> extends JDialog {
             }
         };
 
-        List<T> listaObjetos = obterLista();
+        listaObjetos = obterLista();
 
         if (listaObjetos != null) {
-            for (T obj : listaObjetos) {
-                Object[] linha = toLinha(obj);
+            for (Tabela obj : listaObjetos) {
+                Object[] linha = linha(obj);
                 model.addRow(linha);
             }
         }
-
-        // 2.4) Ajusta o model no JTable
         tblDados.setModel(model);
         tblDados.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
     
     public abstract String[] getColunas();
-    public abstract Object[] toLinha(T objeto);
-    public abstract List<T> obterLista();
+    public abstract Object[] linha(Tabela objeto);
+    public abstract List<Tabela> obterLista();
+    public abstract void onEditar(Tabela objeto)throws SQLException;
+    public abstract void onDeletar(Tabela objeto)throws SQLException;
+    public abstract String getIdObjeto(Tabela objeto);
+    
 }

@@ -53,5 +53,13 @@ public class TaxaEntregaDTO implements InterfaceDTO {
         return "TaxaEntregaDTO{" + "idTaxaEnt=" + idTaxaEnt + ", valEntrega=" + valEntrega + ", idEnd=" + idEnd + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idTaxaEnt == null || idTaxaEnt.isBlank()) ? 0 : Integer.parseInt(idTaxaEnt);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idTaxaEnt = String.valueOf(id);
+    }
 }

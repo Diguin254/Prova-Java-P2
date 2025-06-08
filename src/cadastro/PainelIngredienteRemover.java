@@ -95,21 +95,26 @@ public class PainelIngredienteRemover extends InterfacePainel {
 
         dto.nomeIngrRem = jTextField1.getText();
 
-        int indexEsc = comboEscolha.getSelectedIndex();
-        if (indexEsc > 0 && indexEsc <= listaEscolha.size()) {
-            IngredienteEscolha escolhido = listaEscolha.get(indexEsc - 1);
+        int indiceEsc = comboEscolha.getSelectedIndex();
+        if (indiceEsc > 0 && indiceEsc <= listaEscolha.size()) {
+            IngredienteEscolha escolhido = listaEscolha.get(indiceEsc - 1);
             dto.idIngrEsco = String.valueOf(escolhido.getId());
         } else {
             dto.idIngrEsco = null;
         }
-        
-        return (InterfaceDTO) dto;
+
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (IngredienteRemoverDTO) dto;
-        jTextField1.setText(this.dto.nomeIngrRem);
+        if (dto != null) {
+            this.dto = (IngredienteRemoverDTO) dto;
+            jTextField1.setText(this.dto.nomeIngrRem);
+        } else {
+            this.dto = new IngredienteRemoverDTO();
+            jTextField1.setText("");
+        }
 
         if (listaEscolha != null && !listaEscolha.isEmpty() && this.dto.idIngrEsco != null) {
             int idEsc = Integer.parseInt(this.dto.idIngrEsco);

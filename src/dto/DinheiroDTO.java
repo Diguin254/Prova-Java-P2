@@ -38,5 +38,13 @@ public class DinheiroDTO implements InterfaceDTO {
     public String toString() {
         return "DinheiroDTO{" + "idDinheiro=" + idDinheiro + ", valorD=" + valorD + '}';
     }
+@Override
+    public int getId() {
+        return (idDinheiro == null || idDinheiro.isBlank()) ? 0 : Integer.parseInt(idDinheiro);
+    }
 
+    @Override
+    public void setId(int id) {
+        this.idDinheiro = String.valueOf(id);
+    }
 }

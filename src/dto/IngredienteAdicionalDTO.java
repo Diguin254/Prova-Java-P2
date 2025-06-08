@@ -63,5 +63,13 @@ public class IngredienteAdicionalDTO implements InterfaceDTO{
         return "IngredienteAdicionalDTO{" + "idIngrAdc=" + idIngrAdc + ", nomeIngrAdc=" + nomeIngrAdc + ", valorIngrAdc=" + valorIngrAdc + ", idIngrEsc=" + idIngrEsc + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idIngrAdc == null || idIngrAdc.isBlank()) ? 0 : Integer.parseInt(idIngrAdc);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idIngrAdc = String.valueOf(id);
+    }
 }

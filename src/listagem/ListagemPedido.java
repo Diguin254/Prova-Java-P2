@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelPedido;
 import controller.PedidoController;
 import dto.PedidoDTO;
 import dto.InterfaceDTO;
@@ -19,7 +21,7 @@ import java.sql.*;
  */
 public class ListagemPedido extends Listagem<PedidoDTO> {
 
-    private PedidoController controller;
+    private final PedidoController controller;
 
     public ListagemPedido(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Pedidos");
@@ -33,26 +35,43 @@ public class ListagemPedido extends Listagem<PedidoDTO> {
     }
 
     @Override
-    public Object[] toLinha(PedidoDTO p) {
+    public Object[] linha(PedidoDTO p) {
         return new Object[]{p.getIdPed(), p.getDataP(), p.getHoraPed(), p.getnPed(), p.getIdClienteP(), p.getIdStatusPed()};
     }
 
     @Override
     public List<PedidoDTO> obterLista() {
         try {
-        List<InterfaceDTO> listaGenerica = controller.listar();
+            List<InterfaceDTO> listaGenerica = controller.listar();
 
-        List<PedidoDTO> listaPedidos = new LinkedList<>();
+            List<PedidoDTO> listaPedidos = new LinkedList<>();
 
-        if (listaGenerica != null) {
-            for (InterfaceDTO iDto : listaGenerica) {
-                listaPedidos.add((PedidoDTO) iDto);
+            if (listaGenerica != null) {
+                for (InterfaceDTO iDto : listaGenerica) {
+                    listaPedidos.add((PedidoDTO) iDto);
+                }
             }
-        }
-        return listaPedidos;
-        
+            return listaPedidos;
+
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(PedidoDTO objeto) throws SQLException {
+        PainelPedido painel = new PainelPedido();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(PedidoDTO objeto) throws SQLException {
+        controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(PedidoDTO objeto) {
+        return objeto.getIdPed();
     }
 }

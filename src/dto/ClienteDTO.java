@@ -103,5 +103,13 @@ public class ClienteDTO implements InterfaceDTO{
         return "ClienteDTO{" + "idCliente=" + idCliente + ", nomeCliente=" + nomeCliente + ", telefones=" + telefones + ", pedidos=" + pedidos + ", entregas=" + entregas + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idCliente == null || idCliente.isBlank()) ? 0 : Integer.parseInt(idCliente);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idCliente = String.valueOf(id);
+    }
 }

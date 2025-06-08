@@ -71,5 +71,13 @@ public class ProdutoDTO implements InterfaceDTO{
     public String toString() {
         return "ProdutoDTO{" + "idProd=" + idProd + ", nomeProd=" + nomeProd + ", valUnProd=" + valUnProd + ", carrinhos=" + carrinhos + '}';
     }
-    
+    @Override
+    public int getId() {
+        return (idProd == null || idProd.isBlank()) ? 0 : Integer.parseInt(idProd);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idProd = String.valueOf(id);
+    }
 }

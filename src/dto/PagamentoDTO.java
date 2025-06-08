@@ -71,5 +71,13 @@ public class PagamentoDTO implements InterfaceDTO{
         return "PagamentoDTO{" + "idPag=" + idPag + ", idMetPag=" + idMetPag + ", idCupomP=" + idCupomP + ", idPedidoP=" + idPedidoP + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idPag == null || idPag.isBlank()) ? 0 : Integer.parseInt(idPag);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idPag = String.valueOf(id);
+    }
 }

@@ -11,7 +11,6 @@ import dao.PedidoDao;
 import dao.StatusPedidoDao;
 import dto.EntregaDTO;
 import dto.InterfaceDTO;
-import dto.PedidoDTO;
 import implementsDao.ClienteImplementsDAO;
 import implementsDao.DeliveryImplementsDAO;
 import implementsDao.PedidoImplementsDAO;
@@ -36,14 +35,14 @@ public class PainelEntrega extends InterfacePainel {
     private final DeliveryDao deliveryDao = new DeliveryImplementsDAO();
     private final PedidoDao pedidoDao = new PedidoImplementsDAO();
     private final StatusPedidoDao statusDao = new StatusPedidoImplementsDAO();
-    
+
     private List<Cliente> listaCliente;
     private List<Delivery> listaDelivery;
     private List<Pedido> listaPedido;
     private List<StatusPedido> listaStatus;
-    
+
     EntregaDTO dto;
-    
+
     private final String[] tiposTexto = {
         "Entrega Especial",
         "Entrega Simples",
@@ -57,7 +56,7 @@ public class PainelEntrega extends InterfacePainel {
         3,
         4
     };
-    
+
     public PainelEntrega() {
         initComponents();
         carregarComboCliente();
@@ -65,7 +64,7 @@ public class PainelEntrega extends InterfacePainel {
         carregarComboPedido();
         carregarComboStatus();
         comboEntrega.removeAllItems();
-        for(String txt : tiposTexto) {
+        for (String txt : tiposTexto) {
             comboEntrega.addItem(txt);
         }
     }
@@ -111,8 +110,6 @@ public class PainelEntrega extends InterfacePainel {
             }
         });
 
-        comboEntrega.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,39 +118,30 @@ public class PainelEntrega extends InterfacePainel {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(40, 40, 40))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBoxDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))))))
+                        .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBoxDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(comboEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(100, 100, 100)
+                .addComponent(comboEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,23 +149,23 @@ public class PainelEntrega extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(comboEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(81, 81, 81))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -205,108 +193,127 @@ public class PainelEntrega extends InterfacePainel {
         if (dto == null) {
             dto = new EntregaDTO();
         }
-        
-        int index =comboEntrega.getSelectedIndex();
-        if(index >= 0 && index < tiposCodigo.length) {
-            dto.tipoEntregaE = String.valueOf(tiposCodigo[index]);
+
+        int indice = comboEntrega.getSelectedIndex();
+        if (indice >= 0 && indice < tiposCodigo.length) {
+            dto.tipoEntregaE = String.valueOf(tiposCodigo[indice]);
         } else {
             dto.tipoEntregaE = "0";
         }
-        
-        int indexC = jComboBoxCliente.getSelectedIndex();
-        if (indexC >= 0 && indexC < listaCliente.size()) {
-            dto.idCliente = String.valueOf(listaCliente.get(indexC).getId());
+
+        int indiceC = jComboBoxCliente.getSelectedIndex();
+        if (indiceC > 0 && indiceC <= listaCliente.size()) {
+            Cliente escolhido = listaCliente.get(indiceC - 1);
+            dto.idCliente = String.valueOf(escolhido.getId());
+        } else {
+            dto.idCliente = null;
         }
-        
-        int indexD = jComboBoxDelivery.getSelectedIndex();
-        if (indexD >= 0 && indexD < listaDelivery.size()) {
-            dto.idDelivery = String.valueOf(listaDelivery.get(indexD).getId());
+
+        int indiceD = jComboBoxDelivery.getSelectedIndex();
+        if (indiceD > 0 && indiceD <= listaDelivery.size()) {
+            Delivery escolhido = listaDelivery.get(indiceD - 1);
+            dto.idDelivery = String.valueOf(escolhido.getId());
+        } else {
+            dto.idDelivery = null;
         }
-        
-        int indexP = jComboBoxPedido.getSelectedIndex();
-        if (indexP >= 0 && indexP < listaPedido.size()) {
-            dto.idPedido = String.valueOf(listaPedido.get(indexP).getId());
+
+        int indiceP = jComboBoxPedido.getSelectedIndex();
+        if (indiceP > 0 && indiceP <= listaPedido.size()) {
+            Pedido escolhido = listaPedido.get(indiceP - 1);
+            dto.idPedido = String.valueOf(escolhido.getId());
+        } else {
+            dto.idPedido = null;
         }
-        
-        int indexS = jComboBoxStatus.getSelectedIndex();
-        if (indexS >= 0 && indexS < listaStatus.size()) {
-            dto.idStatusPedido = String.valueOf(listaStatus.get(indexS).getId());
+
+        int indiceS = jComboBoxStatus.getSelectedIndex();
+        if (indiceS > 0 && indiceS <= listaStatus.size()) {
+            StatusPedido escolhido = listaStatus.get(indiceS - 1);
+            dto.idStatusPedido = String.valueOf(escolhido.getId());
+        } else {
+            dto.idStatusPedido = null;
         }
-        
-        return (InterfaceDTO) dto;
+
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (EntregaDTO) dto;
-        
+        if (dto != null) {
+            this.dto = (EntregaDTO) dto;
+        } else {
+            this.dto = new EntregaDTO();
+        }
+
         int codigoAtual;
         try {
             codigoAtual = Integer.parseInt(this.dto.tipoEntregaE);
         } catch (NumberFormatException e) {
             codigoAtual = 0;
         }
-        
+
         int indiceParaSelecionar = -1;
-        for(int i = 0 ; i < tiposCodigo.length; i++){
-            if(tiposCodigo[i] == codigoAtual){
+        for (int i = 0; i < tiposCodigo.length; i++) {
+            if (tiposCodigo[i] == codigoAtual) {
                 indiceParaSelecionar = i;
-                break;
+                return;
             }
         }
-        
-        if(indiceParaSelecionar >= 0) {
+
+        if (indiceParaSelecionar >= 0) {
             comboEntrega.setSelectedIndex(indiceParaSelecionar);
         } else {
             comboEntrega.setSelectedIndex(-1);
         }
-        
+
         if (listaCliente != null && !listaCliente.isEmpty() && this.dto.idCliente != null) {
             int idC = Integer.parseInt(this.dto.idCliente);
             for (int i = 0; i < listaCliente.size(); i++) {
                 if (listaCliente.get(i).getId() == idC) {
-                    jComboBoxCliente.setSelectedIndex(i);
-                    break;
+                    jComboBoxCliente.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
-        
+        jComboBoxCliente.setSelectedIndex(0);
         if (listaDelivery != null && !listaDelivery.isEmpty() && this.dto.idDelivery != null) {
-            int idD = Integer.parseInt(this.dto.idDelivery);
+            int indiceD = Integer.parseInt(this.dto.idDelivery);
             for (int i = 0; i < listaDelivery.size(); i++) {
-                if (listaDelivery.get(i).getId() == idD) {
-                    jComboBoxDelivery.setSelectedIndex(i);
-                    break;
+                if (listaDelivery.get(i).getId() == indiceD) {
+                    jComboBoxDelivery.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBoxDelivery.setSelectedIndex(0);
         
         if (listaPedido != null && !listaPedido.isEmpty() && this.dto.idPedido != null) {
-            int idP = Integer.parseInt(this.dto.idPedido);
+            int indiceP = Integer.parseInt(this.dto.idPedido);
             for (int i = 0; i < listaPedido.size(); i++) {
-                if (listaPedido.get(i).getId() == idP) {
-                    jComboBoxPedido.setSelectedIndex(i);
-                    break;
+                if (listaPedido.get(i).getId() == indiceP) {
+                    jComboBoxPedido.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBoxPedido.setSelectedIndex(0);
         
         if (listaStatus != null && !listaStatus.isEmpty() && this.dto.idStatusPedido != null) {
-            int idS = Integer.parseInt(this.dto.idStatusPedido);
+            int indiceS = Integer.parseInt(this.dto.idStatusPedido);
             for (int i = 0; i < listaStatus.size(); i++) {
-                if (listaStatus.get(i).getId() == idS) {
-                    jComboBoxStatus.setSelectedIndex(i);
-                    break;
+                if (listaStatus.get(i).getId() == indiceS) {
+                    jComboBoxStatus.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
-        
+        jComboBoxStatus.setSelectedIndex(0);
     }
 
     private void carregarComboCliente() {
         try {
             listaCliente = clienteDao.listar();
             jComboBoxCliente.removeAllItems();
+            jComboBoxCliente.addItem("Selecione");
             for (Cliente c : listaCliente) {
                 jComboBoxCliente.addItem(c.getNome());
             }
@@ -319,6 +326,7 @@ public class PainelEntrega extends InterfacePainel {
         try {
             listaDelivery = deliveryDao.listar();
             jComboBoxDelivery.removeAllItems();
+            jComboBoxDelivery.addItem("Selecione");
             for (Delivery d : listaDelivery) {
                 jComboBoxDelivery.addItem(d.getChaveEntrega());
             }
@@ -331,6 +339,7 @@ public class PainelEntrega extends InterfacePainel {
         try {
             listaPedido = pedidoDao.listar();
             jComboBoxPedido.removeAllItems();
+            jComboBoxPedido.addItem("Selecione");
             for (Pedido p : listaPedido) {
                 jComboBoxPedido.addItem(String.valueOf(p.getNumeroPedido()));
             }
@@ -343,6 +352,7 @@ public class PainelEntrega extends InterfacePainel {
         try {
             listaStatus = statusDao.listar();
             jComboBoxStatus.removeAllItems();
+            jComboBoxStatus.addItem("Selecione");
             for (StatusPedido sts : listaStatus) {
                 jComboBoxStatus.addItem(sts.getProgresso());
             }

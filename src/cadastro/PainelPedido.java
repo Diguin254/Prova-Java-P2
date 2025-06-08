@@ -107,24 +107,24 @@ public class PainelPedido extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,7 +132,7 @@ public class PainelPedido extends InterfacePainel {
         try {
             listaCliente = clienteDao.listar();
             jComboBoxCliente.removeAllItems();
-            jComboBoxCliente.addItem("— Selecione —");
+            jComboBoxCliente.addItem("Selecione ");
             for (Cliente c : listaCliente) {
                 jComboBoxCliente.addItem(c.getNome());
             }
@@ -145,7 +145,7 @@ public class PainelPedido extends InterfacePainel {
         try {
             listaStatus = statusDao.listar();
             jComboBoxStatus.removeAllItems();
-            jComboBoxStatus.addItem("— Selecione —");
+            jComboBoxStatus.addItem("Selecione ");
             for (StatusPedido sts : listaStatus) {
                 jComboBoxStatus.addItem(sts.getProgresso());
             }
@@ -194,55 +194,64 @@ public class PainelPedido extends InterfacePainel {
                 dto.dataP = null;
             }
         }
-        
-        int idxCli = jComboBoxCliente.getSelectedIndex();
-        if(idxCli > 0 && idxCli <= listaCliente.size()){
-            Cliente escolhido = listaCliente.get(idxCli - 1);
+
+        int indiceCli = jComboBoxCliente.getSelectedIndex();
+        if (indiceCli > 0 && indiceCli <= listaCliente.size()) {
+            Cliente escolhido = listaCliente.get(indiceCli - 1);
             dto.idClienteP = String.valueOf(escolhido.getId());
         } else {
             dto.idClienteP = null;
         }
-        
-        int idxSt = jComboBoxStatus.getSelectedIndex();
-        if(idxSt > 0 && idxSt <= listaStatus.size()){
-            StatusPedido escolhido = listaStatus.get(idxSt - 1);
+
+        int indiceSt = jComboBoxStatus.getSelectedIndex();
+        if (indiceSt > 0 && indiceSt <= listaStatus.size()) {
+            StatusPedido escolhido = listaStatus.get(indiceSt - 1);
             dto.idStatusPed = String.valueOf(escolhido.getId());
         } else {
             dto.idStatusPed = null;
         }
-        
-        return (InterfaceDTO) dto;
+
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO interfaceDto) {
-        this.dto = (PedidoDTO) interfaceDto;
-        jTextField1.setText(this.dto.horaPed);
-        jTextField2.setText(this.dto.nPed);
-        if (dto.dataP != null) {
-            jFormattedTextField1.setValue(dto.dataP);
+        if (dto != null) {
+            this.dto = (PedidoDTO) dto;
+            jTextField1.setText(this.dto.horaPed);
+            jTextField2.setText(this.dto.nPed);
+            if (dto.dataP != null) {
+                jFormattedTextField1.setValue(dto.dataP);
+            }
         } else {
-            jFormattedTextField1.setValue(new Date());
+            this.dto = new PedidoDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+            if (dto.dataP == null) {
+                jFormattedTextField1.setValue(new Date());
+            }
         }
 
         if (listaCliente != null && !listaCliente.isEmpty() && this.dto.idClienteP != null) {
             int idC = Integer.parseInt(this.dto.idClienteP);
             for (int i = 0; i < listaCliente.size(); i++) {
                 if (listaCliente.get(i).getId() == idC) {
-                    jComboBoxCliente.setSelectedIndex(i);
-                    break;
+                    jComboBoxCliente.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
-
+        jComboBoxCliente.setSelectedIndex(0);
+        
         if (listaStatus != null && !listaStatus.isEmpty() && this.dto.idStatusPed != null) {
             int idC = Integer.parseInt(this.dto.idStatusPed);
             for (int i = 0; i < listaStatus.size(); i++) {
                 if (listaStatus.get(i).getId() == idC) {
-                    jComboBoxStatus.setSelectedIndex(i);
-                    break;
+                    jComboBoxStatus.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBoxStatus.setSelectedIndex(0);
     }
 }

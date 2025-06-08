@@ -14,7 +14,6 @@ import implementsDao.CupomImplementsDAO;
 import implementsDao.MetodoPagamentoImplementsDAO;
 import implementsDao.PedidoImplementsDAO;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -80,16 +79,11 @@ public class PainelPagamento extends InterfacePainel {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBoxMetPag, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBoxCupom, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jComboBoxMetPag, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCupom, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -98,16 +92,16 @@ public class PainelPagamento extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxMetPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxMetPag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxCupom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxCupom, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addComponent(jComboBoxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(99, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -152,6 +146,7 @@ public class PainelPagamento extends InterfacePainel {
         try {
             listaCupom = cupomDao.listar();
             jComboBoxCupom.removeAllItems();
+            jComboBoxCupom.addItem("Selecione");
             for (Cupom c : listaCupom) {
                 jComboBoxCupom.addItem(String.valueOf(c.getCodigo() + " - " + c.getValidade() + " - " + c.getValorCupom()));
             }
@@ -164,6 +159,7 @@ public class PainelPagamento extends InterfacePainel {
         try {
             listaPedido = pedidoDao.listar();
             jComboBoxPedido.removeAllItems();
+            jComboBoxPedido.addItem("Selecione");
             for (Pedido p : listaPedido) {
                 jComboBoxPedido.addItem(String.valueOf(p.getCliente() + " - " + p.getDataPedido() + " - " + p.getNumeroPedido()));
             }
@@ -177,8 +173,8 @@ public class PainelPagamento extends InterfacePainel {
         if (dto == null) {
             dto = new PagamentoDTO();
         }
-        int indexM = jComboBoxMetPag.getSelectedIndex();
-        if (indexM >= 0) {
+        int indiceM = jComboBoxMetPag.getSelectedIndex();
+        if (indiceM >= 0) {
             String tipoSelecionado = (String) jComboBoxMetPag.getSelectedItem();
             Integer idMetodo = mapaMetodos.get(tipoSelecionado);
 
@@ -190,42 +186,53 @@ public class PainelPagamento extends InterfacePainel {
             dto.idMetPag = String.valueOf(idMetodo);
         }
 
-        int indexC = jComboBoxCupom.getSelectedIndex();
-        if (indexC >= 0 && indexC < listaCupom.size()) {
-            dto.idCupomP = String.valueOf(listaCupom.get(indexC).getId());
+        int indiceC = jComboBoxCupom.getSelectedIndex();
+        if (indiceC > 0 && indiceC <= listaCupom.size()) {
+            Cupom escolhido = listaCupom.get(indiceC - 1);
+            dto.idCupomP = String.valueOf(escolhido.getId());
+        } else {
+            dto.idCupomP = null;
         }
 
-        int indexP = jComboBoxPedido.getSelectedIndex();
-        if (indexP >= 0 && indexP < listaPedido.size()) {
-            dto.idPedidoP = String.valueOf(listaPedido.get(indexP).getId());
+        int indiceP = jComboBoxPedido.getSelectedIndex();
+        if (indiceP > 0 && indiceP <= listaPedido.size()) {
+            Pedido escolhido = listaPedido.get(indiceP - 1);
+            dto.idPedidoP = String.valueOf(escolhido.getId());
+        } else {
+            dto.idPedidoP = null;
         }
 
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (PagamentoDTO) dto;
+        if (dto != null) {
+            this.dto = (PagamentoDTO) dto;
+        } else {
+            this.dto = new PagamentoDTO();
+        }
 
         if (listaCupom != null && !listaCupom.isEmpty() && this.dto.idCupomP != null) {
             int id = Integer.parseInt(this.dto.idCupomP);
             for (int i = 0; i < listaCupom.size(); i++) {
                 if (listaCupom.get(i).getId() == id) {
-                    jComboBoxCupom.setSelectedIndex(i);
-                    break;
+                    jComboBoxCupom.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBoxCupom.setSelectedIndex(0);
 
         if (listaPedido != null && !listaPedido.isEmpty() && this.dto.idPedidoP != null) {
             int id = Integer.parseInt(this.dto.idPedidoP);
             for (int i = 0; i < listaPedido.size(); i++) {
                 if (listaPedido.get(i).getId() == id) {
-                    jComboBoxPedido.setSelectedIndex(i);
-                    break;
+                    jComboBoxPedido.setSelectedIndex(i + 1);
+                    return;
                 }
             }
         }
+        jComboBoxPedido.setSelectedIndex(0);
     }
-
 }

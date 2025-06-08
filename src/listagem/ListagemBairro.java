@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelBairros;
 import controller.BairroController;
 import dto.BairroDTO;
 import dto.InterfaceDTO;
@@ -17,9 +19,9 @@ import java.util.List;
  *
  * @author alencar
  */
-public class ListagemBairro extends Listagem<BairroDTO>{
-    
-    private BairroController controller;
+public class ListagemBairro extends Listagem<BairroDTO> {
+
+    private final BairroController controller;
 
     public ListagemBairro(Frame parent, boolean modal) {
         super(parent, modal, "Lista de Bairros");
@@ -33,27 +35,43 @@ public class ListagemBairro extends Listagem<BairroDTO>{
     }
 
     @Override
-    public Object[] toLinha(BairroDTO b) {
+    public Object[] linha(BairroDTO b) {
         return new Object[]{b.getIdBairro(), b.getNomeBairro()};
     }
 
     @Override
     public List<BairroDTO> obterLista() {
         try {
-        List<InterfaceDTO> listaGenerica = controller.listar();
+            List<InterfaceDTO> listaGenerica = controller.listar();
 
-        List<BairroDTO> listaBairros = new LinkedList<>();
+            List<BairroDTO> listaBairros = new LinkedList<>();
 
-        if (listaGenerica != null) {
-            for (InterfaceDTO iDto : listaGenerica) {
-                listaBairros.add((BairroDTO) iDto);
+            if (listaGenerica != null) {
+                for (InterfaceDTO iDto : listaGenerica) {
+                    listaBairros.add((BairroDTO) iDto);
+                }
             }
-        }
-        return listaBairros;
-        
+            return listaBairros;
+
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
     }
-    
+
+    @Override
+    public void onEditar(BairroDTO objeto) throws SQLException {
+        PainelBairros painel = new PainelBairros();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(BairroDTO objeto) throws SQLException{
+            controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(BairroDTO objeto) {
+        return objeto.getIdBairro();
+    }
 }

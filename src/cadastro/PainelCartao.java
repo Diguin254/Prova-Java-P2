@@ -120,21 +120,27 @@ public class PainelCartao extends InterfacePainel {
         dto.nCartao = jTextField1.getText();
         dto.codCartao = jTextField2.getText();
         
-        int index = jComboBox1.getSelectedIndex();
-        if(index >= 0 && index < tiposCodigo.length) {
-            dto.tipoCartao = String.valueOf(tiposCodigo[index]);
+        int indice = jComboBox1.getSelectedIndex();
+        if(indice >= 0 && indice < tiposCodigo.length) {
+            dto.tipoCartao = String.valueOf(tiposCodigo[indice]);
         } else {
             dto.tipoCartao = "0";
         }
 
-        return (InterfaceDTO) dto;
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (CartaoDTO) dto;
-        jTextField1.setText(this.dto.nCartao);
-        jTextField2.setText(this.dto.codCartao);
+        if (dto != null) {
+            this.dto = (CartaoDTO) dto;
+            jTextField1.setText(this.dto.nCartao);
+            jTextField2.setText(this.dto.codCartao);
+        } else {
+            this.dto = new CartaoDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+        }
         
         int codigoAtual;
         try {

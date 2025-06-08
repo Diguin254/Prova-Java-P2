@@ -77,11 +77,11 @@ public class PainelIngredienteEscolha extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(127, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
@@ -94,9 +94,9 @@ public class PainelIngredienteEscolha extends InterfacePainel {
         try {
             listaCarrinho = carrinhoDao.listar();
             jComboBox1.removeAllItems();
-            jComboBox1.addItem("— Selecione —");
+            jComboBox1.addItem("Selecione");
             for (Carrinho c : listaCarrinho) {
-                jComboBox1.addItem(String.valueOf((char) c.getQntd()));
+                jComboBox1.addItem(String.valueOf( c.getQntd()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar carrinho: " + e.getMessage());
@@ -108,22 +108,26 @@ public class PainelIngredienteEscolha extends InterfacePainel {
         if (dto == null) {
             dto = new IngredienteEscolhaDTO();
         }
-        
-        int index = jComboBox1.getSelectedIndex();
-        if (index > 0 && index <= listaCarrinho.size()) {
-            Carrinho escolhido = listaCarrinho.get(index - 1);
+
+        int indice = jComboBox1.getSelectedIndex();
+        if (indice > 0 && indice <= listaCarrinho.size()) {
+            Carrinho escolhido = listaCarrinho.get(indice - 1);
             dto.idCarrinho = String.valueOf(escolhido.getId());
         } else {
             dto.idCarrinho = null;
         }
-        
-        return (InterfaceDTO) dto;
+
+        return dto;
     }
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (IngredienteEscolhaDTO) dto;
-        
+        if (dto != null) {
+            this.dto = (IngredienteEscolhaDTO) dto;
+        } else {
+            this.dto = new IngredienteEscolhaDTO();
+        }
+
         if (listaCarrinho != null && !listaCarrinho.isEmpty() && this.dto.idCarrinho != null) {
             int idC = Integer.parseInt(this.dto.idCarrinho);
             for (int i = 0; i < listaCarrinho.size(); i++) {

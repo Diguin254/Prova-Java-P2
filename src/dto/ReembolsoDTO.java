@@ -53,5 +53,13 @@ public class ReembolsoDTO implements InterfaceDTO{
         return "ReembolsoDTO{" + "idReemb=" + idReemb + ", motivoReemb=" + motivoReemb + ", idPedidoR=" + idPedidoR + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idReemb == null || idReemb.isBlank()) ? 0 : Integer.parseInt(idReemb);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idReemb = String.valueOf(id);
+    }
 }

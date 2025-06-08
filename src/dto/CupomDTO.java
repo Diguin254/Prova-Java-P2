@@ -59,5 +59,13 @@ public class CupomDTO implements InterfaceDTO {
     public String toString() {
         return "CupomDTO{" + "idC=" + idC + ", valorC=" + valorC + ", codigoC=" + codigoC + ", validadeC=" + validadeC + '}';
     }
+@Override
+    public int getId() {
+        return (idC == null || idC.isBlank()) ? 0 : Integer.parseInt(idC);
+    }
 
+    @Override
+    public void setId(int id) {
+        this.idC = String.valueOf(id);
+    }
 }

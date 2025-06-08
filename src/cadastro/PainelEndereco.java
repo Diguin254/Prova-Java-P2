@@ -12,6 +12,7 @@ import dto.InterfaceDTO;
 import implementsDao.BairroImplementsDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author alenc
@@ -118,20 +119,20 @@ public class PainelEndereco extends InterfacePainel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelBairro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addComponent(jComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -167,7 +168,7 @@ public class PainelEndereco extends InterfacePainel {
         try {
             listaBairros = bairroDao.listar();
             jComboBoxBairro.removeAllItems();
-            jComboBoxBairro.addItem("— Selecione —");
+            jComboBoxBairro.addItem("Selecione");
             for (Bairro b : listaBairros) {
                 jComboBoxBairro.addItem(b.getNome());
             }
@@ -186,9 +187,9 @@ public class PainelEndereco extends InterfacePainel {
         dto.cepEnd = jTextField2.getText();
         dto.distanciaEnd = jTextField3.getText();
 
-        int index = jComboBoxBairro.getSelectedIndex();
-        if (index > 0 && index <= listaBairros.size()) {
-            Bairro escolhido = listaBairros.get(index - 1);
+        int indice = jComboBoxBairro.getSelectedIndex();
+        if (indice > 0 && indice <= listaBairros.size()) {
+            Bairro escolhido = listaBairros.get(indice - 1);
             dto.idBairro = String.valueOf(escolhido.getId());
         } else {
             dto.idBairro = null;
@@ -199,10 +200,17 @@ public class PainelEndereco extends InterfacePainel {
 
     @Override
     public void setDados(InterfaceDTO dto) {
-        this.dto = (EnderecoDTO) dto;
-        jTextField1.setText(this.dto.ruaEnd);
-        jTextField2.setText(this.dto.cepEnd);
-        jTextField3.setText(this.dto.distanciaEnd);
+        if (dto != null) {
+            this.dto = (EnderecoDTO) dto;
+            jTextField1.setText(this.dto.ruaEnd);
+            jTextField2.setText(this.dto.cepEnd);
+            jTextField3.setText(this.dto.distanciaEnd);
+        } else {
+            this.dto = new EnderecoDTO();
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+        }
 
         if (listaBairros != null && !listaBairros.isEmpty() && this.dto.idBairro != null) {
             int id = Integer.parseInt(this.dto.idBairro);

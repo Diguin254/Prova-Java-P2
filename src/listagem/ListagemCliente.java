@@ -4,7 +4,9 @@
  */
 package listagem;
 
+import app.CadastroPadrao;
 import app.Listagem;
+import cadastro.PainelCliente;
 import controller.ClienteController;
 import dto.ClienteDTO;
 import dto.InterfaceDTO;
@@ -33,26 +35,43 @@ public class ListagemCliente extends Listagem<ClienteDTO> {
     }
 
     @Override
-    public Object[] toLinha(ClienteDTO c) {
+    public Object[] linha(ClienteDTO c) {
         return new Object[]{c.getIdCliente(), c.getNomeCliente()};
     }
 
     @Override
     public List<ClienteDTO> obterLista() {
         try {
-        List<InterfaceDTO> listaGenerica = controller.listar();
+            List<InterfaceDTO> listaGenerica = controller.listar();
 
-        List<ClienteDTO> listaClientes = new LinkedList<>();
+            List<ClienteDTO> listaClientes = new LinkedList<>();
 
-        if (listaGenerica != null) {
-            for (InterfaceDTO iDto : listaGenerica) {
-                listaClientes.add((ClienteDTO) iDto);
+            if (listaGenerica != null) {
+                for (InterfaceDTO iDto : listaGenerica) {
+                    listaClientes.add((ClienteDTO) iDto);
+                }
             }
-        }
-        return listaClientes;
-        
+            return listaClientes;
+
         } catch (SQLException ex) {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public void onEditar(ClienteDTO objeto) throws SQLException {
+        PainelCliente painel = new PainelCliente();
+        CadastroPadrao dialog = new CadastroPadrao((Frame) this.getParent(), painel, controller, true, objeto);
+        dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeletar(ClienteDTO objeto) throws SQLException {
+        controller.deletar(objeto.getId());
+    }
+
+    @Override
+    public String getIdObjeto(ClienteDTO objeto) {
+        return objeto.getIdCliente();
     }
 }

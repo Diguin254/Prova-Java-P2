@@ -85,5 +85,13 @@ public class IngredienteEscolhaDTO implements InterfaceDTO{
         return "IngredienteEscolhaDTO{" + "idIngrEsc=" + idIngrEsc + ", idCarrinho=" + idCarrinho + ", ingrRemovs=" + ingrRemovs + ", ingrAdcs=" + ingrAdcs + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idIngrEsc == null || idIngrEsc.isBlank()) ? 0 : Integer.parseInt(idIngrEsc);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idIngrEsc = String.valueOf(id);
+    }
 }

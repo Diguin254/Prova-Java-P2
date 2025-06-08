@@ -112,5 +112,13 @@ public class PedidoDTO implements InterfaceDTO{
         return "PedidoDTO{" + "idPed=" + idPed + ", horaPed=" + horaPed + ", nPed=" + nPed + ", dataP=" + dataP + ", idClienteP=" + idClienteP + ", carrinhos=" + carrinhos + ", idStatusPed=" + idStatusPed + '}';
     }
     
-    
+    @Override
+    public int getId() {
+        return (idPed == null || idPed.isBlank()) ? 0 : Integer.parseInt(idPed);
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idPed = String.valueOf(id);
+    }
 }
